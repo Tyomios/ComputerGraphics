@@ -34,7 +34,7 @@ namespace ComputerGraphics
 			this.resultButton = new System.Windows.Forms.Button();
 			this.saveResultButton = new System.Windows.Forms.Button();
 			this.matrixSizeLabel = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.matrixSizeTextBox = new System.Windows.Forms.TextBox();
 			this.firstMatrixStatusLabel = new System.Windows.Forms.Label();
 			this.secondMatrixStatusLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
@@ -84,12 +84,13 @@ namespace ComputerGraphics
 			this.matrixSizeLabel.TabIndex = 4;
 			this.matrixSizeLabel.Text = "Size:";
 			// 
-			// textBox1
+			// matrixSizeTextBox
 			// 
-			this.textBox1.Location = new System.Drawing.Point(49, 10);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(100, 23);
-			this.textBox1.TabIndex = 5;
+			this.matrixSizeTextBox.Location = new System.Drawing.Point(49, 10);
+			this.matrixSizeTextBox.Name = "matrixSizeTextBox";
+			this.matrixSizeTextBox.Size = new System.Drawing.Size(100, 23);
+			this.matrixSizeTextBox.TabIndex = 5;
+			this.matrixSizeTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
 			// firstMatrixStatusLabel
 			// 
@@ -116,7 +117,7 @@ namespace ComputerGraphics
 			this.ClientSize = new System.Drawing.Size(484, 183);
 			this.Controls.Add(this.secondMatrixStatusLabel);
 			this.Controls.Add(this.firstMatrixStatusLabel);
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.matrixSizeTextBox);
 			this.Controls.Add(this.matrixSizeLabel);
 			this.Controls.Add(this.saveResultButton);
 			this.Controls.Add(this.resultButton);
@@ -136,7 +137,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.Button resultButton;
 		private System.Windows.Forms.Button saveResultButton;
 		private System.Windows.Forms.Label matrixSizeLabel;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox matrixSizeTextBox;
 		private System.Windows.Forms.Label firstMatrixStatusLabel;
 		private System.Windows.Forms.Label secondMatrixStatusLabel;
 	}

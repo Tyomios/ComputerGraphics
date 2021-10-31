@@ -26,20 +26,103 @@ namespace ComputerGraphics
 			InitializeComponent();
 		}
 
-		private void textBox1_TextChanged(object sender, EventArgs e)
+		private void matrixSizeTextBox_TextChanged(object sender, EventArgs e)
 		{
 			if (matrixSizeTextBox.Text == "")
+			{
+				matrixSizeTextBox.BackColor = Color.White;
+				UnlockControls();
+				_matrixSize = 0;
+				return;
+			}
+
+			try
+			{
+				var inputSize = Convert.ToInt32(matrixSizeTextBox.Text);
+				if (inputSize > 4 || inputSize < 0)
+				{
+					matrixSizeTextBox.BackColor = Color.Orange;
+					LockControls();
+				}
+				else if (inputSize <= 4 && inputSize > 0)
+				{
+					matrixSizeTextBox.BackColor = Color.White;
+					UnlockControls();
+				}
+
+				_matrixSize = inputSize;
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(exception.Message);
+				LockControls();
+			}
+			
+			
+		}
+
+		private void LockControls()
+		{
+			createFirstMatrixButton.Enabled = false;
+			createSecondMatrixButton.Enabled = false;
+			resultButton.Enabled = false;
+			saveResultButton.Enabled = false;
+		}
+
+		private void UnlockControls()
+		{
+			createFirstMatrixButton.Enabled = true;
+			createSecondMatrixButton.Enabled = true;
+			resultButton.Enabled = true;
+			saveResultButton.Enabled = true;
+		}
+
+		private void createFirstMatrixButton_Click(object sender, EventArgs e)
+		{
+			if (_matrixSize == 0)
+			{
+				MessageBox.Show("Выберете размер матрицы", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			var matrixForm = new MatrixForm();
+			matrixForm.Size = _matrixSize;
+			var result =  matrixForm.ShowDialog();
+			if (result != DialogResult.OK)
 			{
 				return;
 			}
 
-			var inputSize = Convert.ToInt32(matrixSizeTextBox.Text);
-			if (inputSize > 4)
+			firstMatrix = matrixForm.Matrix;
+			firstMatrixStatusLabel.Text = "Матрица создана";
+		}
+
+		private void createSecondMatrixButton_Click(object sender, EventArgs e)
+		{
+			if (_matrixSize == 0)
 			{
-				matrixSizeTextBox.BackColor = Color.Orange;
+				MessageBox.Show("Выберете размер матрицы", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			var matrixForm = new MatrixForm();
+			matrixForm.Size = _matrixSize;
+			var result = matrixForm.ShowDialog();
+			if (result != DialogResult.OK)
+			{
+				return;
 			}
 
-			_matrixSize = inputSize;
+			firstMatrix = matrixForm.Matrix;
+			firstMatrixStatusLabel.Text = "Матрица создана";
+		}
+
+		private void resultButton_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void saveResultButton_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

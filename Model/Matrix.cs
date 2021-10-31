@@ -71,5 +71,17 @@ namespace Model
 
 			return resultMatrix;
 		}
+
+		public Matrix AddictionMatrix(Matrix secondMatrix)
+		{
+			var resultMatrix = new Matrix();
+			return resultMatrix;
+		}
+
+		public Matrix SubtractMatrix(Matrix secondMatrix)
+		{
+			var resultMatrix = new Matrix();
+			return resultMatrix;
+		}
 	}
 }

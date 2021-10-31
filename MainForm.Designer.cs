@@ -29,7 +29,7 @@ namespace ComputerGraphics
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.createFirstMartixButton = new System.Windows.Forms.Button();
+			this.createFirstMatrixButton = new System.Windows.Forms.Button();
 			this.createSecondMatrixButton = new System.Windows.Forms.Button();
 			this.resultButton = new System.Windows.Forms.Button();
 			this.saveResultButton = new System.Windows.Forms.Button();
@@ -39,14 +39,15 @@ namespace ComputerGraphics
 			this.secondMatrixStatusLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
-			// createFirstMartixButton
+			// createFirstMatrixButton
 			// 
-			this.createFirstMartixButton.Location = new System.Drawing.Point(13, 39);
-			this.createFirstMartixButton.Name = "createFirstMartixButton";
-			this.createFirstMartixButton.Size = new System.Drawing.Size(136, 39);
-			this.createFirstMartixButton.TabIndex = 0;
-			this.createFirstMartixButton.Text = "Создать первую матрицу";
-			this.createFirstMartixButton.UseVisualStyleBackColor = true;
+			this.createFirstMatrixButton.Location = new System.Drawing.Point(13, 39);
+			this.createFirstMatrixButton.Name = "createFirstMatrixButton";
+			this.createFirstMatrixButton.Size = new System.Drawing.Size(136, 39);
+			this.createFirstMatrixButton.TabIndex = 0;
+			this.createFirstMatrixButton.Text = "Создать первую матрицу";
+			this.createFirstMatrixButton.UseVisualStyleBackColor = true;
+			this.createFirstMatrixButton.Click += new System.EventHandler(this.createFirstMatrixButton_Click);
 			// 
 			// createSecondMatrixButton
 			// 
@@ -56,6 +57,7 @@ namespace ComputerGraphics
 			this.createSecondMatrixButton.TabIndex = 1;
 			this.createSecondMatrixButton.Text = "Создать вторую матрицу";
 			this.createSecondMatrixButton.UseVisualStyleBackColor = true;
+			this.createSecondMatrixButton.Click += new System.EventHandler(this.createSecondMatrixButton_Click);
 			// 
 			// resultButton
 			// 
@@ -65,6 +67,7 @@ namespace ComputerGraphics
 			this.resultButton.TabIndex = 2;
 			this.resultButton.Text = "Результат";
 			this.resultButton.UseVisualStyleBackColor = true;
+			this.resultButton.Click += new System.EventHandler(this.resultButton_Click);
 			// 
 			// saveResultButton
 			// 
@@ -74,6 +77,7 @@ namespace ComputerGraphics
 			this.saveResultButton.TabIndex = 3;
 			this.saveResultButton.Text = "Сохранить результат";
 			this.saveResultButton.UseVisualStyleBackColor = true;
+			this.saveResultButton.Click += new System.EventHandler(this.saveResultButton_Click);
 			// 
 			// matrixSizeLabel
 			// 
@@ -90,7 +94,7 @@ namespace ComputerGraphics
 			this.matrixSizeTextBox.Name = "matrixSizeTextBox";
 			this.matrixSizeTextBox.Size = new System.Drawing.Size(100, 23);
 			this.matrixSizeTextBox.TabIndex = 5;
-			this.matrixSizeTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+			this.matrixSizeTextBox.TextChanged += new System.EventHandler(this.matrixSizeTextBox_TextChanged);
 			// 
 			// firstMatrixStatusLabel
 			// 
@@ -122,7 +126,7 @@ namespace ComputerGraphics
 			this.Controls.Add(this.saveResultButton);
 			this.Controls.Add(this.resultButton);
 			this.Controls.Add(this.createSecondMatrixButton);
-			this.Controls.Add(this.createFirstMartixButton);
+			this.Controls.Add(this.createFirstMatrixButton);
 			this.Name = "MainForm";
 			this.Text = "Matrix calculator";
 			this.ResumeLayout(false);
@@ -132,7 +136,7 @@ namespace ComputerGraphics
 
 		#endregion
 
-		private System.Windows.Forms.Button createFirstMartixButton;
+		private System.Windows.Forms.Button createFirstMatrixButton;
 		private System.Windows.Forms.Button createSecondMatrixButton;
 		private System.Windows.Forms.Button resultButton;
 		private System.Windows.Forms.Button saveResultButton;

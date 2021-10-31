@@ -15,7 +15,7 @@ namespace ComputerGraphics
 {
 	public partial class MatrixForm : Form
 	{
-		private Matrix _matrix;
+		private Matrix _matrix = new Matrix();
 
 		private int _size;
 
@@ -37,6 +37,8 @@ namespace ComputerGraphics
 				{
 					LockThreeFields();
 				}
+
+				_matrix = new Matrix(value);
 			}
 		}
 
@@ -100,12 +102,29 @@ namespace ComputerGraphics
 		private void saveButton_Click(object sender, EventArgs e)
 		{
 			CheckValues();
-			double[,] values = new double[Size, Size];
+			var values = new List<double>();
 			for (int i = 0; i < panel1.Controls.Count; i++)
 			{
 				var currentValue = (TextBox)panel1.Controls[i];
-				
+				if (currentValue.Enabled)
+				{
+					values.Add(Convert.ToDouble(currentValue.Text));
+				}
 			}
+
+			var stringIndex = 0;
+			for (int i = 0; i < Size; i++)
+			{
+				for (int j = 0; j < Size; j++)
+				{
+					Matrix.MatrixValues[i, j] = values[i + j + stringIndex];
+				}
+
+				stringIndex += Size - 1;
+			}
+			DialogResult = DialogResult.OK;
+			Close();
+
 		}
 
 		private void CheckValues()

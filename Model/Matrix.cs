@@ -34,6 +34,8 @@ namespace Model
 
 		}
 
+		public int Size { get; set; }
+
 		/// <summary>
 		/// Создает экземпляр <see cref="Matrix"/>
 		/// </summary>
@@ -41,6 +43,12 @@ namespace Model
 		public Matrix(double[,] values)
 		{
 			MatrixValues = values;
+		}
+
+		public Matrix(int size)
+		{
+			_matrixValues = new double[size, size];
+			Size = size;
 		}
 
 		public Matrix()
@@ -57,15 +65,12 @@ namespace Model
 		{
 			Matrix resultMatrix = new Matrix();
 
-			for (int i = 0; i < MatrixValues.Length; i++)
+			for (int i = 0; i < Size; i++)
 			{
-				for (int j = 0; j < secondMatrix.MatrixValues.Length; j++)
+				for (int j = 0; j < secondMatrix.Size; j++)
 				{
-					
-					for (int k = 0; k < MatrixValues.Length; k++)
-					{
-						resultMatrix.MatrixValues[j, i] += MatrixValues[k, i] * secondMatrix.MatrixValues[j, k];
-					}
+
+					resultMatrix.MatrixValues[i, j] += MatrixValues[i, j] * secondMatrix.MatrixValues[i, j];
 				}
 			}
 
@@ -74,13 +79,33 @@ namespace Model
 
 		public Matrix AddictionMatrix(Matrix secondMatrix)
 		{
-			var resultMatrix = new Matrix();
+			Matrix resultMatrix = new Matrix();
+
+			for (int i = 0; i < Size; i++)
+			{
+				for (int j = 0; j < secondMatrix.Size; j++)
+				{
+
+					resultMatrix.MatrixValues[i, j] += MatrixValues[i, j] + secondMatrix.MatrixValues[i, j];
+				}
+			}
+
 			return resultMatrix;
 		}
 
 		public Matrix SubtractMatrix(Matrix secondMatrix)
 		{
-			var resultMatrix = new Matrix();
+			Matrix resultMatrix = new Matrix();
+
+			for (int i = 0; i < Size; i++)
+			{
+				for (int j = 0; j < secondMatrix.Size; j++)
+				{
+
+					resultMatrix.MatrixValues[i, j] += MatrixValues[i, j] - secondMatrix.MatrixValues[i, j];
+				}
+			}
+
 			return resultMatrix;
 		}
 	}

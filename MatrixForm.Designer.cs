@@ -64,7 +64,7 @@ namespace ComputerGraphics
 			// saveButton
 			// 
 			this.saveButton.BackColor = System.Drawing.SystemColors.Control;
-			this.saveButton.Location = new System.Drawing.Point(315, 208);
+			this.saveButton.Location = new System.Drawing.Point(311, 190);
 			this.saveButton.Name = "saveButton";
 			this.saveButton.Size = new System.Drawing.Size(75, 38);
 			this.saveButton.TabIndex = 1;

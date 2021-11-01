@@ -29,6 +29,8 @@ namespace ComputerGraphics
 			actionsComboBox.Items.Add("Сложение");
 			actionsComboBox.Items.Add("Вычитание");
 			actionsComboBox.Items.Add("Произведение");
+			actionsComboBox.Items.Add("Умножение 1й на К");
+			actionsComboBox.Items.Add("Произведение на вектор");
 
 			actionsComboBox.SelectedItem = "Выберите действие";
 			resultRichTextBox.ReadOnly = true;
@@ -140,6 +142,27 @@ namespace ComputerGraphics
 		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			resultRichTextBox.Clear();
+			if (actionsComboBox.SelectedItem == "Умножение 1й на К" && firstMatrix != null)
+			{
+				resultMatrix = firstMatrix.MultiplyConst();
+				resultRichTextBox.Text = GetMatrixTextValue(resultMatrix);
+				return;
+			}
+			if (actionsComboBox.SelectedItem == "Произведение на вектор" && firstMatrix != null)
+			{
+				var vector = new List<double>();
+				for (int i = 0; i < firstMatrix.Size; i++)
+				{
+					vector.Add(i + 1);
+				}
+				resultMatrix = firstMatrix.MultiplyVector(vector);
+				resultRichTextBox.Text = GetMatrixTextValue(resultMatrix);
+				for (int i = 0; i < vector.Count; i++)
+				{
+					resultRichTextBox.Text += $"\n {vector[i] }" + "\t";
+				}
+				return;
+			}
 			if (CheckMatrix())
 			{
 				return;
@@ -165,6 +188,7 @@ namespace ComputerGraphics
 				resultMatrix = firstMatrix.MultiplyMatrix(secondMatrix);
 				resultRichTextBox.Text = GetMatrixTextValue(resultMatrix);
 			}
+
 		}
 
 		private string GetMatrixTextValue(Matrix matrix)

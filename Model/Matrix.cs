@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Model
 {
@@ -65,12 +66,46 @@ namespace Model
 		{
 			Matrix resultMatrix = new Matrix();
 
-			for (int i = 0; i < Size; i++)
+			for (int i = 0; i < Size; i++) // строка
 			{
-				for (int j = 0; j < secondMatrix.Size; j++)
+				for (int j = 0; j < secondMatrix.Size; j++) // столбец
 				{
+					for (int k = 0; k < secondMatrix.Size; k++)
+					{
+						resultMatrix.MatrixValues[i, j] += MatrixValues[i, k] * secondMatrix.MatrixValues[k, j];
+					}
+					
+				}
+			}
 
-					resultMatrix.MatrixValues[i, j] += MatrixValues[i, j] * secondMatrix.MatrixValues[i, j];
+			return resultMatrix;
+		}
+
+		public Matrix MultiplyConst()
+		{
+			var resultMatrix = new Matrix(Size);
+			const int k = 6;
+			for (var i = 0; i < Size; i++)
+			{
+				for (var j = 0; j < Size; j++)
+				{
+					resultMatrix.MatrixValues[i, j] = MatrixValues[i, j] * k;
+				}
+			}
+
+			return resultMatrix;
+		}
+
+		public Matrix MultiplyVector(List<double> vector)
+		{
+			var resultMatrix = new Matrix(Size);
+			
+
+			for (var i = 0; i < Size; i++)
+			{
+				for (var j = 0; j < Size; j++)
+				{
+					resultMatrix.MatrixValues[i, 0] += MatrixValues[i, j] * vector[j];
 				}
 			}
 

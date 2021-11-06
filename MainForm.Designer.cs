@@ -35,15 +35,16 @@ namespace ComputerGraphics
 			this.simpleCDARadioButton = new System.Windows.Forms.RadioButton();
 			this.pointDrawLabel = new System.Windows.Forms.Label();
 			this.panel = new System.Windows.Forms.Panel();
+			this.yNLabel = new System.Windows.Forms.Label();
+			this.xNLabel = new System.Windows.Forms.Label();
+			this.yNTextBox = new System.Windows.Forms.TextBox();
+			this.xNTextBox = new System.Windows.Forms.TextBox();
 			this.yKLabel = new System.Windows.Forms.Label();
 			this.xKLabel = new System.Windows.Forms.Label();
 			this.lineBuildButton = new System.Windows.Forms.Button();
 			this.yKtextBox = new System.Windows.Forms.TextBox();
 			this.xKtextBox = new System.Windows.Forms.TextBox();
-			this.yNLabel = new System.Windows.Forms.Label();
-			this.xNLabel = new System.Windows.Forms.Label();
-			this.yNTextBox = new System.Windows.Forms.TextBox();
-			this.xNTextBox = new System.Windows.Forms.TextBox();
+			this.colorPickerButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.panel.SuspendLayout();
@@ -51,7 +52,7 @@ namespace ComputerGraphics
 			// 
 			// clearButton
 			// 
-			this.clearButton.Location = new System.Drawing.Point(79, 328);
+			this.clearButton.Location = new System.Drawing.Point(80, 474);
 			this.clearButton.Name = "clearButton";
 			this.clearButton.Size = new System.Drawing.Size(136, 23);
 			this.clearButton.TabIndex = 2;
@@ -65,7 +66,7 @@ namespace ComputerGraphics
 			this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pictureBox.Location = new System.Drawing.Point(12, 28);
 			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(351, 358);
+			this.pictureBox.Size = new System.Drawing.Size(351, 504);
 			this.pictureBox.TabIndex = 3;
 			this.pictureBox.TabStop = false;
 			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
@@ -108,6 +109,7 @@ namespace ComputerGraphics
 			// 
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel.Controls.Add(this.colorPickerButton);
 			this.panel.Controls.Add(this.yNLabel);
 			this.panel.Controls.Add(this.xNLabel);
 			this.panel.Controls.Add(this.yNTextBox);
@@ -122,8 +124,40 @@ namespace ComputerGraphics
 			this.panel.Controls.Add(this.clearButton);
 			this.panel.Location = new System.Drawing.Point(369, 28);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(282, 358);
+			this.panel.Size = new System.Drawing.Size(285, 504);
 			this.panel.TabIndex = 5;
+			// 
+			// yNLabel
+			// 
+			this.yNLabel.AutoSize = true;
+			this.yNLabel.Location = new System.Drawing.Point(162, 219);
+			this.yNLabel.Name = "yNLabel";
+			this.yNLabel.Size = new System.Drawing.Size(37, 15);
+			this.yNLabel.TabIndex = 13;
+			this.yNLabel.Text = "Y нач";
+			// 
+			// xNLabel
+			// 
+			this.xNLabel.AutoSize = true;
+			this.xNLabel.Location = new System.Drawing.Point(160, 177);
+			this.xNLabel.Name = "xNLabel";
+			this.xNLabel.Size = new System.Drawing.Size(37, 15);
+			this.xNLabel.TabIndex = 12;
+			this.xNLabel.Text = "X нач";
+			// 
+			// yNTextBox
+			// 
+			this.yNTextBox.Location = new System.Drawing.Point(205, 216);
+			this.yNTextBox.Name = "yNTextBox";
+			this.yNTextBox.Size = new System.Drawing.Size(63, 23);
+			this.yNTextBox.TabIndex = 11;
+			// 
+			// xNTextBox
+			// 
+			this.xNTextBox.Location = new System.Drawing.Point(205, 174);
+			this.xNTextBox.Name = "xNTextBox";
+			this.xNTextBox.Size = new System.Drawing.Size(63, 23);
+			this.xNTextBox.TabIndex = 10;
 			// 
 			// yKLabel
 			// 
@@ -167,43 +201,21 @@ namespace ComputerGraphics
 			this.xKtextBox.Size = new System.Drawing.Size(63, 23);
 			this.xKtextBox.TabIndex = 5;
 			// 
-			// yNLabel
+			// colorPickerButton
 			// 
-			this.yNLabel.AutoSize = true;
-			this.yNLabel.Location = new System.Drawing.Point(162, 219);
-			this.yNLabel.Name = "yNLabel";
-			this.yNLabel.Size = new System.Drawing.Size(37, 15);
-			this.yNLabel.TabIndex = 13;
-			this.yNLabel.Text = "Y нач";
-			// 
-			// xNLabel
-			// 
-			this.xNLabel.AutoSize = true;
-			this.xNLabel.Location = new System.Drawing.Point(160, 177);
-			this.xNLabel.Name = "xNLabel";
-			this.xNLabel.Size = new System.Drawing.Size(37, 15);
-			this.xNLabel.TabIndex = 12;
-			this.xNLabel.Text = "X нач";
-			// 
-			// yNTextBox
-			// 
-			this.yNTextBox.Location = new System.Drawing.Point(205, 216);
-			this.yNTextBox.Name = "yNTextBox";
-			this.yNTextBox.Size = new System.Drawing.Size(63, 23);
-			this.yNTextBox.TabIndex = 11;
-			// 
-			// xNTextBox
-			// 
-			this.xNTextBox.Location = new System.Drawing.Point(205, 174);
-			this.xNTextBox.Name = "xNTextBox";
-			this.xNTextBox.Size = new System.Drawing.Size(63, 23);
-			this.xNTextBox.TabIndex = 10;
+			this.colorPickerButton.Location = new System.Drawing.Point(22, 327);
+			this.colorPickerButton.Name = "colorPickerButton";
+			this.colorPickerButton.Size = new System.Drawing.Size(75, 40);
+			this.colorPickerButton.TabIndex = 14;
+			this.colorPickerButton.Text = "Цвет пера";
+			this.colorPickerButton.UseVisualStyleBackColor = true;
+			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(663, 398);
+			this.ClientSize = new System.Drawing.Size(660, 544);
 			this.Controls.Add(this.panel);
 			this.Controls.Add(this.pictureBox);
 			this.Name = "MainForm";
@@ -233,6 +245,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.Label xNLabel;
 		private System.Windows.Forms.TextBox yNTextBox;
 		private System.Windows.Forms.TextBox xNTextBox;
+		private System.Windows.Forms.Button colorPickerButton;
 	}
 }
 

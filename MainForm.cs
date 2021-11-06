@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace ComputerGraphics
 {
-	// TODO: настройка цвета линии
 	// TODO: настройка стиля линии - пунктир, толстая, сплошная
 	// TODO: шаблоны отрезков/прямоугольников/треугольников/14 вариант
 	// TODO: генерация окружности по алгоритму Брезенхема
@@ -87,7 +86,7 @@ namespace ComputerGraphics
 			catch (Exception exception)
 			{
 				MessageBox.Show(exception.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				throw;
+				return;
 			}
 
 			if (CheckPictureBoxSize(xk, yk) || CheckPictureBoxSize(xn, yn))
@@ -141,6 +140,15 @@ namespace ComputerGraphics
 			}
 
 			return false;
+		}
+
+		private void colorPickerButton_Click(object sender, EventArgs e)
+		{
+			ColorDialog colorDialog1 = new ColorDialog();
+			if (colorDialog1.ShowDialog() == DialogResult.OK)
+			{
+				_pen.Color = colorDialog1.Color;
+			}
 		}
 
 		public MainForm()

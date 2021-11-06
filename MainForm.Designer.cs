@@ -35,6 +35,11 @@ namespace ComputerGraphics
 			this.simpleCDARadioButton = new System.Windows.Forms.RadioButton();
 			this.pointDrawLabel = new System.Windows.Forms.Label();
 			this.panel = new System.Windows.Forms.Panel();
+			this.templatesComboBox = new System.Windows.Forms.ComboBox();
+			this.penSettingsGroupBox = new System.Windows.Forms.GroupBox();
+			this.prevPenCheckBox = new System.Windows.Forms.CheckBox();
+			this.fatPencheckBox = new System.Windows.Forms.CheckBox();
+			this.colorPickerButton = new System.Windows.Forms.Button();
 			this.yNLabel = new System.Windows.Forms.Label();
 			this.xNLabel = new System.Windows.Forms.Label();
 			this.yNTextBox = new System.Windows.Forms.TextBox();
@@ -44,15 +49,16 @@ namespace ComputerGraphics
 			this.lineBuildButton = new System.Windows.Forms.Button();
 			this.yKtextBox = new System.Windows.Forms.TextBox();
 			this.xKtextBox = new System.Windows.Forms.TextBox();
-			this.colorPickerButton = new System.Windows.Forms.Button();
+			this.templatesLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.panel.SuspendLayout();
+			this.penSettingsGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// clearButton
 			// 
-			this.clearButton.Location = new System.Drawing.Point(80, 474);
+			this.clearButton.Location = new System.Drawing.Point(77, 542);
 			this.clearButton.Name = "clearButton";
 			this.clearButton.Size = new System.Drawing.Size(136, 23);
 			this.clearButton.TabIndex = 2;
@@ -66,7 +72,7 @@ namespace ComputerGraphics
 			this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pictureBox.Location = new System.Drawing.Point(12, 28);
 			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(351, 504);
+			this.pictureBox.Size = new System.Drawing.Size(351, 572);
 			this.pictureBox.TabIndex = 3;
 			this.pictureBox.TabStop = false;
 			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
@@ -109,7 +115,9 @@ namespace ComputerGraphics
 			// 
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel.Controls.Add(this.colorPickerButton);
+			this.panel.Controls.Add(this.templatesLabel);
+			this.panel.Controls.Add(this.templatesComboBox);
+			this.panel.Controls.Add(this.penSettingsGroupBox);
 			this.panel.Controls.Add(this.yNLabel);
 			this.panel.Controls.Add(this.xNLabel);
 			this.panel.Controls.Add(this.yNTextBox);
@@ -124,8 +132,62 @@ namespace ComputerGraphics
 			this.panel.Controls.Add(this.clearButton);
 			this.panel.Location = new System.Drawing.Point(369, 28);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(285, 504);
+			this.panel.Size = new System.Drawing.Size(285, 572);
 			this.panel.TabIndex = 5;
+			// 
+			// templatesComboBox
+			// 
+			this.templatesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.templatesComboBox.FormattingEnabled = true;
+			this.templatesComboBox.Location = new System.Drawing.Point(92, 315);
+			this.templatesComboBox.Name = "templatesComboBox";
+			this.templatesComboBox.Size = new System.Drawing.Size(121, 23);
+			this.templatesComboBox.TabIndex = 14;
+			this.templatesComboBox.SelectedIndexChanged += new System.EventHandler(this.templatesComboBox_SelectedIndexChanged);
+			// 
+			// penSettingsGroupBox
+			// 
+			this.penSettingsGroupBox.Controls.Add(this.prevPenCheckBox);
+			this.penSettingsGroupBox.Controls.Add(this.fatPencheckBox);
+			this.penSettingsGroupBox.Controls.Add(this.colorPickerButton);
+			this.penSettingsGroupBox.Location = new System.Drawing.Point(22, 388);
+			this.penSettingsGroupBox.Name = "penSettingsGroupBox";
+			this.penSettingsGroupBox.Size = new System.Drawing.Size(246, 148);
+			this.penSettingsGroupBox.TabIndex = 6;
+			this.penSettingsGroupBox.TabStop = false;
+			this.penSettingsGroupBox.Text = "Настройка пера";
+			// 
+			// prevPenCheckBox
+			// 
+			this.prevPenCheckBox.AutoSize = true;
+			this.prevPenCheckBox.Location = new System.Drawing.Point(138, 68);
+			this.prevPenCheckBox.Name = "prevPenCheckBox";
+			this.prevPenCheckBox.Size = new System.Drawing.Size(73, 19);
+			this.prevPenCheckBox.TabIndex = 16;
+			this.prevPenCheckBox.Text = "Пунктир";
+			this.prevPenCheckBox.UseVisualStyleBackColor = true;
+			this.prevPenCheckBox.CheckedChanged += new System.EventHandler(this.prevPenCheckBox_CheckedChanged);
+			// 
+			// fatPencheckBox
+			// 
+			this.fatPencheckBox.AutoSize = true;
+			this.fatPencheckBox.Location = new System.Drawing.Point(138, 32);
+			this.fatPencheckBox.Name = "fatPencheckBox";
+			this.fatPencheckBox.Size = new System.Drawing.Size(107, 19);
+			this.fatPencheckBox.TabIndex = 15;
+			this.fatPencheckBox.Text = "Жирная линия";
+			this.fatPencheckBox.UseVisualStyleBackColor = true;
+			this.fatPencheckBox.CheckedChanged += new System.EventHandler(this.fatPencheckBox_CheckedChanged);
+			// 
+			// colorPickerButton
+			// 
+			this.colorPickerButton.Location = new System.Drawing.Point(15, 32);
+			this.colorPickerButton.Name = "colorPickerButton";
+			this.colorPickerButton.Size = new System.Drawing.Size(49, 38);
+			this.colorPickerButton.TabIndex = 14;
+			this.colorPickerButton.Text = "Цвет пера";
+			this.colorPickerButton.UseVisualStyleBackColor = true;
+			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
 			// yNLabel
 			// 
@@ -201,21 +263,20 @@ namespace ComputerGraphics
 			this.xKtextBox.Size = new System.Drawing.Size(63, 23);
 			this.xKtextBox.TabIndex = 5;
 			// 
-			// colorPickerButton
+			// templatesLabel
 			// 
-			this.colorPickerButton.Location = new System.Drawing.Point(22, 327);
-			this.colorPickerButton.Name = "colorPickerButton";
-			this.colorPickerButton.Size = new System.Drawing.Size(75, 40);
-			this.colorPickerButton.TabIndex = 14;
-			this.colorPickerButton.Text = "Цвет пера";
-			this.colorPickerButton.UseVisualStyleBackColor = true;
-			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
+			this.templatesLabel.AutoSize = true;
+			this.templatesLabel.Location = new System.Drawing.Point(25, 318);
+			this.templatesLabel.Name = "templatesLabel";
+			this.templatesLabel.Size = new System.Drawing.Size(61, 15);
+			this.templatesLabel.TabIndex = 15;
+			this.templatesLabel.Text = "Шаблоны";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(660, 544);
+			this.ClientSize = new System.Drawing.Size(660, 612);
 			this.Controls.Add(this.panel);
 			this.Controls.Add(this.pictureBox);
 			this.Name = "MainForm";
@@ -225,6 +286,8 @@ namespace ComputerGraphics
 			this.groupBox1.PerformLayout();
 			this.panel.ResumeLayout(false);
 			this.panel.PerformLayout();
+			this.penSettingsGroupBox.ResumeLayout(false);
+			this.penSettingsGroupBox.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -246,6 +309,11 @@ namespace ComputerGraphics
 		private System.Windows.Forms.TextBox yNTextBox;
 		private System.Windows.Forms.TextBox xNTextBox;
 		private System.Windows.Forms.Button colorPickerButton;
+		private System.Windows.Forms.GroupBox penSettingsGroupBox;
+		private System.Windows.Forms.CheckBox fatPencheckBox;
+		private System.Windows.Forms.CheckBox prevPenCheckBox;
+		private System.Windows.Forms.ComboBox templatesComboBox;
+		private System.Windows.Forms.Label templatesLabel;
 	}
 }
 

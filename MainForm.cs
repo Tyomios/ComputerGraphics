@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,15 @@ namespace ComputerGraphics
 		private double xn, yn, xk, yk;
 
 		private Pen _pen = new Pen(Color.Black, 1);
+
+		
+
+		public MainForm()
+		{
+			InitializeComponent();
+			templatesComboBox.Items.Add("Треугольник");
+			templatesComboBox.Items.Add("Прямоугольник");
+		}
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
 		{
@@ -40,7 +50,7 @@ namespace ComputerGraphics
 				xk = e.X;
 				yk = e.Y;
 			}
-			
+
 			dx = xk - xn;
 			dy = yk - yn;
 			n = 100;
@@ -151,9 +161,68 @@ namespace ComputerGraphics
 			}
 		}
 
-		public MainForm()
+		private void fatPencheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			InitializeComponent();
+			if (fatPencheckBox.Checked)
+			{
+				_pen.Width = 4;
+			}
+			else
+			{
+				_pen.Width = 2;
+			}
+		}
+
+		// нужно исправить
+		private void prevPenCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (prevPenCheckBox.Checked)
+			{
+				_pen.DashStyle = DashStyle.Dash;
+			}
+			else
+			{
+				_pen.DashStyle = DashStyle.Solid;
+			}
+		}
+
+		private void templatesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (templatesComboBox.SelectedItem == "Треугольник")
+			{
+				DrawTriangle();
+			}
+			if (templatesComboBox.SelectedItem == "Прямоугольник")
+			{
+				DrawRectangle();
+			}
+		}
+
+		private void DrawTriangle()
+		{
+			var random = new Random();
+			var width = pictureBox.Width;
+			var height = pictureBox.Height;
+
+			var point1 = new Point(random.Next(0, width), random.Next(0, height));
+			var point2 = new Point(random.Next(0, width), random.Next(0, height));
+			var point3 = new Point(random.Next(0, width), random.Next(0, height));
+
+			var g = Graphics.FromHwnd(pictureBox.Handle);
+			g.DrawLines(_pen, new[] { point1, point2, point3, point1 });
+		}
+
+		private void DrawRectangle()
+		{
+			var random = new Random();
+			var width = pictureBox.Width;
+			var height = pictureBox.Height;
+			
+			var point1 = new Point(random.Next(0, width), random.Next(0, height));
+			var size = new Size(random.Next(3, width), random.Next(3, height));
+			var rect = new Rectangle(point1, size);
+			var g = Graphics.FromHwnd(pictureBox.Handle);
+			g.DrawRectangle(_pen, rect);
 		}
 
 		private void simpleCDARadioButton_CheckedChanged(object sender, EventArgs e)

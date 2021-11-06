@@ -21,13 +21,12 @@ namespace ComputerGraphics
 
 		private Pen _pen = new Pen(Color.Black, 1);
 
-		
-
 		public MainForm()
 		{
 			InitializeComponent();
 			templatesComboBox.Items.Add("Треугольник");
 			templatesComboBox.Items.Add("Прямоугольник");
+			templatesComboBox.Items.Add("Вариант 14");
 		}
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
@@ -196,6 +195,21 @@ namespace ComputerGraphics
 			{
 				DrawRectangle();
 			}
+			if (templatesComboBox.SelectedItem == "Вариант 14")
+			{
+				DrawSpecialFigure();
+			}
+		}
+
+		private void DrawSpecialFigure()
+		{
+			var point1 = new Point(15, 50);
+			var point2 = new Point(point1.X, point1.Y + 50);
+			var point3 = new Point(point1.X + 80, point2.Y);
+			var point4 = new Point(point3.X - 30, point1.Y);
+
+			var g = Graphics.FromHwnd(pictureBox.Handle);
+			g.DrawLines(_pen, new[] { point1, point2, point3, point4, point1 });
 		}
 
 		private void DrawTriangle()

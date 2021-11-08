@@ -206,15 +206,16 @@ namespace ComputerGraphics
 			// 
 			// colorPickerButton
 			// 
-			this.colorPickerButton.BackColor = System.Drawing.Color.Yellow;
+			this.colorPickerButton.BackColor = System.Drawing.Color.Black;
 			this.colorPickerButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.colorPickerButton.FlatAppearance.BorderColor = System.Drawing.Color.Red;
 			this.colorPickerButton.FlatAppearance.BorderSize = 10;
 			this.colorPickerButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
 			this.colorPickerButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+			this.colorPickerButton.ForeColor = System.Drawing.Color.White;
 			this.colorPickerButton.Location = new System.Drawing.Point(15, 36);
 			this.colorPickerButton.Name = "colorPickerButton";
-			this.colorPickerButton.Size = new System.Drawing.Size(84, 22);
+			this.colorPickerButton.Size = new System.Drawing.Size(85, 25);
 			this.colorPickerButton.TabIndex = 14;
 			this.colorPickerButton.Text = "Цвет пера";
 			this.colorPickerButton.UseVisualStyleBackColor = false;

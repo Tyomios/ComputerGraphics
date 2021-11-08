@@ -35,6 +35,7 @@ namespace ComputerGraphics
 			
 			templatesComboBox.Items.Add("Треугольник");
 			templatesComboBox.Items.Add("Прямоугольник");
+			templatesComboBox.Items.Add("Круг");
 			templatesComboBox.Items.Add("Вариант 14");
 
 			penSettingsComboBox.Items.Add(PenSettings.px2);
@@ -46,7 +47,10 @@ namespace ComputerGraphics
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
 		{
-			simpleCDADraw(e);
+			if (simpleCDARadioButton.Checked)
+			{
+				simpleCDADraw(e);
+			}
 		}
 
 		/// <summary>
@@ -82,6 +86,7 @@ namespace ComputerGraphics
 				//SolidBrush redBrush = new SolidBrush(Color.Red);
 				//Рисуем закрашенный прямоугольник
 				//g.FillRectangle(redBrush, (int)xt, (int)yt, 2, 2);
+
 				xt = xt + dx / n;
 				yt = yt + dy / n;
 			}
@@ -149,12 +154,14 @@ namespace ComputerGraphics
 					yt = yt + dy / n;
 				}
 			}
+
 			else
 			{
 				MessageBox.Show("Выберите алгоритм", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
 
 		}
+
 
 		private bool CheckPictureBoxSize(double x, double y)
 		{
@@ -165,6 +172,7 @@ namespace ComputerGraphics
 
 			return false;
 		}
+
 
 		private void colorPickerButton_Click(object sender, EventArgs e)
 		{
@@ -196,6 +204,7 @@ namespace ComputerGraphics
 			}
 		}
 
+
 		private void fatPencheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (fatPencheckBox.Checked)
@@ -209,7 +218,7 @@ namespace ComputerGraphics
 			}
 		}
 
-		// нужно исправить
+
 		private void prevPenCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (prevPenCheckBox.Checked)
@@ -221,6 +230,7 @@ namespace ComputerGraphics
 				_pen.DashStyle = DashStyle.Solid;
 			}
 		}
+
 
 		private void templatesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -236,7 +246,49 @@ namespace ComputerGraphics
 			{
 				DrawSpecialFigure();
 			}
+
+			if (templatesComboBox.SelectedItem == "Круг")
+			{
+				DrawCircle();
+			}
 		}
+
+
+		private void DrawCircle()
+		{
+			var g = Graphics.FromHwnd(pictureBox.Handle);
+			Brush b1 = new SolidBrush(_pen.Color);
+			var random = new Random();
+			int x = 20;
+			int y = 0;
+			var x0 = random.Next(10, pictureBox.Width - 40);
+			var y0 = random.Next(10, pictureBox.Height - 40);
+			int radiusError = 1 - x;
+			while (x >= y)
+			{
+				g.FillRectangle(b1, x + x0 , y + y0 , _pen.Width, _pen.Width);
+				g.FillRectangle(b1, y + x0 , x + y0 , _pen.Width, _pen.Width);
+				g.FillRectangle(b1, -x + x0 , y + y0 , _pen.Width, _pen.Width);
+				g.FillRectangle(b1, -y + x0 , x + y0 , _pen.Width, _pen.Width);
+				g.FillRectangle(b1, -x + x0 , -y + y0 , _pen.Width, _pen.Width);
+				g.FillRectangle(b1, -y + x0 , -x + y0 , _pen.Width, _pen.Width);
+				g.FillRectangle(b1, x + x0 , -y + y0 , _pen.Width, _pen.Width);
+				g.FillRectangle(b1, y + x0 , -x + y0 , _pen.Width, _pen.Width);
+
+				y++;
+				if (radiusError < 0)
+				{
+					radiusError += 2 * y + 1;
+				}
+				else
+				{
+					x--;
+					radiusError += 2 * (y - x + 1);
+				}
+
+			}
+		}
+
 
 		private void DrawSpecialFigure()
 		{
@@ -249,6 +301,7 @@ namespace ComputerGraphics
 			var g = Graphics.FromHwnd(pictureBox.Handle);
 			g.DrawLines(_pen, new[] { point1, point2, point3, point4, point1 });
 		}
+
 
 		private void DrawTriangle()
 		{
@@ -264,6 +317,7 @@ namespace ComputerGraphics
 			g.DrawLines(_pen, new[] { point1, point2, point3, point1 });
 		}
 
+
 		private void penSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			var selectedValue = (PenSettings)penSettingsComboBox.SelectedItem;
@@ -276,8 +330,8 @@ namespace ComputerGraphics
 			var width = pictureBox.Width;
 			var height = pictureBox.Height;
 			
-			var point1 = new Point(random.Next(0, width), random.Next(0, height));
-			var size = new Size(random.Next(3, width), random.Next(3, height));
+			var point1 = new Point(random.Next(0, width - 100), random.Next(0, height - 100));
+			var size = new Size(random.Next(10, 80), random.Next(3, 200));
 			var rect = new Rectangle(point1, size);
 			var g = Graphics.FromHwnd(pictureBox.Handle);
 			g.DrawRectangle(_pen, rect);
@@ -296,7 +350,7 @@ namespace ComputerGraphics
 				yn = e.Y;
 			}
 
-			else MessageBox.Show("Вы не выбрали алгоритм вывода фигуры!",
+			else MessageBox.Show("Вы не выбрали алгоритм!",
 								"Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 		}
 	}

@@ -21,12 +21,27 @@ namespace ComputerGraphics
 
 		private Pen _pen = new Pen(Color.Black, 1);
 
+		private enum PenSettings
+		{
+			px2 = 2,
+			px4 = 4,
+			px6 = 6,
+			px8 = 8
+		}
+
 		public MainForm()
 		{
 			InitializeComponent();
+			
 			templatesComboBox.Items.Add("Треугольник");
 			templatesComboBox.Items.Add("Прямоугольник");
 			templatesComboBox.Items.Add("Вариант 14");
+
+			penSettingsComboBox.Items.Add(PenSettings.px2);
+			penSettingsComboBox.Items.Add(PenSettings.px4);
+			penSettingsComboBox.Items.Add(PenSettings.px6);
+			penSettingsComboBox.Items.Add(PenSettings.px8);
+			penSettingsComboBox.Enabled = false;
 		}
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
@@ -37,7 +52,7 @@ namespace ComputerGraphics
 		/// <summary>
 		/// Отрисвока линии алгоритмом обычный ЦДА.
 		/// </summary>
-		/// <param name="e"></param>
+		/// <param name="e"> Событие мыши, через которое можно получить координаты курсора </param>
 		private void simpleCDADraw(MouseEventArgs e, double xk = 0, double yk = 0)
 		{
 			int i, n;
@@ -164,11 +179,12 @@ namespace ComputerGraphics
 		{
 			if (fatPencheckBox.Checked)
 			{
-				_pen.Width = 4;
+				penSettingsComboBox.Enabled = true;
 			}
 			else
 			{
-				_pen.Width = 2;
+				_pen.Width = (float)PenSettings.px2;
+				penSettingsComboBox.Enabled = false;
 			}
 		}
 
@@ -203,10 +219,11 @@ namespace ComputerGraphics
 
 		private void DrawSpecialFigure()
 		{
-			var point1 = new Point(15, 50);
-			var point2 = new Point(point1.X, point1.Y + 50);
-			var point3 = new Point(point1.X + 80, point2.Y);
-			var point4 = new Point(point3.X - 30, point1.Y);
+			var random = new Random();
+			var point1 = new Point(random.Next(10,100), random.Next(50,70));
+			var point2 = new Point(point1.X, point1.Y + random.Next(50, 70));
+			var point3 = new Point(point1.X + random.Next(80,100), point2.Y);
+			var point4 = new Point(point3.X - random.Next(30, 50), point1.Y);
 
 			var g = Graphics.FromHwnd(pictureBox.Handle);
 			g.DrawLines(_pen, new[] { point1, point2, point3, point4, point1 });
@@ -224,6 +241,12 @@ namespace ComputerGraphics
 
 			var g = Graphics.FromHwnd(pictureBox.Handle);
 			g.DrawLines(_pen, new[] { point1, point2, point3, point1 });
+		}
+
+		private void penSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			var selectedValue = (PenSettings)penSettingsComboBox.SelectedItem;
+			_pen.Width = (float)selectedValue;
 		}
 
 		private void DrawRectangle()

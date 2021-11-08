@@ -172,6 +172,27 @@ namespace ComputerGraphics
 			if (colorDialog1.ShowDialog() == DialogResult.OK)
 			{
 				_pen.Color = colorDialog1.Color;
+				var color = colorDialog1.Color;
+
+				var colorInfo = new List<byte>();
+				colorInfo.Add(color.R);
+				colorInfo.Add(color.G);
+				colorInfo.Add(color.B);
+				colorPickerButton.BackColor = _pen.Color;
+				foreach (var value in colorInfo)
+				{
+					if (value > 200)
+					{
+						colorPickerButton.ForeColor = Color.Black;
+						return;
+					}
+					else
+					{
+						colorPickerButton.ForeColor = Color.White;
+					}
+				}
+
+				
 			}
 		}
 
@@ -183,7 +204,7 @@ namespace ComputerGraphics
 			}
 			else
 			{
-				_pen.Width = (float)PenSettings.px2;
+				_pen.Width = 1;
 				penSettingsComboBox.Enabled = false;
 			}
 		}

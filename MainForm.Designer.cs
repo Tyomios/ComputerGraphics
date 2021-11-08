@@ -59,7 +59,7 @@ namespace ComputerGraphics
 			// 
 			// clearButton
 			// 
-			this.clearButton.Location = new System.Drawing.Point(77, 542);
+			this.clearButton.Location = new System.Drawing.Point(77, 533);
 			this.clearButton.Name = "clearButton";
 			this.clearButton.Size = new System.Drawing.Size(136, 23);
 			this.clearButton.TabIndex = 2;
@@ -143,7 +143,7 @@ namespace ComputerGraphics
 			// templatesLabel
 			// 
 			this.templatesLabel.AutoSize = true;
-			this.templatesLabel.Location = new System.Drawing.Point(25, 318);
+			this.templatesLabel.Location = new System.Drawing.Point(14, 318);
 			this.templatesLabel.Name = "templatesLabel";
 			this.templatesLabel.Size = new System.Drawing.Size(61, 15);
 			this.templatesLabel.TabIndex = 15;
@@ -153,9 +153,9 @@ namespace ComputerGraphics
 			// 
 			this.templatesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.templatesComboBox.FormattingEnabled = true;
-			this.templatesComboBox.Location = new System.Drawing.Point(92, 315);
+			this.templatesComboBox.Location = new System.Drawing.Point(78, 315);
 			this.templatesComboBox.Name = "templatesComboBox";
-			this.templatesComboBox.Size = new System.Drawing.Size(121, 23);
+			this.templatesComboBox.Size = new System.Drawing.Size(135, 23);
 			this.templatesComboBox.TabIndex = 14;
 			this.templatesComboBox.SelectedIndexChanged += new System.EventHandler(this.templatesComboBox_SelectedIndexChanged);
 			// 
@@ -165,7 +165,7 @@ namespace ComputerGraphics
 			this.penSettingsGroupBox.Controls.Add(this.prevPenCheckBox);
 			this.penSettingsGroupBox.Controls.Add(this.fatPencheckBox);
 			this.penSettingsGroupBox.Controls.Add(this.colorPickerButton);
-			this.penSettingsGroupBox.Location = new System.Drawing.Point(22, 388);
+			this.penSettingsGroupBox.Location = new System.Drawing.Point(20, 369);
 			this.penSettingsGroupBox.Name = "penSettingsGroupBox";
 			this.penSettingsGroupBox.Size = new System.Drawing.Size(246, 148);
 			this.penSettingsGroupBox.TabIndex = 6;
@@ -223,7 +223,7 @@ namespace ComputerGraphics
 			// yNLabel
 			// 
 			this.yNLabel.AutoSize = true;
-			this.yNLabel.Location = new System.Drawing.Point(162, 219);
+			this.yNLabel.Location = new System.Drawing.Point(150, 219);
 			this.yNLabel.Name = "yNLabel";
 			this.yNLabel.Size = new System.Drawing.Size(37, 15);
 			this.yNLabel.TabIndex = 13;
@@ -232,7 +232,7 @@ namespace ComputerGraphics
 			// xNLabel
 			// 
 			this.xNLabel.AutoSize = true;
-			this.xNLabel.Location = new System.Drawing.Point(160, 177);
+			this.xNLabel.Location = new System.Drawing.Point(150, 177);
 			this.xNLabel.Name = "xNLabel";
 			this.xNLabel.Size = new System.Drawing.Size(37, 15);
 			this.xNLabel.TabIndex = 12;
@@ -240,14 +240,14 @@ namespace ComputerGraphics
 			// 
 			// yNTextBox
 			// 
-			this.yNTextBox.Location = new System.Drawing.Point(205, 216);
+			this.yNTextBox.Location = new System.Drawing.Point(193, 216);
 			this.yNTextBox.Name = "yNTextBox";
 			this.yNTextBox.Size = new System.Drawing.Size(63, 23);
 			this.yNTextBox.TabIndex = 11;
 			// 
 			// xNTextBox
 			// 
-			this.xNTextBox.Location = new System.Drawing.Point(205, 174);
+			this.xNTextBox.Location = new System.Drawing.Point(193, 174);
 			this.xNTextBox.Name = "xNTextBox";
 			this.xNTextBox.Size = new System.Drawing.Size(63, 23);
 			this.xNTextBox.TabIndex = 10;
@@ -255,7 +255,7 @@ namespace ComputerGraphics
 			// yKLabel
 			// 
 			this.yKLabel.AutoSize = true;
-			this.yKLabel.Location = new System.Drawing.Point(22, 219);
+			this.yKLabel.Location = new System.Drawing.Point(14, 219);
 			this.yKLabel.Name = "yKLabel";
 			this.yKLabel.Size = new System.Drawing.Size(37, 15);
 			this.yKLabel.TabIndex = 9;
@@ -264,7 +264,7 @@ namespace ComputerGraphics
 			// xKLabel
 			// 
 			this.xKLabel.AutoSize = true;
-			this.xKLabel.Location = new System.Drawing.Point(20, 177);
+			this.xKLabel.Location = new System.Drawing.Point(14, 177);
 			this.xKLabel.Name = "xKLabel";
 			this.xKLabel.Size = new System.Drawing.Size(37, 15);
 			this.xKLabel.TabIndex = 8;
@@ -272,9 +272,9 @@ namespace ComputerGraphics
 			// 
 			// lineBuildButton
 			// 
-			this.lineBuildButton.Location = new System.Drawing.Point(104, 245);
+			this.lineBuildButton.Location = new System.Drawing.Point(77, 262);
 			this.lineBuildButton.Name = "lineBuildButton";
-			this.lineBuildButton.Size = new System.Drawing.Size(75, 40);
+			this.lineBuildButton.Size = new System.Drawing.Size(136, 24);
 			this.lineBuildButton.TabIndex = 7;
 			this.lineBuildButton.Text = "Построить отрезок";
 			this.lineBuildButton.UseVisualStyleBackColor = true;
@@ -282,14 +282,14 @@ namespace ComputerGraphics
 			// 
 			// yKtextBox
 			// 
-			this.yKtextBox.Location = new System.Drawing.Point(65, 216);
+			this.yKtextBox.Location = new System.Drawing.Point(57, 216);
 			this.yKtextBox.Name = "yKtextBox";
 			this.yKtextBox.Size = new System.Drawing.Size(63, 23);
 			this.yKtextBox.TabIndex = 6;
 			// 
 			// xKtextBox
 			// 
-			this.xKtextBox.Location = new System.Drawing.Point(65, 174);
+			this.xKtextBox.Location = new System.Drawing.Point(57, 174);
 			this.xKtextBox.Name = "xKtextBox";
 			this.xKtextBox.Size = new System.Drawing.Size(63, 23);
 			this.xKtextBox.TabIndex = 5;

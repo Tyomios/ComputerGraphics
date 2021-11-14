@@ -59,11 +59,11 @@ namespace ComputerGraphics
 
 			if (fillRadioButton.Checked)
 			{
-				//ColorIt(new Point(e.X, e.Y));
-				//var color = bitmap.GetPixel(e.X, e.Y);
-				//Stack<Point> collector = new Stack<Point>();
-				//Zaliv(e.X,e.Y, bitmap, color, collector);
+				Zaliv(e.X,e.Y, bitmap, bitmap.GetPixel(e.X, e.Y));
+			}
 
+			if (fillStackRadioButton.Checked)
+			{
 				bitmap = FloodFill(bitmap, new Point(e.X, e.Y), _pen.Color);
 				pictureBox.BackgroundImage = bitmap;
 			}
@@ -107,7 +107,7 @@ namespace ComputerGraphics
 			return bitmap;
 		}
 
-		private void Zaliv(int x1, int y1, Bitmap mybitmap, Color prevColor, Stack<Point> collector)
+		private void Zaliv(int x1, int y1, Bitmap mybitmap, Color prevColor)
 		{
 			if (x1 == pictureBox.Width || y1 == pictureBox.Height 
 			                           || x1 < 0 || y1 < 0 || iter == 6888)
@@ -119,7 +119,6 @@ namespace ComputerGraphics
 			try
 			{
 				Color old_color = mybitmap.GetPixel(x1, y1);
-				collector.Push(new Point(x1, y1));
 
 				// сравнение цветов происходит в формате RGB
 				// для этого используем метод ToArgb объекта Color
@@ -131,10 +130,10 @@ namespace ComputerGraphics
 					
 
 					//вызываем метод для 4-х соседних пикселей
-					Zaliv(x1 + 1, y1, mybitmap, old_color, collector);
-					Zaliv(x1 - 1, y1, mybitmap, old_color, collector);
-					Zaliv(x1, y1 + 1, mybitmap, old_color, collector);
-					Zaliv(x1, y1 - 1, mybitmap, old_color, collector);
+					Zaliv(x1 + 1, y1, mybitmap, old_color);
+					Zaliv(x1 - 1, y1, mybitmap, old_color);
+					Zaliv(x1, y1 + 1, mybitmap, old_color);
+					Zaliv(x1, y1 - 1, mybitmap, old_color);
 				}
 				else
 				{
@@ -143,6 +142,7 @@ namespace ComputerGraphics
 			}
 			catch (Exception e)
 			{
+				
 			}
 			pictureBox.BackgroundImage = mybitmap;
 
@@ -166,7 +166,8 @@ namespace ComputerGraphics
 
 			if (xk < 0 || yk < 0 || xk > pictureBox.Width || yk > pictureBox.Height)
 			{
-				MessageBox.Show("Нельзя рисовать за пределами полотна");
+				MessageBox.Show("Нельзя рисовать за пределами полотна", "Внимание", 
+								MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
 
@@ -203,10 +204,7 @@ namespace ComputerGraphics
 				_pen.Color = colorDialog1.Color;
 				var color = colorDialog1.Color;
 
-				var colorInfo = new List<byte>();
-				colorInfo.Add(color.R);
-				colorInfo.Add(color.G);
-				colorInfo.Add(color.B);
+				var colorInfo = new List<byte>() {color.R, color.G, color.B};
 				colorPickerButton.BackColor = _pen.Color;
 				foreach (var value in colorInfo)
 				{
@@ -267,7 +265,6 @@ namespace ComputerGraphics
 			{
 				DrawSpecialFigure();
 			}
-
 			if (templatesComboBox.SelectedItem == "Круг")
 			{
 				DrawCircle();
@@ -373,7 +370,5 @@ namespace ComputerGraphics
 		{
 
 		}
-
-		
 	}
 }

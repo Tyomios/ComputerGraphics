@@ -42,6 +42,7 @@ namespace ComputerGraphics
 			this.prevPenCheckBox = new System.Windows.Forms.CheckBox();
 			this.fatPencheckBox = new System.Windows.Forms.CheckBox();
 			this.colorPickerButton = new System.Windows.Forms.Button();
+			this.fillStackRadioButton = new System.Windows.Forms.RadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.panel.SuspendLayout();
@@ -76,6 +77,7 @@ namespace ComputerGraphics
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.fillStackRadioButton);
 			this.groupBox1.Controls.Add(this.fillRadioButton);
 			this.groupBox1.Controls.Add(this.simpleCDARadioButton);
 			this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -89,12 +91,12 @@ namespace ComputerGraphics
 			// fillRadioButton
 			// 
 			this.fillRadioButton.AutoSize = true;
-			this.fillRadioButton.Location = new System.Drawing.Point(6, 69);
+			this.fillRadioButton.Location = new System.Drawing.Point(6, 63);
 			this.fillRadioButton.Name = "fillRadioButton";
-			this.fillRadioButton.Size = new System.Drawing.Size(70, 19);
+			this.fillRadioButton.Size = new System.Drawing.Size(211, 19);
 			this.fillRadioButton.TabIndex = 4;
 			this.fillRadioButton.TabStop = true;
-			this.fillRadioButton.Text = "Заливка";
+			this.fillRadioButton.Text = "Заливка (рекурсивный алгоритм)";
 			this.fillRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// simpleCDARadioButton
@@ -205,6 +207,17 @@ namespace ComputerGraphics
 			this.colorPickerButton.UseVisualStyleBackColor = false;
 			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
+			// fillStackRadioButton
+			// 
+			this.fillStackRadioButton.AutoSize = true;
+			this.fillStackRadioButton.Location = new System.Drawing.Point(6, 88);
+			this.fillStackRadioButton.Name = "fillStackRadioButton";
+			this.fillStackRadioButton.Size = new System.Drawing.Size(209, 19);
+			this.fillStackRadioButton.TabIndex = 5;
+			this.fillStackRadioButton.TabStop = true;
+			this.fillStackRadioButton.Text = "Заливка (итеративный алгоритм)";
+			this.fillStackRadioButton.UseVisualStyleBackColor = true;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -240,6 +253,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.Label templatesLabel;
 		private System.Windows.Forms.ComboBox penSettingsComboBox;
 		private System.Windows.Forms.RadioButton fillRadioButton;
+		private System.Windows.Forms.RadioButton fillStackRadioButton;
 	}
 }
 

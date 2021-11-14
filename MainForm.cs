@@ -93,10 +93,7 @@ namespace ComputerGraphics
 		}
 
 
-		private bool CheckColor(Color prevColor, Color )
-		{
-
-		}
+		
 		private void Zaliv(int x1, int y1, Bitmap mybitmap, Color prevColor, Stack<Point> collector)
 		{
 			if (x1 == pictureBox.Width || y1 == pictureBox.Height 
@@ -150,6 +147,12 @@ namespace ComputerGraphics
 				yk = e.Y;
 			}
 
+			if (xk < 0 || yk < 0 || xk > pictureBox.Width || yk > pictureBox.Height)
+			{
+				MessageBox.Show("Нельзя рисовать за пределами полотна");
+				return;
+			}
+
 			dx = xk - xn;
 			dy = yk - yn;
 			n = 300;
@@ -165,12 +168,14 @@ namespace ComputerGraphics
 			}
 
 			pictureBox.BackgroundImage = b;
-			//pictureBox.Refresh();
 		}
 
 		private void clearButton_Click(object sender, EventArgs e)
 		{
-			pictureBox.Image = null;
+			var g = Graphics.FromImage(bitmap);
+			g.Clear(Color.White);
+			pictureBox.BackgroundImage = bitmap;
+			pictureBox.Refresh();
 		}
 		
 		private void colorPickerButton_Click(object sender, EventArgs e)
@@ -255,7 +260,7 @@ namespace ComputerGraphics
 
 		private void DrawCircle()
 		{
-			var g = Graphics.FromHwnd(pictureBox.Handle);
+			var g = Graphics.FromImage(bitmap);
 			Brush b1 = new SolidBrush(_pen.Color);
 			var random = new Random();
 			int x = 20; //вносим радиус
@@ -287,6 +292,9 @@ namespace ComputerGraphics
 				}
 
 			}
+
+			pictureBox.BackgroundImage = bitmap;
+			pictureBox.Refresh();
 		}
 
 
@@ -298,8 +306,11 @@ namespace ComputerGraphics
 			var point3 = new Point(point1.X + random.Next(80,100), point2.Y);
 			var point4 = new Point(point3.X - random.Next(30, 50), point1.Y);
 
-			var g = Graphics.FromHwnd(pictureBox.Handle);
+			var g = Graphics.FromImage(bitmap);
 			g.DrawLines(_pen, new[] { point1, point2, point3, point4, point1 });
+
+			pictureBox.BackgroundImage = bitmap;
+			pictureBox.Refresh();
 		}
 
 
@@ -313,8 +324,10 @@ namespace ComputerGraphics
 			var point2 = new Point(random.Next(0, width), random.Next(0, height));
 			var point3 = new Point(random.Next(0, width), random.Next(0, height));
 
-			var g = Graphics.FromHwnd(pictureBox.Handle);
+			var g = Graphics.FromImage(bitmap);
 			g.DrawLines(_pen, new[] { point1, point2, point3, point1 });
+			pictureBox.BackgroundImage = bitmap;
+			pictureBox.Refresh();
 		}
 
 
@@ -333,8 +346,10 @@ namespace ComputerGraphics
 			var point1 = new Point(random.Next(0, width - 100), random.Next(0, height - 100));
 			var size = new Size(random.Next(10, 80), random.Next(3, 200));
 			var rect = new Rectangle(point1, size);
-			var g = Graphics.FromHwnd(pictureBox.Handle);
+			var g = Graphics.FromImage(bitmap);
 			g.DrawRectangle(_pen, rect);
+			pictureBox.BackgroundImage = bitmap;
+			pictureBox.Refresh();
 		}
 
 		private void simpleCDARadioButton_CheckedChanged(object sender, EventArgs e)

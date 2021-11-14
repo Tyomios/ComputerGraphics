@@ -60,9 +60,12 @@ namespace ComputerGraphics
 			if (fillRadioButton.Checked)
 			{
 				//ColorIt(new Point(e.X, e.Y));
-				var color = bitmap.GetPixel(e.X, e.Y);
-				Stack<Point> collector = new Stack<Point>();
-				Zaliv(e.X,e.Y, bitmap, color, collector);
+				//var color = bitmap.GetPixel(e.X, e.Y);
+				//Stack<Point> collector = new Stack<Point>();
+				//Zaliv(e.X,e.Y, bitmap, color, collector);
+
+				bitmap = FloodFill(bitmap, new Point(e.X, e.Y), _pen.Color);
+				pictureBox.BackgroundImage = bitmap;
 			}
 			pictureBox.Refresh();
 		}
@@ -80,20 +83,30 @@ namespace ComputerGraphics
 			//					"Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 		}
 
-		private void ColorIt(Point p)
+		public static Bitmap FloodFill(Bitmap bitmap, Point pt, Color color)
 		{
-			var pointColor = ((Bitmap)pictureBox.BackgroundImage).GetPixel(p.X, p.Y);
-			if (pointColor == pictureBox.BackColor)
+			Stack<Point> pixels = new Stack<Point>();
+			var targetColor = bitmap.GetPixel(pt.X, pt.Y);
+			pixels.Push(pt);
+
+			while (pixels.Count > 0)
 			{
-				pointColor = _pen.Color;
-				pictureBox.Refresh();
-				//ColorIt(new Point(p.X + 1, p.Y));
-				//ColorIt(new Point(p.X, p.Y + 1));
+				Point currentP = pixels.Pop();
+				if (currentP.X < bitmap.Width && currentP.X > -1 && currentP.Y < bitmap.Height && currentP.Y > -1)
+				{
+					if (bitmap.GetPixel(currentP.X, currentP.Y) == targetColor)
+					{
+						bitmap.SetPixel(currentP.X, currentP.Y, color);
+						pixels.Push(new Point(currentP.X - 1, currentP.Y));
+						pixels.Push(new Point(currentP.X + 1, currentP.Y));
+						pixels.Push(new Point(currentP.X, currentP.Y - 1));
+						pixels.Push(new Point(currentP.X, currentP.Y + 1));
+					}
+				}
 			}
+			return bitmap;
 		}
 
-
-		
 		private void Zaliv(int x1, int y1, Bitmap mybitmap, Color prevColor, Stack<Point> collector)
 		{
 			if (x1 == pictureBox.Width || y1 == pictureBox.Height 
@@ -122,6 +135,10 @@ namespace ComputerGraphics
 					Zaliv(x1 - 1, y1, mybitmap, old_color, collector);
 					Zaliv(x1, y1 + 1, mybitmap, old_color, collector);
 					Zaliv(x1, y1 - 1, mybitmap, old_color, collector);
+				}
+				else
+				{
+					return;
 				}
 			}
 			catch (Exception e)

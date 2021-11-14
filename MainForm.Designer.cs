@@ -32,8 +32,8 @@ namespace ComputerGraphics
 			this.clearButton = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.fillRadioButton = new System.Windows.Forms.RadioButton();
 			this.simpleCDARadioButton = new System.Windows.Forms.RadioButton();
-			this.pointDrawLabel = new System.Windows.Forms.Label();
 			this.panel = new System.Windows.Forms.Panel();
 			this.templatesLabel = new System.Windows.Forms.Label();
 			this.templatesComboBox = new System.Windows.Forms.ComboBox();
@@ -42,15 +42,6 @@ namespace ComputerGraphics
 			this.prevPenCheckBox = new System.Windows.Forms.CheckBox();
 			this.fatPencheckBox = new System.Windows.Forms.CheckBox();
 			this.colorPickerButton = new System.Windows.Forms.Button();
-			this.yNLabel = new System.Windows.Forms.Label();
-			this.xNLabel = new System.Windows.Forms.Label();
-			this.yNTextBox = new System.Windows.Forms.TextBox();
-			this.xNTextBox = new System.Windows.Forms.TextBox();
-			this.yKLabel = new System.Windows.Forms.Label();
-			this.xKLabel = new System.Windows.Forms.Label();
-			this.lineBuildButton = new System.Windows.Forms.Button();
-			this.yKtextBox = new System.Windows.Forms.TextBox();
-			this.xKtextBox = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.panel.SuspendLayout();
@@ -59,7 +50,7 @@ namespace ComputerGraphics
 			// 
 			// clearButton
 			// 
-			this.clearButton.Location = new System.Drawing.Point(77, 533);
+			this.clearButton.Location = new System.Drawing.Point(72, 359);
 			this.clearButton.Name = "clearButton";
 			this.clearButton.Size = new System.Drawing.Size(136, 23);
 			this.clearButton.TabIndex = 2;
@@ -73,10 +64,11 @@ namespace ComputerGraphics
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBox.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.pictureBox.BackgroundImage = global::ComputerGraphics.Properties.Resources.panelBack;
 			this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pictureBox.Location = new System.Drawing.Point(10, 30);
 			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(351, 572);
+			this.pictureBox.Size = new System.Drawing.Size(350, 570);
 			this.pictureBox.TabIndex = 3;
 			this.pictureBox.TabStop = false;
 			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
@@ -84,6 +76,7 @@ namespace ComputerGraphics
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.fillRadioButton);
 			this.groupBox1.Controls.Add(this.simpleCDARadioButton);
 			this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.groupBox1.Location = new System.Drawing.Point(14, 20);
@@ -92,6 +85,17 @@ namespace ComputerGraphics
 			this.groupBox1.TabIndex = 4;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Выберите алгоритм";
+			// 
+			// fillRadioButton
+			// 
+			this.fillRadioButton.AutoSize = true;
+			this.fillRadioButton.Location = new System.Drawing.Point(6, 69);
+			this.fillRadioButton.Name = "fillRadioButton";
+			this.fillRadioButton.Size = new System.Drawing.Size(70, 19);
+			this.fillRadioButton.TabIndex = 4;
+			this.fillRadioButton.TabStop = true;
+			this.fillRadioButton.Text = "Заливка";
+			this.fillRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// simpleCDARadioButton
 			// 
@@ -105,16 +109,6 @@ namespace ComputerGraphics
 			this.simpleCDARadioButton.UseVisualStyleBackColor = true;
 			this.simpleCDARadioButton.CheckedChanged += new System.EventHandler(this.simpleCDARadioButton_CheckedChanged);
 			// 
-			// pointDrawLabel
-			// 
-			this.pointDrawLabel.AutoSize = true;
-			this.pointDrawLabel.Location = new System.Drawing.Point(14, 146);
-			this.pointDrawLabel.Name = "pointDrawLabel";
-			this.pointDrawLabel.Size = new System.Drawing.Size(120, 15);
-			this.pointDrawLabel.TabIndex = 4;
-			this.pointDrawLabel.Text = "Введите координаты";
-			this.pointDrawLabel.Click += new System.EventHandler(this.pointDrawLabel_Click);
-			// 
 			// panel
 			// 
 			this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -123,27 +117,17 @@ namespace ComputerGraphics
 			this.panel.Controls.Add(this.templatesLabel);
 			this.panel.Controls.Add(this.templatesComboBox);
 			this.panel.Controls.Add(this.penSettingsGroupBox);
-			this.panel.Controls.Add(this.yNLabel);
-			this.panel.Controls.Add(this.xNLabel);
-			this.panel.Controls.Add(this.yNTextBox);
-			this.panel.Controls.Add(this.xNTextBox);
-			this.panel.Controls.Add(this.yKLabel);
-			this.panel.Controls.Add(this.xKLabel);
-			this.panel.Controls.Add(this.lineBuildButton);
-			this.panel.Controls.Add(this.yKtextBox);
-			this.panel.Controls.Add(this.xKtextBox);
 			this.panel.Controls.Add(this.groupBox1);
-			this.panel.Controls.Add(this.pointDrawLabel);
 			this.panel.Controls.Add(this.clearButton);
 			this.panel.Location = new System.Drawing.Point(370, 30);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(285, 572);
+			this.panel.Size = new System.Drawing.Size(285, 395);
 			this.panel.TabIndex = 5;
 			// 
 			// templatesLabel
 			// 
 			this.templatesLabel.AutoSize = true;
-			this.templatesLabel.Location = new System.Drawing.Point(14, 318);
+			this.templatesLabel.Location = new System.Drawing.Point(14, 155);
 			this.templatesLabel.Name = "templatesLabel";
 			this.templatesLabel.Size = new System.Drawing.Size(61, 15);
 			this.templatesLabel.TabIndex = 15;
@@ -153,7 +137,7 @@ namespace ComputerGraphics
 			// 
 			this.templatesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.templatesComboBox.FormattingEnabled = true;
-			this.templatesComboBox.Location = new System.Drawing.Point(78, 315);
+			this.templatesComboBox.Location = new System.Drawing.Point(97, 152);
 			this.templatesComboBox.Name = "templatesComboBox";
 			this.templatesComboBox.Size = new System.Drawing.Size(135, 23);
 			this.templatesComboBox.TabIndex = 14;
@@ -165,9 +149,9 @@ namespace ComputerGraphics
 			this.penSettingsGroupBox.Controls.Add(this.prevPenCheckBox);
 			this.penSettingsGroupBox.Controls.Add(this.fatPencheckBox);
 			this.penSettingsGroupBox.Controls.Add(this.colorPickerButton);
-			this.penSettingsGroupBox.Location = new System.Drawing.Point(20, 369);
+			this.penSettingsGroupBox.Location = new System.Drawing.Point(14, 194);
 			this.penSettingsGroupBox.Name = "penSettingsGroupBox";
-			this.penSettingsGroupBox.Size = new System.Drawing.Size(246, 148);
+			this.penSettingsGroupBox.Size = new System.Drawing.Size(254, 148);
 			this.penSettingsGroupBox.TabIndex = 6;
 			this.penSettingsGroupBox.TabStop = false;
 			this.penSettingsGroupBox.Text = "Настройка пера";
@@ -221,80 +205,6 @@ namespace ComputerGraphics
 			this.colorPickerButton.UseVisualStyleBackColor = false;
 			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
-			// yNLabel
-			// 
-			this.yNLabel.AutoSize = true;
-			this.yNLabel.Location = new System.Drawing.Point(150, 219);
-			this.yNLabel.Name = "yNLabel";
-			this.yNLabel.Size = new System.Drawing.Size(37, 15);
-			this.yNLabel.TabIndex = 13;
-			this.yNLabel.Text = "Y нач";
-			// 
-			// xNLabel
-			// 
-			this.xNLabel.AutoSize = true;
-			this.xNLabel.Location = new System.Drawing.Point(150, 177);
-			this.xNLabel.Name = "xNLabel";
-			this.xNLabel.Size = new System.Drawing.Size(37, 15);
-			this.xNLabel.TabIndex = 12;
-			this.xNLabel.Text = "X нач";
-			// 
-			// yNTextBox
-			// 
-			this.yNTextBox.Location = new System.Drawing.Point(193, 216);
-			this.yNTextBox.Name = "yNTextBox";
-			this.yNTextBox.Size = new System.Drawing.Size(63, 23);
-			this.yNTextBox.TabIndex = 11;
-			// 
-			// xNTextBox
-			// 
-			this.xNTextBox.Location = new System.Drawing.Point(193, 174);
-			this.xNTextBox.Name = "xNTextBox";
-			this.xNTextBox.Size = new System.Drawing.Size(63, 23);
-			this.xNTextBox.TabIndex = 10;
-			// 
-			// yKLabel
-			// 
-			this.yKLabel.AutoSize = true;
-			this.yKLabel.Location = new System.Drawing.Point(14, 219);
-			this.yKLabel.Name = "yKLabel";
-			this.yKLabel.Size = new System.Drawing.Size(37, 15);
-			this.yKLabel.TabIndex = 9;
-			this.yKLabel.Text = "Y кон";
-			// 
-			// xKLabel
-			// 
-			this.xKLabel.AutoSize = true;
-			this.xKLabel.Location = new System.Drawing.Point(14, 177);
-			this.xKLabel.Name = "xKLabel";
-			this.xKLabel.Size = new System.Drawing.Size(37, 15);
-			this.xKLabel.TabIndex = 8;
-			this.xKLabel.Text = "X кон";
-			// 
-			// lineBuildButton
-			// 
-			this.lineBuildButton.Location = new System.Drawing.Point(77, 262);
-			this.lineBuildButton.Name = "lineBuildButton";
-			this.lineBuildButton.Size = new System.Drawing.Size(136, 24);
-			this.lineBuildButton.TabIndex = 7;
-			this.lineBuildButton.Text = "Построить отрезок";
-			this.lineBuildButton.UseVisualStyleBackColor = true;
-			this.lineBuildButton.Click += new System.EventHandler(this.lineBuildButton_Click);
-			// 
-			// yKtextBox
-			// 
-			this.yKtextBox.Location = new System.Drawing.Point(57, 216);
-			this.yKtextBox.Name = "yKtextBox";
-			this.yKtextBox.Size = new System.Drawing.Size(63, 23);
-			this.yKtextBox.TabIndex = 6;
-			// 
-			// xKtextBox
-			// 
-			this.xKtextBox.Location = new System.Drawing.Point(57, 174);
-			this.xKtextBox.Name = "xKtextBox";
-			this.xKtextBox.Size = new System.Drawing.Size(63, 23);
-			this.xKtextBox.TabIndex = 5;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -304,7 +214,7 @@ namespace ComputerGraphics
 			this.Controls.Add(this.pictureBox);
 			this.MinimumSize = new System.Drawing.Size(675, 650);
 			this.Name = "MainForm";
-			this.Text = "Matrix calculator";
+			this.Text = "Растровые алгоритмы";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
@@ -321,17 +231,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.RadioButton simpleCDARadioButton;
-		private System.Windows.Forms.Label pointDrawLabel;
 		private System.Windows.Forms.Panel panel;
-		private System.Windows.Forms.Button lineBuildButton;
-		private System.Windows.Forms.TextBox yKtextBox;
-		private System.Windows.Forms.TextBox xKtextBox;
-		private System.Windows.Forms.Label xKLabel;
-		private System.Windows.Forms.Label yKLabel;
-		private System.Windows.Forms.Label yNLabel;
-		private System.Windows.Forms.Label xNLabel;
-		private System.Windows.Forms.TextBox yNTextBox;
-		private System.Windows.Forms.TextBox xNTextBox;
 		private System.Windows.Forms.Button colorPickerButton;
 		private System.Windows.Forms.GroupBox penSettingsGroupBox;
 		private System.Windows.Forms.CheckBox fatPencheckBox;
@@ -339,6 +239,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.ComboBox templatesComboBox;
 		private System.Windows.Forms.Label templatesLabel;
 		private System.Windows.Forms.ComboBox penSettingsComboBox;
+		private System.Windows.Forms.RadioButton fillRadioButton;
 	}
 }
 

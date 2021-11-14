@@ -11,15 +11,18 @@ using System.Windows.Forms;
 
 namespace ComputerGraphics
 {
-	// TODO: настройка стиля линии - пунктир, толстая, сплошная
-	// TODO: шаблоны отрезков/прямоугольников/треугольников/14 вариант
-	// TODO: генерация окружности по алгоритму Брезенхема
 	public partial class MainForm : Form
 	{
 		// начальные x y и конечные.
 		private double xn, yn, xk, yk;
 
+		private int xPrint, yPrint;
+
 		private Pen _pen = new Pen(Color.Black, 1);
+
+		private Bitmap bitmap;
+
+		private int iter = 0;
 
 		private enum PenSettings
 		{
@@ -43,21 +46,99 @@ namespace ComputerGraphics
 			penSettingsComboBox.Items.Add(PenSettings.px6);
 			penSettingsComboBox.Items.Add(PenSettings.px8);
 			penSettingsComboBox.Enabled = false;
+
+			bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
 		}
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
 		{
 			if (simpleCDARadioButton.Checked)
 			{
-				simpleCDADraw(e);
+				simpleCDADraw(e, bitmap);
 			}
+
+			if (fillRadioButton.Checked)
+			{
+				//ColorIt(new Point(e.X, e.Y));
+				var color = bitmap.GetPixel(e.X, e.Y);
+				Stack<Point> collector = new Stack<Point>();
+				Zaliv(e.X,e.Y, bitmap, color, collector);
+			}
+			pictureBox.Refresh();
+		}
+		private void pictureBox_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (simpleCDARadioButton.Checked)
+			{
+				xn = e.X;
+				yn = e.Y;
+			}
+			xPrint = e.X;
+			yPrint = e.Y;
+			
+			//else MessageBox.Show("Вы не выбрали алгоритм!",
+			//					"Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		}
+
+		private void ColorIt(Point p)
+		{
+			var pointColor = ((Bitmap)pictureBox.BackgroundImage).GetPixel(p.X, p.Y);
+			if (pointColor == pictureBox.BackColor)
+			{
+				pointColor = _pen.Color;
+				pictureBox.Refresh();
+				//ColorIt(new Point(p.X + 1, p.Y));
+				//ColorIt(new Point(p.X, p.Y + 1));
+			}
+		}
+
+
+		private bool CheckColor(Color prevColor, Color )
+		{
+
+		}
+		private void Zaliv(int x1, int y1, Bitmap mybitmap, Color prevColor, Stack<Point> collector)
+		{
+			if (x1 == pictureBox.Width || y1 == pictureBox.Height 
+			                           || x1 < 0 || y1 < 0 || iter == 6888)
+			{
+				return;
+			}
+
+
+			try
+			{
+				Color old_color = mybitmap.GetPixel(x1, y1);
+				collector.Push(new Point(x1, y1));
+
+				// сравнение цветов происходит в формате RGB
+				// для этого используем метод ToArgb объекта Color
+				if (old_color.ToArgb() != _pen.Color.ToArgb()
+					&& old_color.ToArgb() == prevColor.ToArgb())
+				{
+					//перекрашиваем пиксель
+					mybitmap.SetPixel(x1, y1, _pen.Color);
+					
+
+					//вызываем метод для 4-х соседних пикселей
+					Zaliv(x1 + 1, y1, mybitmap, old_color, collector);
+					Zaliv(x1 - 1, y1, mybitmap, old_color, collector);
+					Zaliv(x1, y1 + 1, mybitmap, old_color, collector);
+					Zaliv(x1, y1 - 1, mybitmap, old_color, collector);
+				}
+			}
+			catch (Exception e)
+			{
+			}
+			pictureBox.BackgroundImage = mybitmap;
+
 		}
 
 		/// <summary>
 		/// Отрисвока линии алгоритмом обычный ЦДА.
 		/// </summary>
 		/// <param name="e"> Событие мыши, через которое можно получить координаты курсора </param>
-		private void simpleCDADraw(MouseEventArgs e, double xk = 0, double yk = 0)
+		private void simpleCDADraw(MouseEventArgs e, Bitmap b, double xk = 0, double yk = 0)
 		{
 			int i, n;
 			double xt, yt, dx, dy;
@@ -71,109 +152,27 @@ namespace ComputerGraphics
 
 			dx = xk - xn;
 			dy = yk - yn;
-			n = 100;
+			n = 300;
 			xt = xn;
 			yt = yn;
 
 			for (i = 1; i <= n; i++)
 			{
-
-				var g = Graphics.FromHwnd(pictureBox.Handle);
-
-				g.DrawRectangle(_pen, (int)xt, (int)yt, 2, 2);
-				//Рисуем закрашенный прямоугольник:
-				//Объявляем объект "redBrush", задающий цвет кисти
-				//SolidBrush redBrush = new SolidBrush(Color.Red);
-				//Рисуем закрашенный прямоугольник
-				//g.FillRectangle(redBrush, (int)xt, (int)yt, 2, 2);
+				b.SetPixel((int)xt, (int)yt, _pen.Color);
 
 				xt = xt + dx / n;
 				yt = yt + dy / n;
 			}
+
+			pictureBox.BackgroundImage = b;
+			//pictureBox.Refresh();
 		}
 
 		private void clearButton_Click(object sender, EventArgs e)
 		{
 			pictureBox.Image = null;
 		}
-
-		private void pointDrawLabel_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void lineBuildButton_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				xk = Convert.ToDouble(xKtextBox.Text);
-				xn = Convert.ToDouble(xNTextBox.Text);
-				yk = Convert.ToDouble(yKtextBox.Text);
-				yn = Convert.ToDouble(yNTextBox.Text);
-
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(exception.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
-			}
-
-			if (CheckPictureBoxSize(xk, yk) || CheckPictureBoxSize(xn, yn))
-			{
-				MessageBox.Show("Указанные координаты превосходят параметры элемента отображения",
-					"Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				xKtextBox.Text = String.Empty;
-				yKtextBox.Text = String.Empty;
-				yNTextBox.Text = "0";
-				xNTextBox.Text = "0";
-				return;
-			}
-			if (simpleCDARadioButton.Checked)
-			{
-				int i, n;
-				double xt, yt, dx, dy;
-
-				dx = xk - xn;
-				dy = yk - yn;
-				n = 100;
-				xt = xn;
-				yt = yn;
-
-				for (i = 1; i <= n; i++)
-				{
-
-					var g = Graphics.FromHwnd(pictureBox.Handle);
-
-					g.DrawRectangle(_pen, (int)xt, (int)yt, 2, 2);
-					//Рисуем закрашенный прямоугольник:
-					//Объявляем объект "redBrush", задающий цвет кисти
-					//SolidBrush redBrush = new SolidBrush(Color.Red);
-					//Рисуем закрашенный прямоугольник
-					//g.FillRectangle(redBrush, (int)xt, (int)yt, 2, 2);
-					xt = xt + dx / n;
-					yt = yt + dy / n;
-				}
-			}
-
-			else
-			{
-				MessageBox.Show("Выберите алгоритм", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			}
-
-		}
-
-
-		private bool CheckPictureBoxSize(double x, double y)
-		{
-			if (pictureBox.Width < x || pictureBox.Height < y)
-			{
-				return true;
-			}
-
-			return false;
-		}
-
-
+		
 		private void colorPickerButton_Click(object sender, EventArgs e)
 		{
 			ColorDialog colorDialog1 = new ColorDialog();
@@ -259,11 +258,12 @@ namespace ComputerGraphics
 			var g = Graphics.FromHwnd(pictureBox.Handle);
 			Brush b1 = new SolidBrush(_pen.Color);
 			var random = new Random();
-			int x = 20;
+			int x = 20; //вносим радиус
 			int y = 0;
 			var x0 = random.Next(10, pictureBox.Width - 40);
 			var y0 = random.Next(10, pictureBox.Height - 40);
 			int radiusError = 1 - x;
+
 			while (x >= y)
 			{
 				g.FillRectangle(b1, x + x0 , y + y0 , _pen.Width, _pen.Width);
@@ -342,16 +342,6 @@ namespace ComputerGraphics
 
 		}
 
-		private void pictureBox_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (simpleCDARadioButton.Checked)
-			{
-				xn = e.X;
-				yn = e.Y;
-			}
-
-			else MessageBox.Show("Вы не выбрали алгоритм!",
-								"Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-		}
+		
 	}
 }

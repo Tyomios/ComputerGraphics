@@ -215,10 +215,6 @@ namespace ComputerGraphics
 
 		private void templatesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Треугольник")
-			{
-				DrawTriangle();
-			}
 			if (templatesComboBox.SelectedItem == "Прямоугольник")
 			{
 				DrawRectangle();
@@ -232,6 +228,11 @@ namespace ComputerGraphics
 		
 		private void leftShiftButton_Click(object sender, EventArgs e)
 		{
+			if (CheckRect())
+			{
+				k += 5;
+				return;
+			}
 			Clear();
 			k -= 5;
 			DrawRectangle();
@@ -239,22 +240,37 @@ namespace ComputerGraphics
 
 		private void upShiftButton_Click(object sender, EventArgs e)
 		{
-			Clear();
 			l -= 5;
+			if (CheckRect())
+			{
+				l += 5;
+				return;
+			}
+			Clear();
 			DrawRectangle();
 		}
 
 		private void downShiftButton_Click(object sender, EventArgs e)
 		{
-			Clear();
 			l += 5;
+			if (CheckRect())
+			{
+				l -= 5;
+				return;
+			}
+			Clear();
 			DrawRectangle();
 		}
 
 		private void rightShiftButton_Click(object sender, EventArgs e)
 		{
-			Clear();
 			k += 5;
+			if (CheckRect())
+			{
+				k -= 5;
+				return;
+			}
+			Clear();
 			DrawRectangle();
 		}
 
@@ -273,23 +289,6 @@ namespace ComputerGraphics
 			pictureBox.Refresh();
 		}
 
-
-		private void DrawTriangle()
-		{
-			var random = new Random();
-			var width = pictureBox.Width;
-			var height = pictureBox.Height;
-
-			var point1 = new Point(random.Next(0, width), random.Next(0, height));
-			var point2 = new Point(random.Next(0, width), random.Next(0, height));
-			var point3 = new Point(random.Next(0, width), random.Next(0, height));
-
-			var g = Graphics.FromImage(bitmap);
-			g.DrawLines(_pen, new[] { point1, point2, point3, point1 });
-			pictureBox.BackgroundImage = bitmap;
-			pictureBox.Refresh();
-		}
-
 		private void penSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			var selectedValue = (PenSettings)penSettingsComboBox.SelectedItem;
@@ -303,7 +302,8 @@ namespace ComputerGraphics
 			var rect = MultiplyMatrix(_square, _shiftMartix);
 
 			var g = Graphics.FromImage(bitmap);
-			
+
+
 			g.DrawLine(_pen, rect[0,0], rect[0, 1], rect[1, 0], rect[1, 1]);
 			g.DrawLine(_pen, rect[1,0], rect[1, 1], rect[2, 0], rect[2, 1]);
 			g.DrawLine(_pen, rect[2,0], rect[2, 1], rect[3, 0], rect[3, 1]);
@@ -313,6 +313,37 @@ namespace ComputerGraphics
 			pictureBox.Refresh();
 		}
 
+		private bool CheckLocation(int x, int y)
+		{
+			if (x < 0 || y < 0) return true;
+
+			if (x > pictureBox.Width) return true;
+
+			if (y > pictureBox.Height) return true;
+
+			return false;
+		}
+
+
+		private bool CheckRect()
+		{
+			InitSquare();
+			InitShiftMatrix(k, l);
+			var rect = MultiplyMatrix(_square, _shiftMartix);
+
+			if (CheckLocation(rect[0, 0], rect[0, 1]) || CheckLocation(rect[1, 0], rect[1, 1])
+			                                          || CheckLocation(rect[1, 0], rect[1, 1]) ||
+			                                          CheckLocation(rect[2, 0], rect[2, 1])
+			                                          || CheckLocation(rect[2, 0], rect[2, 1]) ||
+			                                          CheckLocation(rect[3, 0], rect[3, 1])
+			                                          || CheckLocation(rect[3, 0], rect[3, 1]) ||
+			                                          CheckLocation(rect[0, 0], rect[0, 1]))
+			{
+				return true;
+			}
+
+			return false;
+		}
 		private int[,] MultiplyMatrix(int[,] firstMatrix, int[,] secondMatrix)
 		{
 			// размерность первой матрицы

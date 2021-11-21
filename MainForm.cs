@@ -13,6 +13,9 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace ComputerGraphics
 {
+	//TODO: Поворот
+	//TODO: Добавить лого тусура 5 лет
+	//TODO: Дорисовать оси
 	public partial class MainForm : Form
 	{
 		private Pen _pen = new Pen(Color.Black, 1);
@@ -136,16 +139,6 @@ namespace ComputerGraphics
 			_timer.Start();
 		}
 
-
-		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
-		{
-			
-		}
-		private void pictureBox_MouseDown(object sender, MouseEventArgs e)
-		{
-			
-		}
-
 		private void clearButton_Click(object sender, EventArgs e)
 		{
 			Clear();
@@ -217,10 +210,12 @@ namespace ComputerGraphics
 		{
 			if (templatesComboBox.SelectedItem == "Прямоугольник")
 			{
+				Clear();
 				DrawRectangle();
 			}
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
+				Clear();
 				DrawSpecialFigure();
 			}
 		}
@@ -228,71 +223,132 @@ namespace ComputerGraphics
 		
 		private void leftShiftButton_Click(object sender, EventArgs e)
 		{
-			if (CheckRect())
+			if (templatesComboBox.SelectedItem == "Прямоугольник")
 			{
-				k += 5;
-				return;
+				k -= 5;
+				if (CheckRect())
+				{
+					k += 5;
+					return;
+				}
+				Clear();
+				DrawRectangle();
 			}
-			Clear();
-			k -= 5;
-			DrawRectangle();
+			if (templatesComboBox.SelectedItem == "Вариант 14")
+			{
+				k -= 5;
+				if (CheckSpecialFigure())
+				{
+					k += 5;
+					return;
+				}
+				Clear();
+				DrawSpecialFigure();
+			}
+			
 		}
 
 		private void upShiftButton_Click(object sender, EventArgs e)
 		{
-			l -= 5;
-			if (CheckRect())
+			if (templatesComboBox.SelectedItem == "Прямоугольник")
 			{
-				l += 5;
-				return;
+				l -= 5;
+				if (CheckRect())
+				{
+					l += 5;
+					return;
+				}
+				Clear();
+				DrawRectangle();
 			}
-			Clear();
-			DrawRectangle();
+			if (templatesComboBox.SelectedItem == "Вариант 14")
+			{
+				l -= 5;
+				if (CheckSpecialFigure())
+				{
+					l += 5;
+					return;
+				}
+				Clear();
+				DrawSpecialFigure();
+			}
+			
 		}
 
 		private void downShiftButton_Click(object sender, EventArgs e)
 		{
-			l += 5;
-			if (CheckRect())
+			if (templatesComboBox.SelectedItem == "Прямоугольник")
 			{
-				l -= 5;
-				return;
+				l += 5;
+				if (CheckRect())
+				{
+					l -= 5;
+					return;
+				}
+				Clear();
+				DrawRectangle();
 			}
-			Clear();
-			DrawRectangle();
+			if (templatesComboBox.SelectedItem == "Вариант 14")
+			{
+				l += 5;
+				if (CheckSpecialFigure())
+				{
+					l -= 5;
+					return;
+				}
+				Clear();
+				DrawSpecialFigure();
+			}
 		}
 
 		private void rightShiftButton_Click(object sender, EventArgs e)
 		{
-			k += 5;
-			if (CheckRect())
+			if (templatesComboBox.SelectedItem == "Прямоугольник")
 			{
-				k -= 5;
-				return;
+				k += 5;
+				if (CheckRect())
+				{
+					k -= 5;
+					return;
+				}
+				Clear();
+				DrawRectangle();
 			}
-			Clear();
-			DrawRectangle();
-		}
-
-		private void DrawSpecialFigure()
-		{
-			var random = new Random();
-			var point1 = new Point(random.Next(10,100), random.Next(50,70));
-			var point2 = new Point(point1.X, point1.Y + random.Next(50, 70));
-			var point3 = new Point(point1.X + random.Next(80,100), point2.Y);
-			var point4 = new Point(point3.X - random.Next(30, 50), point1.Y);
-
-			var g = Graphics.FromImage(bitmap);
-			g.DrawLines(_pen, new[] { point1, point2, point3, point4, point1 });
-
-			pictureBox.BackgroundImage = bitmap;
-			pictureBox.Refresh();
+			if (templatesComboBox.SelectedItem == "Вариант 14")
+			{
+				k += 5;
+				if (CheckSpecialFigure())
+				{
+					k -= 5;
+					return;
+				}
+				Clear();
+				DrawSpecialFigure();
+			}
 		}
 
 		private void penSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			var selectedValue = (PenSettings)penSettingsComboBox.SelectedItem;
 			_pen.Width = (float)selectedValue;
+		}
+
+
+		
+		private void DrawSpecialFigure()
+		{
+			InitSpecialFigure();
+			InitShiftMatrix(k, l);
+			var rect = MultiplyMatrix(_square, _shiftMartix);
+			var g = Graphics.FromImage(bitmap);
+
+			g.DrawLine(_pen, rect[0, 0], rect[0, 1], rect[1, 0], rect[1, 1]);
+			g.DrawLine(_pen, rect[1, 0], rect[1, 1], rect[2, 0], rect[2, 1]);
+			g.DrawLine(_pen, rect[2, 0], rect[2, 1], rect[3, 0], rect[3, 1]);
+			g.DrawLine(_pen, rect[3, 0], rect[3, 1], rect[0, 0], rect[0, 1]);
+
+			pictureBox.BackgroundImage = bitmap;
+			pictureBox.Refresh();
 		}
 
 		private void DrawRectangle()
@@ -344,6 +400,27 @@ namespace ComputerGraphics
 
 			return false;
 		}
+
+		private bool CheckSpecialFigure()
+		{
+			InitSpecialFigure();
+			InitShiftMatrix(k, l);
+			var rect = MultiplyMatrix(_square, _shiftMartix);
+
+			if (CheckLocation(rect[0, 0], rect[0, 1]) || CheckLocation(rect[1, 0], rect[1, 1])
+			                                          || CheckLocation(rect[1, 0], rect[1, 1]) ||
+			                                          CheckLocation(rect[2, 0], rect[2, 1])
+			                                          || CheckLocation(rect[2, 0], rect[2, 1]) ||
+			                                          CheckLocation(rect[3, 0], rect[3, 1])
+			                                          || CheckLocation(rect[3, 0], rect[3, 1]) ||
+			                                          CheckLocation(rect[0, 0], rect[0, 1]))
+			{
+				return true;
+			}
+
+			return false;
+		}
+
 		private int[,] MultiplyMatrix(int[,] firstMatrix, int[,] secondMatrix)
 		{
 			// размерность первой матрицы
@@ -381,14 +458,31 @@ namespace ComputerGraphics
 
 		private void InitSquare()
 		{
+			_square[0, 0] = -50; //x1
+			_square[1, 0] = 0; //x2
+			_square[2, 0] = 50; //x3
+			_square[3, 0] = 0; //x4
+			_square[0, 1] = 0;  //y1
+			_square[1, 1] = 50; //y2
+			_square[2, 1] = 0; //y3
+			_square[3, 1] = -50; //y4
+			_square[0, 2] = 1;
+			_square[1, 2] = 1;
+			_square[2, 2] = 1;
+			_square[3, 2] = 1;
+		}
+
+
+		private void InitSpecialFigure()
+		{
 			_square[0, 0] = -50;
 			_square[1, 0] = 0;
 			_square[2, 0] = 50;
-			_square[3, 0] = 0;
+			_square[3, 0] = 50;
 			_square[0, 1] = 0;
 			_square[1, 1] = 50;
 			_square[2, 1] = 0;
-			_square[3, 1] = -50;
+			_square[3, 1] = -85;
 			_square[0, 2] = 1;
 			_square[1, 2] = 1;
 			_square[2, 2] = 1;
@@ -398,6 +492,18 @@ namespace ComputerGraphics
 		private void sizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			_size = (int)sizeComboBox.SelectedItem;
+		}
+
+		private void mirrorCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (mirrorCheckBox.Checked)
+			{
+				_size *= -1;
+			}
+			else
+			{
+				Math.Abs(_size);
+			}
 		}
 
 		private void BuildAxis()

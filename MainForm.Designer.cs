@@ -32,6 +32,9 @@ namespace ComputerGraphics
 			this.clearButton = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
+			this.mirrorCheckBox = new System.Windows.Forms.CheckBox();
+			this.sizeComboBox = new System.Windows.Forms.ComboBox();
+			this.SizeLabel = new System.Windows.Forms.Label();
 			this.leftShiftButton = new System.Windows.Forms.Button();
 			this.downShiftButton = new System.Windows.Forms.Button();
 			this.rightShiftButton = new System.Windows.Forms.Button();
@@ -44,8 +47,6 @@ namespace ComputerGraphics
 			this.prevPenCheckBox = new System.Windows.Forms.CheckBox();
 			this.fatPencheckBox = new System.Windows.Forms.CheckBox();
 			this.colorPickerButton = new System.Windows.Forms.Button();
-			this.SizeLabel = new System.Windows.Forms.Label();
-			this.sizeComboBox = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.panel.SuspendLayout();
 			this.penSettingsGroupBox.SuspendLayout();
@@ -74,14 +75,13 @@ namespace ComputerGraphics
 			this.pictureBox.Size = new System.Drawing.Size(375, 570);
 			this.pictureBox.TabIndex = 3;
 			this.pictureBox.TabStop = false;
-			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
-			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
 			// 
 			// panel
 			// 
 			this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel.Controls.Add(this.mirrorCheckBox);
 			this.panel.Controls.Add(this.sizeComboBox);
 			this.panel.Controls.Add(this.SizeLabel);
 			this.panel.Controls.Add(this.leftShiftButton);
@@ -97,6 +97,36 @@ namespace ComputerGraphics
 			this.panel.Name = "panel";
 			this.panel.Size = new System.Drawing.Size(285, 465);
 			this.panel.TabIndex = 5;
+			// 
+			// mirrorCheckBox
+			// 
+			this.mirrorCheckBox.AutoSize = true;
+			this.mirrorCheckBox.Location = new System.Drawing.Point(14, 430);
+			this.mirrorCheckBox.Name = "mirrorCheckBox";
+			this.mirrorCheckBox.Size = new System.Drawing.Size(91, 19);
+			this.mirrorCheckBox.TabIndex = 23;
+			this.mirrorCheckBox.Text = "Отражение ";
+			this.mirrorCheckBox.UseVisualStyleBackColor = true;
+			this.mirrorCheckBox.CheckedChanged += new System.EventHandler(this.mirrorCheckBox_CheckedChanged);
+			// 
+			// sizeComboBox
+			// 
+			this.sizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.sizeComboBox.FormattingEnabled = true;
+			this.sizeComboBox.Location = new System.Drawing.Point(82, 392);
+			this.sizeComboBox.Name = "sizeComboBox";
+			this.sizeComboBox.Size = new System.Drawing.Size(55, 23);
+			this.sizeComboBox.TabIndex = 22;
+			this.sizeComboBox.SelectedIndexChanged += new System.EventHandler(this.sizeComboBox_SelectedIndexChanged);
+			// 
+			// SizeLabel
+			// 
+			this.SizeLabel.AutoSize = true;
+			this.SizeLabel.Location = new System.Drawing.Point(14, 395);
+			this.SizeLabel.Name = "SizeLabel";
+			this.SizeLabel.Size = new System.Drawing.Size(62, 15);
+			this.SizeLabel.TabIndex = 21;
+			this.SizeLabel.Text = "Масштаб:";
 			// 
 			// leftShiftButton
 			// 
@@ -228,25 +258,6 @@ namespace ComputerGraphics
 			this.colorPickerButton.UseVisualStyleBackColor = false;
 			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
-			// SizeLabel
-			// 
-			this.SizeLabel.AutoSize = true;
-			this.SizeLabel.Location = new System.Drawing.Point(14, 423);
-			this.SizeLabel.Name = "SizeLabel";
-			this.SizeLabel.Size = new System.Drawing.Size(62, 15);
-			this.SizeLabel.TabIndex = 21;
-			this.SizeLabel.Text = "Масштаб:";
-			// 
-			// sizeComboBox
-			// 
-			this.sizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.sizeComboBox.FormattingEnabled = true;
-			this.sizeComboBox.Location = new System.Drawing.Point(81, 420);
-			this.sizeComboBox.Name = "sizeComboBox";
-			this.sizeComboBox.Size = new System.Drawing.Size(55, 23);
-			this.sizeComboBox.TabIndex = 22;
-			this.sizeComboBox.SelectedIndexChanged += new System.EventHandler(this.sizeComboBox_SelectedIndexChanged);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -284,6 +295,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.Button upShiftButton;
 		private System.Windows.Forms.Label SizeLabel;
 		private System.Windows.Forms.ComboBox sizeComboBox;
+		private System.Windows.Forms.CheckBox mirrorCheckBox;
 	}
 }
 

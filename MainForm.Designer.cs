@@ -31,10 +31,12 @@ namespace ComputerGraphics
 		{
 			this.clearButton = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.fillRadioButton = new System.Windows.Forms.RadioButton();
-			this.simpleCDARadioButton = new System.Windows.Forms.RadioButton();
 			this.panel = new System.Windows.Forms.Panel();
+			this.button4 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
+			this.shiftLabel = new System.Windows.Forms.Label();
 			this.templatesLabel = new System.Windows.Forms.Label();
 			this.templatesComboBox = new System.Windows.Forms.ComboBox();
 			this.penSettingsGroupBox = new System.Windows.Forms.GroupBox();
@@ -42,16 +44,14 @@ namespace ComputerGraphics
 			this.prevPenCheckBox = new System.Windows.Forms.CheckBox();
 			this.fatPencheckBox = new System.Windows.Forms.CheckBox();
 			this.colorPickerButton = new System.Windows.Forms.Button();
-			this.fillStackRadioButton = new System.Windows.Forms.RadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-			this.groupBox1.SuspendLayout();
 			this.panel.SuspendLayout();
 			this.penSettingsGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// clearButton
 			// 
-			this.clearButton.Location = new System.Drawing.Point(72, 359);
+			this.clearButton.Location = new System.Drawing.Point(71, 199);
 			this.clearButton.Name = "clearButton";
 			this.clearButton.Size = new System.Drawing.Size(136, 23);
 			this.clearButton.TabIndex = 2;
@@ -69,67 +69,80 @@ namespace ComputerGraphics
 			this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pictureBox.Location = new System.Drawing.Point(10, 30);
 			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(350, 570);
+			this.pictureBox.Size = new System.Drawing.Size(375, 570);
 			this.pictureBox.TabIndex = 3;
 			this.pictureBox.TabStop = false;
 			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
 			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.Add(this.fillStackRadioButton);
-			this.groupBox1.Controls.Add(this.fillRadioButton);
-			this.groupBox1.Controls.Add(this.simpleCDARadioButton);
-			this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.groupBox1.Location = new System.Drawing.Point(14, 20);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(254, 113);
-			this.groupBox1.TabIndex = 4;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Выберите алгоритм";
-			// 
-			// fillRadioButton
-			// 
-			this.fillRadioButton.AutoSize = true;
-			this.fillRadioButton.Location = new System.Drawing.Point(6, 63);
-			this.fillRadioButton.Name = "fillRadioButton";
-			this.fillRadioButton.Size = new System.Drawing.Size(211, 19);
-			this.fillRadioButton.TabIndex = 4;
-			this.fillRadioButton.TabStop = true;
-			this.fillRadioButton.Text = "Заливка (рекурсивный алгоритм)";
-			this.fillRadioButton.UseVisualStyleBackColor = true;
-			// 
-			// simpleCDARadioButton
-			// 
-			this.simpleCDARadioButton.AutoSize = true;
-			this.simpleCDARadioButton.Location = new System.Drawing.Point(6, 35);
-			this.simpleCDARadioButton.Name = "simpleCDARadioButton";
-			this.simpleCDARadioButton.Size = new System.Drawing.Size(108, 19);
-			this.simpleCDARadioButton.TabIndex = 3;
-			this.simpleCDARadioButton.TabStop = true;
-			this.simpleCDARadioButton.Text = "Обычный ЦДА";
-			this.simpleCDARadioButton.UseVisualStyleBackColor = true;
-			this.simpleCDARadioButton.CheckedChanged += new System.EventHandler(this.simpleCDARadioButton_CheckedChanged);
 			// 
 			// panel
 			// 
 			this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel.Controls.Add(this.button4);
+			this.panel.Controls.Add(this.button3);
+			this.panel.Controls.Add(this.button2);
+			this.panel.Controls.Add(this.button1);
+			this.panel.Controls.Add(this.shiftLabel);
 			this.panel.Controls.Add(this.templatesLabel);
 			this.panel.Controls.Add(this.templatesComboBox);
 			this.panel.Controls.Add(this.penSettingsGroupBox);
-			this.panel.Controls.Add(this.groupBox1);
 			this.panel.Controls.Add(this.clearButton);
-			this.panel.Location = new System.Drawing.Point(370, 30);
+			this.panel.Location = new System.Drawing.Point(395, 30);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(285, 395);
+			this.panel.Size = new System.Drawing.Size(285, 465);
 			this.panel.TabIndex = 5;
+			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(14, 306);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(75, 23);
+			this.button4.TabIndex = 20;
+			this.button4.Text = "button4";
+			this.button4.UseVisualStyleBackColor = true;
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(98, 346);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.TabIndex = 19;
+			this.button3.Text = "button3";
+			this.button3.UseVisualStyleBackColor = true;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(193, 306);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 18;
+			this.button2.Text = "button2";
+			this.button2.UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(98, 268);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 17;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// shiftLabel
+			// 
+			this.shiftLabel.AutoSize = true;
+			this.shiftLabel.Location = new System.Drawing.Point(117, 310);
+			this.shiftLabel.Name = "shiftLabel";
+			this.shiftLabel.Size = new System.Drawing.Size(39, 15);
+			this.shiftLabel.TabIndex = 16;
+			this.shiftLabel.Text = "Сдвиг";
 			// 
 			// templatesLabel
 			// 
 			this.templatesLabel.AutoSize = true;
-			this.templatesLabel.Location = new System.Drawing.Point(14, 155);
+			this.templatesLabel.Location = new System.Drawing.Point(14, 19);
 			this.templatesLabel.Name = "templatesLabel";
 			this.templatesLabel.Size = new System.Drawing.Size(61, 15);
 			this.templatesLabel.TabIndex = 15;
@@ -139,7 +152,7 @@ namespace ComputerGraphics
 			// 
 			this.templatesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.templatesComboBox.FormattingEnabled = true;
-			this.templatesComboBox.Location = new System.Drawing.Point(97, 152);
+			this.templatesComboBox.Location = new System.Drawing.Point(81, 16);
 			this.templatesComboBox.Name = "templatesComboBox";
 			this.templatesComboBox.Size = new System.Drawing.Size(135, 23);
 			this.templatesComboBox.TabIndex = 14;
@@ -151,7 +164,7 @@ namespace ComputerGraphics
 			this.penSettingsGroupBox.Controls.Add(this.prevPenCheckBox);
 			this.penSettingsGroupBox.Controls.Add(this.fatPencheckBox);
 			this.penSettingsGroupBox.Controls.Add(this.colorPickerButton);
-			this.penSettingsGroupBox.Location = new System.Drawing.Point(14, 194);
+			this.penSettingsGroupBox.Location = new System.Drawing.Point(14, 45);
 			this.penSettingsGroupBox.Name = "penSettingsGroupBox";
 			this.penSettingsGroupBox.Size = new System.Drawing.Size(254, 148);
 			this.penSettingsGroupBox.TabIndex = 6;
@@ -207,30 +220,17 @@ namespace ComputerGraphics
 			this.colorPickerButton.UseVisualStyleBackColor = false;
 			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
-			// fillStackRadioButton
-			// 
-			this.fillStackRadioButton.AutoSize = true;
-			this.fillStackRadioButton.Location = new System.Drawing.Point(6, 88);
-			this.fillStackRadioButton.Name = "fillStackRadioButton";
-			this.fillStackRadioButton.Size = new System.Drawing.Size(209, 19);
-			this.fillStackRadioButton.TabIndex = 5;
-			this.fillStackRadioButton.TabStop = true;
-			this.fillStackRadioButton.Text = "Заливка (итеративный алгоритм)";
-			this.fillStackRadioButton.UseVisualStyleBackColor = true;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(659, 611);
+			this.ClientSize = new System.Drawing.Size(684, 611);
 			this.Controls.Add(this.panel);
 			this.Controls.Add(this.pictureBox);
-			this.MinimumSize = new System.Drawing.Size(675, 650);
+			this.MinimumSize = new System.Drawing.Size(700, 650);
 			this.Name = "MainForm";
-			this.Text = "Растровые алгоритмы";
+			this.Text = "Преобразования на плоскости";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
 			this.panel.ResumeLayout(false);
 			this.panel.PerformLayout();
 			this.penSettingsGroupBox.ResumeLayout(false);
@@ -242,8 +242,6 @@ namespace ComputerGraphics
 		#endregion
 		private System.Windows.Forms.Button clearButton;
 		private System.Windows.Forms.PictureBox pictureBox;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.RadioButton simpleCDARadioButton;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.Button colorPickerButton;
 		private System.Windows.Forms.GroupBox penSettingsGroupBox;
@@ -252,8 +250,11 @@ namespace ComputerGraphics
 		private System.Windows.Forms.ComboBox templatesComboBox;
 		private System.Windows.Forms.Label templatesLabel;
 		private System.Windows.Forms.ComboBox penSettingsComboBox;
-		private System.Windows.Forms.RadioButton fillRadioButton;
-		private System.Windows.Forms.RadioButton fillStackRadioButton;
+		private System.Windows.Forms.Label shiftLabel;
+		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button1;
 	}
 }
 

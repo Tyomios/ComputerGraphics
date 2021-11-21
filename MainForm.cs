@@ -22,7 +22,13 @@ namespace ComputerGraphics
 
 		private Bitmap bitmap;
 
-		private int iter = 0;
+		private int[,] _axis = new int[4, 3];
+
+		private int[,] _square = new int[4, 3];
+
+		private int[,] _shiftMartix = new int[3, 3];
+
+		private int _k1, _l1;
 
 		private enum PenSettings
 		{
@@ -48,39 +54,109 @@ namespace ComputerGraphics
 			penSettingsComboBox.Enabled = false;
 
 			bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
+
+			_k1 = pictureBox.Width / 2;
+			_l1 = pictureBox.Height / 2;
+			InitAxis();
+		}
+
+
+
+		private int[,] MultiplyMatrix(int[,] firstMatrix, int[,] secondMatrix)
+		{
+			// размерность первой матрицы
+			var n = firstMatrix.GetLength(0);
+			var m = firstMatrix.GetLength(1);
+
+			var result = new int[n, m];
+			for (int i = 0; i < n; i++)
+			{
+				for (int j = 0; j < m; j++)
+				{
+					result[i, j] = 0;
+					for (int k = 0; k < m; k++)
+					{
+						result[i, j] += firstMatrix[i, k] * secondMatrix[k, j];
+					}
+				}
+			}
+
+			return result;
+		}
+
+		private void InitShiftMatrix(int k1, int l1)
+		{
+			_shiftMartix[0, 0] = 1;
+			_shiftMartix[1, 0] = 0;
+			_shiftMartix[2, 0] = k1;
+			_shiftMartix[0, 1] = 0;
+			_shiftMartix[1, 1] = 1;
+			_shiftMartix[2, 1] = l1;
+			_shiftMartix[0, 2] = 0;
+			_shiftMartix[1, 2] = 0;
+			_shiftMartix[2, 2] = 1;
+		}
+
+		private void InitSquare()
+		{
+			_square[0, 0] = -50;
+			_square[1, 0] = 0;
+			_square[2, 0] = 50;
+			_square[3, 0] = 0;
+			_square[0, 1] = 0;
+			_square[1, 1] = 50;
+			_square[2, 1] = 0;
+			_square[3, 1] = -50;
+			_square[0, 2] = 1;
+			_square[1, 2] = 1;
+			_square[2, 2] = 1;
+			_square[3, 2] = 1;
+		}
+
+
+		private void BuildAxis()
+		{
+			_axis[0, 0] = -200;
+			_axis[1, 0] = 200;
+			_axis[2, 0] = 0;
+			_axis[3, 0] = 0;
+			_axis[0, 1] = 0;
+			_axis[1, 1] = 0;
+			_axis[2, 1] = 200;
+			_axis[3, 1] = -200;
+			_axis[0, 2] = 1;
+			_axis[1, 2] = 1;
+			_axis[2, 2] = 1;
+			_axis[3, 2] = 1;
+
+		}
+
+		private void InitAxis()
+		{
+			BuildAxis();
+			InitShiftMatrix(_k1, _l1);
+
+			var axis = MultiplyMatrix(_axis, _shiftMartix);
+
+			var pen = new Pen(Color.Black, 1);
+			var g = Graphics.FromImage(bitmap);
+
+			g.DrawLine(pen, axis[0,0], axis[0, 1], axis[1, 0], axis[1, 1]);
+			g.DrawLine(pen, axis[2,0], axis[2, 1], axis[3, 0], axis[3, 1]);
+
+			g.Dispose();
+
+			pictureBox.BackgroundImage = bitmap;
+			pictureBox.Refresh();
 		}
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
 		{
-			if (simpleCDARadioButton.Checked)
-			{
-				simpleCDADraw(e, bitmap);
-			}
-
-			if (fillRadioButton.Checked)
-			{
-				Zaliv(e.X,e.Y, bitmap, bitmap.GetPixel(e.X, e.Y));
-			}
-
-			if (fillStackRadioButton.Checked)
-			{
-				bitmap = FloodFill(bitmap, new Point(e.X, e.Y), _pen.Color);
-				pictureBox.BackgroundImage = bitmap;
-			}
-			pictureBox.Refresh();
+			
 		}
 		private void pictureBox_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (simpleCDARadioButton.Checked)
-			{
-				xn = e.X;
-				yn = e.Y;
-			}
-			xPrint = e.X;
-			yPrint = e.Y;
 			
-			//else MessageBox.Show("Вы не выбрали алгоритм!",
-			//					"Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 		}
 
 		public static Bitmap FloodFill(Bitmap bitmap, Point pt, Color color)
@@ -107,46 +183,6 @@ namespace ComputerGraphics
 			return bitmap;
 		}
 
-		private void Zaliv(int x1, int y1, Bitmap mybitmap, Color prevColor)
-		{
-			if (x1 == pictureBox.Width || y1 == pictureBox.Height 
-			                           || x1 < 0 || y1 < 0 || iter == 6888)
-			{
-				return;
-			}
-
-
-			try
-			{
-				Color old_color = mybitmap.GetPixel(x1, y1);
-
-				// сравнение цветов происходит в формате RGB
-				// для этого используем метод ToArgb объекта Color
-				if (old_color.ToArgb() != _pen.Color.ToArgb()
-					&& old_color.ToArgb() == prevColor.ToArgb())
-				{
-					//перекрашиваем пиксель
-					mybitmap.SetPixel(x1, y1, _pen.Color);
-					
-
-					//вызываем метод для 4-х соседних пикселей
-					Zaliv(x1 + 1, y1, mybitmap, old_color);
-					Zaliv(x1 - 1, y1, mybitmap, old_color);
-					Zaliv(x1, y1 + 1, mybitmap, old_color);
-					Zaliv(x1, y1 - 1, mybitmap, old_color);
-				}
-				else
-				{
-					return;
-				}
-			}
-			catch (Exception e)
-			{
-				
-			}
-			pictureBox.BackgroundImage = mybitmap;
-
-		}
 
 		/// <summary>
 		/// Отрисвока линии алгоритмом обычный ЦДА.
@@ -192,8 +228,7 @@ namespace ComputerGraphics
 		{
 			var g = Graphics.FromImage(bitmap);
 			g.Clear(Color.White);
-			pictureBox.BackgroundImage = bitmap;
-			pictureBox.Refresh();
+			InitAxis();
 		}
 		
 		private void colorPickerButton_Click(object sender, EventArgs e)
@@ -259,6 +294,7 @@ namespace ComputerGraphics
 			}
 			if (templatesComboBox.SelectedItem == "Прямоугольник")
 			{
+				
 				DrawRectangle();
 			}
 			if (templatesComboBox.SelectedItem == "Вариант 14")
@@ -353,22 +389,19 @@ namespace ComputerGraphics
 
 		private void DrawRectangle()
 		{
-			var random = new Random();
-			var width = pictureBox.Width;
-			var height = pictureBox.Height;
-			
-			var point1 = new Point(random.Next(0, width - 100), random.Next(0, height - 100));
-			var size = new Size(random.Next(10, 80), random.Next(3, 200));
-			var rect = new Rectangle(point1, size);
+			InitSquare();
+			InitShiftMatrix(_k1, _l1);
+			var rect = MultiplyMatrix(_square, _shiftMartix);
+
 			var g = Graphics.FromImage(bitmap);
-			g.DrawRectangle(_pen, rect);
+			
+			g.DrawLine(_pen, rect[0,0], rect[0, 1], rect[1, 0], rect[1, 1]);
+			g.DrawLine(_pen, rect[1,0], rect[1, 1], rect[2, 0], rect[2, 1]);
+			g.DrawLine(_pen, rect[2,0], rect[2, 1], rect[3, 0], rect[3, 1]);
+			g.DrawLine(_pen, rect[3,0], rect[3, 1], rect[0, 0], rect[0, 1]);
+
 			pictureBox.BackgroundImage = bitmap;
 			pictureBox.Refresh();
-		}
-
-		private void simpleCDARadioButton_CheckedChanged(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

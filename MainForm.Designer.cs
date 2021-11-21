@@ -32,7 +32,6 @@ namespace ComputerGraphics
 			this.clearButton = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
-			this.stopButton = new System.Windows.Forms.Button();
 			this.leftShiftButton = new System.Windows.Forms.Button();
 			this.downShiftButton = new System.Windows.Forms.Button();
 			this.rightShiftButton = new System.Windows.Forms.Button();
@@ -81,7 +80,6 @@ namespace ComputerGraphics
 			this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel.Controls.Add(this.stopButton);
 			this.panel.Controls.Add(this.leftShiftButton);
 			this.panel.Controls.Add(this.downShiftButton);
 			this.panel.Controls.Add(this.rightShiftButton);
@@ -95,16 +93,6 @@ namespace ComputerGraphics
 			this.panel.Name = "panel";
 			this.panel.Size = new System.Drawing.Size(285, 465);
 			this.panel.TabIndex = 5;
-			// 
-			// stopButton
-			// 
-			this.stopButton.Location = new System.Drawing.Point(102, 306);
-			this.stopButton.Name = "stopButton";
-			this.stopButton.Size = new System.Drawing.Size(75, 23);
-			this.stopButton.TabIndex = 21;
-			this.stopButton.Text = "стоп";
-			this.stopButton.UseVisualStyleBackColor = true;
-			this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
 			// 
 			// leftShiftButton
 			// 
@@ -135,8 +123,6 @@ namespace ComputerGraphics
 			this.rightShiftButton.Text = "вправо";
 			this.rightShiftButton.UseVisualStyleBackColor = true;
 			this.rightShiftButton.Click += new System.EventHandler(this.rightShiftButton_Click);
-			this.rightShiftButton.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rightShiftButton_KeyPress);
-			this.rightShiftButton.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rightShiftButton_KeyUp);
 			// 
 			// upShiftButton
 			// 
@@ -151,7 +137,7 @@ namespace ComputerGraphics
 			// shiftLabel
 			// 
 			this.shiftLabel.AutoSize = true;
-			this.shiftLabel.Location = new System.Drawing.Point(29, 256);
+			this.shiftLabel.Location = new System.Drawing.Point(119, 310);
 			this.shiftLabel.Name = "shiftLabel";
 			this.shiftLabel.Size = new System.Drawing.Size(39, 15);
 			this.shiftLabel.TabIndex = 16;
@@ -273,7 +259,6 @@ namespace ComputerGraphics
 		private System.Windows.Forms.Button downShiftButton;
 		private System.Windows.Forms.Button rightShiftButton;
 		private System.Windows.Forms.Button upShiftButton;
-		private System.Windows.Forms.Button stopButton;
 	}
 }
 

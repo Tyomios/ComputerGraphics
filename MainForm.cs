@@ -9,16 +9,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace ComputerGraphics
 {
 	public partial class MainForm : Form
 	{
-		// начальные x y и конечные.
-		private double xn, yn, xk, yk;
-
-		private int xPrint, yPrint;
-
 		private Pen _pen = new Pen(Color.Black, 1);
 
 		private Bitmap bitmap;
@@ -33,7 +29,7 @@ namespace ComputerGraphics
 
 		private int k,l;
 
-		private bool action = true;
+		private Timer _timer = new Timer();
 
 		private enum PenSettings
 		{
@@ -60,6 +56,21 @@ namespace ComputerGraphics
 
 			bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
 
+			_timer.Interval = 50;
+			_timer.Enabled = false;
+
+			rightShiftButton.MouseDown += RightShiftButtonOnMouseDown;
+			rightShiftButton.MouseUp += RightShiftButtonOnMouseUp;
+
+			leftShiftButton.MouseDown += LeftShiftButtonOnMouseDown;
+			leftShiftButton.MouseUp += LeftShiftButtonOnMouseUp;
+
+			upShiftButton.MouseDown += UpShiftButtonOnMouseDown;
+			upShiftButton.MouseUp += UpShiftButtonOnMouseUp;
+
+			downShiftButton.MouseDown += DownShiftButtonOnMouseDown;
+			downShiftButton.MouseUp += DownShiftButtonOnMouseUp;
+
 			_k1 = pictureBox.Width / 2;
 			_l1 = pictureBox.Height / 2;
 			k = _k1;
@@ -68,94 +79,59 @@ namespace ComputerGraphics
 		}
 
 
-
-		private int[,] MultiplyMatrix(int[,] firstMatrix, int[,] secondMatrix)
+		private void DownShiftButtonOnMouseUp(object? sender, MouseEventArgs e)
 		{
-			// размерность первой матрицы
-			var n = firstMatrix.GetLength(0);
-			var m = firstMatrix.GetLength(1);
-
-			var result = new int[n, m];
-			for (int i = 0; i < n; i++)
-			{
-				for (int j = 0; j < m; j++)
-				{
-					result[i, j] = 0;
-					for (int k = 0; k < m; k++)
-					{
-						result[i, j] += firstMatrix[i, k] * secondMatrix[k, j];
-					}
-				}
-			}
-
-			return result;
+			_timer.Stop();
+			_timer.Tick -= downShiftButton_Click;
 		}
 
-		private void InitShiftMatrix(int k1, int l1)
+		private void DownShiftButtonOnMouseDown(object? sender, MouseEventArgs e)
 		{
-			_shiftMartix[0, 0] = 1;
-			_shiftMartix[1, 0] = 0;
-			_shiftMartix[2, 0] = k1;
-			_shiftMartix[0, 1] = 0;
-			_shiftMartix[1, 1] = 1;
-			_shiftMartix[2, 1] = l1;
-			_shiftMartix[0, 2] = 0;
-			_shiftMartix[1, 2] = 0;
-			_shiftMartix[2, 2] = 1;
+			_timer.Enabled = true;
+			_timer.Tick += downShiftButton_Click;
+			_timer.Start();
 		}
 
-		private void InitSquare()
+		private void UpShiftButtonOnMouseUp(object? sender, MouseEventArgs e)
 		{
-			_square[0, 0] = -50;
-			_square[1, 0] = 0;
-			_square[2, 0] = 50;
-			_square[3, 0] = 0;
-			_square[0, 1] = 0;
-			_square[1, 1] = 50;
-			_square[2, 1] = 0;
-			_square[3, 1] = -50;
-			_square[0, 2] = 1;
-			_square[1, 2] = 1;
-			_square[2, 2] = 1;
-			_square[3, 2] = 1;
+			_timer.Stop();
+			_timer.Tick -= upShiftButton_Click;
+		}
+
+		private void UpShiftButtonOnMouseDown(object? sender, MouseEventArgs e)
+		{
+			_timer.Enabled = true;
+			_timer.Tick += upShiftButton_Click;
+			_timer.Start();
+		}
+
+		private void LeftShiftButtonOnMouseUp(object? sender, MouseEventArgs e)
+		{
+			_timer.Stop();
+			_timer.Tick -= leftShiftButton_Click;
+		}
+
+		private void LeftShiftButtonOnMouseDown(object? sender, MouseEventArgs e)
+		{
+			_timer.Enabled = true;
+			_timer.Tick += leftShiftButton_Click;
+			_timer.Start();
 		}
 
 
-		private void BuildAxis()
+		private void RightShiftButtonOnMouseUp(object? sender, MouseEventArgs e)
 		{
-			_axis[0, 0] = -200;
-			_axis[1, 0] = 200;
-			_axis[2, 0] = 0;
-			_axis[3, 0] = 0;
-			_axis[0, 1] = 0;
-			_axis[1, 1] = 0;
-			_axis[2, 1] = 200;
-			_axis[3, 1] = -200;
-			_axis[0, 2] = 1;
-			_axis[1, 2] = 1;
-			_axis[2, 2] = 1;
-			_axis[3, 2] = 1;
-
+			_timer.Stop();
+			_timer.Tick -= rightShiftButton_Click;
 		}
 
-		private void InitAxis()
+		private void RightShiftButtonOnMouseDown(object? sender, MouseEventArgs e)
 		{
-			BuildAxis();
-			InitShiftMatrix(_k1, _l1);
-
-			var axis = MultiplyMatrix(_axis, _shiftMartix);
-
-			var pen = new Pen(Color.Black, 1);
-			var g = Graphics.FromImage(bitmap);
-
-			g.DrawLine(pen, axis[0,0], axis[0, 1], axis[1, 0], axis[1, 1]);
-			g.DrawLine(pen, axis[2,0], axis[2, 1], axis[3, 0], axis[3, 1]);
-
-			g.Dispose();
-
-			pictureBox.BackgroundImage = bitmap;
-			pictureBox.Refresh();
+			_timer.Enabled = true;
+			_timer.Tick += rightShiftButton_Click;
+			_timer.Start();
 		}
+
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
 		{
@@ -164,71 +140,6 @@ namespace ComputerGraphics
 		private void pictureBox_MouseDown(object sender, MouseEventArgs e)
 		{
 			
-		}
-
-		public static Bitmap FloodFill(Bitmap bitmap, Point pt, Color color)
-		{
-			Stack<Point> pixels = new Stack<Point>();
-			var targetColor = bitmap.GetPixel(pt.X, pt.Y);
-			pixels.Push(pt);
-
-			while (pixels.Count > 0)
-			{
-				Point currentP = pixels.Pop();
-				if (currentP.X < bitmap.Width && currentP.X > -1 && currentP.Y < bitmap.Height && currentP.Y > -1)
-				{
-					if (bitmap.GetPixel(currentP.X, currentP.Y) == targetColor)
-					{
-						bitmap.SetPixel(currentP.X, currentP.Y, color);
-						pixels.Push(new Point(currentP.X - 1, currentP.Y));
-						pixels.Push(new Point(currentP.X + 1, currentP.Y));
-						pixels.Push(new Point(currentP.X, currentP.Y - 1));
-						pixels.Push(new Point(currentP.X, currentP.Y + 1));
-					}
-				}
-			}
-			return bitmap;
-		}
-
-
-		/// <summary>
-		/// Отрисвока линии алгоритмом обычный ЦДА.
-		/// </summary>
-		/// <param name="e"> Событие мыши, через которое можно получить координаты курсора </param>
-		private void simpleCDADraw(MouseEventArgs e, Bitmap b, double xk = 0, double yk = 0)
-		{
-			int i, n;
-			double xt, yt, dx, dy;
-
-			// используется рисование мышью
-			if (xk == 0 && yk == 0)
-			{
-				xk = e.X;
-				yk = e.Y;
-			}
-
-			if (xk < 0 || yk < 0 || xk > pictureBox.Width || yk > pictureBox.Height)
-			{
-				MessageBox.Show("Нельзя рисовать за пределами полотна", "Внимание", 
-								MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
-			}
-
-			dx = xk - xn;
-			dy = yk - yn;
-			n = 300;
-			xt = xn;
-			yt = yn;
-
-			for (i = 1; i <= n; i++)
-			{
-				b.SetPixel((int)xt, (int)yt, _pen.Color);
-
-				xt = xt + dx / n;
-				yt = yt + dy / n;
-			}
-
-			pictureBox.BackgroundImage = b;
 		}
 
 		private void clearButton_Click(object sender, EventArgs e)
@@ -314,23 +225,13 @@ namespace ComputerGraphics
 			}
 		}
 
-		private void rightShiftButton_KeyUp(object sender, KeyEventArgs e)
+		
+		private void TimerOnTick(object? sender, EventArgs e)
 		{
-			action = false;
+			Clear();
+			k += 5;
+			DrawRectangle();
 		}
-
-		private void rightShiftButton_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			action = true;
-			while (action)
-			{
-				Clear();
-				k += 5;
-				DrawRectangle();
-				Thread.Sleep(500);
-			}
-		}
-
 		private void leftShiftButton_Click(object sender, EventArgs e)
 		{
 			Clear();
@@ -352,18 +253,12 @@ namespace ComputerGraphics
 			DrawRectangle();
 		}
 
-		private void stopButton_Click(object sender, EventArgs e)
-		{
-			action = false;
-		}
-
 		private void rightShiftButton_Click(object sender, EventArgs e)
 		{
 			Clear();
 			k += 5;
 			DrawRectangle();
 		}
-
 
 		private void DrawSpecialFigure()
 		{
@@ -416,6 +311,94 @@ namespace ComputerGraphics
 			g.DrawLine(_pen, rect[1,0], rect[1, 1], rect[2, 0], rect[2, 1]);
 			g.DrawLine(_pen, rect[2,0], rect[2, 1], rect[3, 0], rect[3, 1]);
 			g.DrawLine(_pen, rect[3,0], rect[3, 1], rect[0, 0], rect[0, 1]);
+
+			pictureBox.BackgroundImage = bitmap;
+			pictureBox.Refresh();
+		}
+
+		private int[,] MultiplyMatrix(int[,] firstMatrix, int[,] secondMatrix)
+		{
+			// размерность первой матрицы
+			var n = firstMatrix.GetLength(0);
+			var m = firstMatrix.GetLength(1);
+
+			var result = new int[n, m];
+			for (int i = 0; i < n; i++)
+			{
+				for (int j = 0; j < m; j++)
+				{
+					result[i, j] = 0;
+					for (int k = 0; k < m; k++)
+					{
+						result[i, j] += firstMatrix[i, k] * secondMatrix[k, j];
+					}
+				}
+			}
+
+			return result;
+		}
+
+		private void InitShiftMatrix(int k1, int l1)
+		{
+			_shiftMartix[0, 0] = 1;
+			_shiftMartix[1, 0] = 0;
+			_shiftMartix[2, 0] = k1;
+			_shiftMartix[0, 1] = 0;
+			_shiftMartix[1, 1] = 1;
+			_shiftMartix[2, 1] = l1;
+			_shiftMartix[0, 2] = 0;
+			_shiftMartix[1, 2] = 0;
+			_shiftMartix[2, 2] = 1;
+		}
+
+		private void InitSquare()
+		{
+			_square[0, 0] = -50;
+			_square[1, 0] = 0;
+			_square[2, 0] = 50;
+			_square[3, 0] = 0;
+			_square[0, 1] = 0;
+			_square[1, 1] = 50;
+			_square[2, 1] = 0;
+			_square[3, 1] = -50;
+			_square[0, 2] = 1;
+			_square[1, 2] = 1;
+			_square[2, 2] = 1;
+			_square[3, 2] = 1;
+		}
+
+
+		private void BuildAxis()
+		{
+			_axis[0, 0] = -200;
+			_axis[1, 0] = 200;
+			_axis[2, 0] = 0;
+			_axis[3, 0] = 0;
+			_axis[0, 1] = 0;
+			_axis[1, 1] = 0;
+			_axis[2, 1] = 200;
+			_axis[3, 1] = -200;
+			_axis[0, 2] = 1;
+			_axis[1, 2] = 1;
+			_axis[2, 2] = 1;
+			_axis[3, 2] = 1;
+
+		}
+
+		private void InitAxis()
+		{
+			BuildAxis();
+			InitShiftMatrix(_k1, _l1);
+
+			var axis = MultiplyMatrix(_axis, _shiftMartix);
+
+			var pen = new Pen(Color.Black, 1);
+			var g = Graphics.FromImage(bitmap);
+
+			g.DrawLine(pen, axis[0, 0], axis[0, 1], axis[1, 0], axis[1, 1]);
+			g.DrawLine(pen, axis[2, 0], axis[2, 1], axis[3, 0], axis[3, 1]);
+
+			g.Dispose();
 
 			pictureBox.BackgroundImage = bitmap;
 			pictureBox.Refresh();

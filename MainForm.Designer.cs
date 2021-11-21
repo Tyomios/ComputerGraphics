@@ -44,6 +44,8 @@ namespace ComputerGraphics
 			this.prevPenCheckBox = new System.Windows.Forms.CheckBox();
 			this.fatPencheckBox = new System.Windows.Forms.CheckBox();
 			this.colorPickerButton = new System.Windows.Forms.Button();
+			this.SizeLabel = new System.Windows.Forms.Label();
+			this.sizeComboBox = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.panel.SuspendLayout();
 			this.penSettingsGroupBox.SuspendLayout();
@@ -80,6 +82,8 @@ namespace ComputerGraphics
 			this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel.Controls.Add(this.sizeComboBox);
+			this.panel.Controls.Add(this.SizeLabel);
 			this.panel.Controls.Add(this.leftShiftButton);
 			this.panel.Controls.Add(this.downShiftButton);
 			this.panel.Controls.Add(this.rightShiftButton);
@@ -224,6 +228,25 @@ namespace ComputerGraphics
 			this.colorPickerButton.UseVisualStyleBackColor = false;
 			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
+			// SizeLabel
+			// 
+			this.SizeLabel.AutoSize = true;
+			this.SizeLabel.Location = new System.Drawing.Point(14, 423);
+			this.SizeLabel.Name = "SizeLabel";
+			this.SizeLabel.Size = new System.Drawing.Size(62, 15);
+			this.SizeLabel.TabIndex = 21;
+			this.SizeLabel.Text = "Масштаб:";
+			// 
+			// sizeComboBox
+			// 
+			this.sizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.sizeComboBox.FormattingEnabled = true;
+			this.sizeComboBox.Location = new System.Drawing.Point(81, 420);
+			this.sizeComboBox.Name = "sizeComboBox";
+			this.sizeComboBox.Size = new System.Drawing.Size(55, 23);
+			this.sizeComboBox.TabIndex = 22;
+			this.sizeComboBox.SelectedIndexChanged += new System.EventHandler(this.sizeComboBox_SelectedIndexChanged);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -259,6 +282,8 @@ namespace ComputerGraphics
 		private System.Windows.Forms.Button downShiftButton;
 		private System.Windows.Forms.Button rightShiftButton;
 		private System.Windows.Forms.Button upShiftButton;
+		private System.Windows.Forms.Label SizeLabel;
+		private System.Windows.Forms.ComboBox sizeComboBox;
 	}
 }
 

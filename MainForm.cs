@@ -31,6 +31,8 @@ namespace ComputerGraphics
 
 		private Timer _timer = new Timer();
 
+		private int _size = 1;
+
 		private enum PenSettings
 		{
 			px2 = 2,
@@ -43,10 +45,12 @@ namespace ComputerGraphics
 		{
 			InitializeComponent();
 			
-			templatesComboBox.Items.Add("Треугольник");
 			templatesComboBox.Items.Add("Прямоугольник");
-			templatesComboBox.Items.Add("Круг");
 			templatesComboBox.Items.Add("Вариант 14");
+
+			sizeComboBox.Items.Add(1);
+			sizeComboBox.Items.Add(2);
+			sizeComboBox.Items.Add(3);
 
 			penSettingsComboBox.Items.Add(PenSettings.px2);
 			penSettingsComboBox.Items.Add(PenSettings.px4);
@@ -226,12 +230,6 @@ namespace ComputerGraphics
 		}
 
 		
-		private void TimerOnTick(object? sender, EventArgs e)
-		{
-			Clear();
-			k += 5;
-			DrawRectangle();
-		}
 		private void leftShiftButton_Click(object sender, EventArgs e)
 		{
 			Clear();
@@ -292,7 +290,6 @@ namespace ComputerGraphics
 			pictureBox.Refresh();
 		}
 
-
 		private void penSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			var selectedValue = (PenSettings)penSettingsComboBox.SelectedItem;
@@ -340,15 +337,15 @@ namespace ComputerGraphics
 
 		private void InitShiftMatrix(int k1, int l1)
 		{
-			_shiftMartix[0, 0] = 1;
+			_shiftMartix[0, 0] = _size;
 			_shiftMartix[1, 0] = 0;
 			_shiftMartix[2, 0] = k1;
 			_shiftMartix[0, 1] = 0;
-			_shiftMartix[1, 1] = 1;
+			_shiftMartix[1, 1] = _size;
 			_shiftMartix[2, 1] = l1;
 			_shiftMartix[0, 2] = 0;
 			_shiftMartix[1, 2] = 0;
-			_shiftMartix[2, 2] = 1;
+			_shiftMartix[2, 2] = _size;
 		}
 
 		private void InitSquare()
@@ -367,6 +364,10 @@ namespace ComputerGraphics
 			_square[3, 2] = 1;
 		}
 
+		private void sizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			_size = (int)sizeComboBox.SelectedItem;
+		}
 
 		private void BuildAxis()
 		{

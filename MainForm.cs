@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,6 +30,10 @@ namespace ComputerGraphics
 		private int[,] _shiftMartix = new int[3, 3];
 
 		private int _k1, _l1;
+
+		private int k,l;
+
+		private bool action = true;
 
 		private enum PenSettings
 		{
@@ -57,6 +62,8 @@ namespace ComputerGraphics
 
 			_k1 = pictureBox.Width / 2;
 			_l1 = pictureBox.Height / 2;
+			k = _k1;
+			l = _l1;
 			InitAxis();
 		}
 
@@ -226,6 +233,11 @@ namespace ComputerGraphics
 
 		private void clearButton_Click(object sender, EventArgs e)
 		{
+			Clear();
+		}
+
+		private void Clear()
+		{
 			var g = Graphics.FromImage(bitmap);
 			g.Clear(Color.White);
 			InitAxis();
@@ -294,57 +306,62 @@ namespace ComputerGraphics
 			}
 			if (templatesComboBox.SelectedItem == "Прямоугольник")
 			{
-				
 				DrawRectangle();
 			}
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
 				DrawSpecialFigure();
 			}
-			if (templatesComboBox.SelectedItem == "Круг")
+		}
+
+		private void rightShiftButton_KeyUp(object sender, KeyEventArgs e)
+		{
+			action = false;
+		}
+
+		private void rightShiftButton_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			action = true;
+			while (action)
 			{
-				DrawCircle();
+				Clear();
+				k += 5;
+				DrawRectangle();
+				Thread.Sleep(500);
 			}
 		}
 
-
-		private void DrawCircle()
+		private void leftShiftButton_Click(object sender, EventArgs e)
 		{
-			var g = Graphics.FromImage(bitmap);
-			Brush b1 = new SolidBrush(_pen.Color);
-			var random = new Random();
-			int x = 20; //вносим радиус
-			int y = 0;
-			var x0 = random.Next(10, pictureBox.Width - 40);
-			var y0 = random.Next(10, pictureBox.Height - 40);
-			int radiusError = 1 - x;
+			Clear();
+			k -= 5;
+			DrawRectangle();
+		}
 
-			while (x >= y)
-			{
-				g.FillRectangle(b1, x + x0 , y + y0 , _pen.Width, _pen.Width);
-				g.FillRectangle(b1, y + x0 , x + y0 , _pen.Width, _pen.Width);
-				g.FillRectangle(b1, -x + x0 , y + y0 , _pen.Width, _pen.Width);
-				g.FillRectangle(b1, -y + x0 , x + y0 , _pen.Width, _pen.Width);
-				g.FillRectangle(b1, -x + x0 , -y + y0 , _pen.Width, _pen.Width);
-				g.FillRectangle(b1, -y + x0 , -x + y0 , _pen.Width, _pen.Width);
-				g.FillRectangle(b1, x + x0 , -y + y0 , _pen.Width, _pen.Width);
-				g.FillRectangle(b1, y + x0 , -x + y0 , _pen.Width, _pen.Width);
+		private void upShiftButton_Click(object sender, EventArgs e)
+		{
+			Clear();
+			l -= 5;
+			DrawRectangle();
+		}
 
-				y++;
-				if (radiusError < 0)
-				{
-					radiusError += 2 * y + 1;
-				}
-				else
-				{
-					x--;
-					radiusError += 2 * (y - x + 1);
-				}
+		private void downShiftButton_Click(object sender, EventArgs e)
+		{
+			Clear();
+			l += 5;
+			DrawRectangle();
+		}
 
-			}
+		private void stopButton_Click(object sender, EventArgs e)
+		{
+			action = false;
+		}
 
-			pictureBox.BackgroundImage = bitmap;
-			pictureBox.Refresh();
+		private void rightShiftButton_Click(object sender, EventArgs e)
+		{
+			Clear();
+			k += 5;
+			DrawRectangle();
 		}
 
 
@@ -390,7 +407,7 @@ namespace ComputerGraphics
 		private void DrawRectangle()
 		{
 			InitSquare();
-			InitShiftMatrix(_k1, _l1);
+			InitShiftMatrix(k, l);
 			var rect = MultiplyMatrix(_square, _shiftMartix);
 
 			var g = Graphics.FromImage(bitmap);

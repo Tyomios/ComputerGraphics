@@ -32,10 +32,11 @@ namespace ComputerGraphics
 			this.clearButton = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
+			this.stopButton = new System.Windows.Forms.Button();
+			this.leftShiftButton = new System.Windows.Forms.Button();
+			this.downShiftButton = new System.Windows.Forms.Button();
+			this.rightShiftButton = new System.Windows.Forms.Button();
+			this.upShiftButton = new System.Windows.Forms.Button();
 			this.shiftLabel = new System.Windows.Forms.Label();
 			this.templatesLabel = new System.Windows.Forms.Label();
 			this.templatesComboBox = new System.Windows.Forms.ComboBox();
@@ -80,10 +81,11 @@ namespace ComputerGraphics
 			this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel.Controls.Add(this.button4);
-			this.panel.Controls.Add(this.button3);
-			this.panel.Controls.Add(this.button2);
-			this.panel.Controls.Add(this.button1);
+			this.panel.Controls.Add(this.stopButton);
+			this.panel.Controls.Add(this.leftShiftButton);
+			this.panel.Controls.Add(this.downShiftButton);
+			this.panel.Controls.Add(this.rightShiftButton);
+			this.panel.Controls.Add(this.upShiftButton);
 			this.panel.Controls.Add(this.shiftLabel);
 			this.panel.Controls.Add(this.templatesLabel);
 			this.panel.Controls.Add(this.templatesComboBox);
@@ -94,46 +96,62 @@ namespace ComputerGraphics
 			this.panel.Size = new System.Drawing.Size(285, 465);
 			this.panel.TabIndex = 5;
 			// 
-			// button4
+			// stopButton
 			// 
-			this.button4.Location = new System.Drawing.Point(14, 306);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(75, 23);
-			this.button4.TabIndex = 20;
-			this.button4.Text = "button4";
-			this.button4.UseVisualStyleBackColor = true;
+			this.stopButton.Location = new System.Drawing.Point(102, 306);
+			this.stopButton.Name = "stopButton";
+			this.stopButton.Size = new System.Drawing.Size(75, 23);
+			this.stopButton.TabIndex = 21;
+			this.stopButton.Text = "стоп";
+			this.stopButton.UseVisualStyleBackColor = true;
+			this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
 			// 
-			// button3
+			// leftShiftButton
 			// 
-			this.button3.Location = new System.Drawing.Point(98, 346);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 19;
-			this.button3.Text = "button3";
-			this.button3.UseVisualStyleBackColor = true;
+			this.leftShiftButton.Location = new System.Drawing.Point(14, 306);
+			this.leftShiftButton.Name = "leftShiftButton";
+			this.leftShiftButton.Size = new System.Drawing.Size(75, 23);
+			this.leftShiftButton.TabIndex = 20;
+			this.leftShiftButton.Text = "влево";
+			this.leftShiftButton.UseVisualStyleBackColor = true;
+			this.leftShiftButton.Click += new System.EventHandler(this.leftShiftButton_Click);
 			// 
-			// button2
+			// downShiftButton
 			// 
-			this.button2.Location = new System.Drawing.Point(193, 306);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 18;
-			this.button2.Text = "button2";
-			this.button2.UseVisualStyleBackColor = true;
+			this.downShiftButton.Location = new System.Drawing.Point(102, 347);
+			this.downShiftButton.Name = "downShiftButton";
+			this.downShiftButton.Size = new System.Drawing.Size(75, 23);
+			this.downShiftButton.TabIndex = 19;
+			this.downShiftButton.Text = "вниз";
+			this.downShiftButton.UseVisualStyleBackColor = true;
+			this.downShiftButton.Click += new System.EventHandler(this.downShiftButton_Click);
 			// 
-			// button1
+			// rightShiftButton
 			// 
-			this.button1.Location = new System.Drawing.Point(98, 268);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 17;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
+			this.rightShiftButton.Location = new System.Drawing.Point(193, 306);
+			this.rightShiftButton.Name = "rightShiftButton";
+			this.rightShiftButton.Size = new System.Drawing.Size(75, 23);
+			this.rightShiftButton.TabIndex = 18;
+			this.rightShiftButton.Text = "вправо";
+			this.rightShiftButton.UseVisualStyleBackColor = true;
+			this.rightShiftButton.Click += new System.EventHandler(this.rightShiftButton_Click);
+			this.rightShiftButton.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rightShiftButton_KeyPress);
+			this.rightShiftButton.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rightShiftButton_KeyUp);
+			// 
+			// upShiftButton
+			// 
+			this.upShiftButton.Location = new System.Drawing.Point(102, 268);
+			this.upShiftButton.Name = "upShiftButton";
+			this.upShiftButton.Size = new System.Drawing.Size(75, 23);
+			this.upShiftButton.TabIndex = 17;
+			this.upShiftButton.Text = "вверх";
+			this.upShiftButton.UseVisualStyleBackColor = true;
+			this.upShiftButton.Click += new System.EventHandler(this.upShiftButton_Click);
 			// 
 			// shiftLabel
 			// 
 			this.shiftLabel.AutoSize = true;
-			this.shiftLabel.Location = new System.Drawing.Point(117, 310);
+			this.shiftLabel.Location = new System.Drawing.Point(29, 256);
 			this.shiftLabel.Name = "shiftLabel";
 			this.shiftLabel.Size = new System.Drawing.Size(39, 15);
 			this.shiftLabel.TabIndex = 16;
@@ -251,10 +269,11 @@ namespace ComputerGraphics
 		private System.Windows.Forms.Label templatesLabel;
 		private System.Windows.Forms.ComboBox penSettingsComboBox;
 		private System.Windows.Forms.Label shiftLabel;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button leftShiftButton;
+		private System.Windows.Forms.Button downShiftButton;
+		private System.Windows.Forms.Button rightShiftButton;
+		private System.Windows.Forms.Button upShiftButton;
+		private System.Windows.Forms.Button stopButton;
 	}
 }
 

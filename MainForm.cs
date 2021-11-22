@@ -14,7 +14,6 @@ using Timer = System.Windows.Forms.Timer;
 namespace ComputerGraphics
 {
 	//TODO: Поворот
-	//TODO: Добавить лого тусура 5 лет
 	//TODO: Дорисовать оси
 	public partial class MainForm : Form
 	{
@@ -28,6 +27,8 @@ namespace ComputerGraphics
 
 		private int[,] _shiftMartix = new int[3, 3];
 
+		private int[,] ShiftMartix = new int[3, 3];
+
 		private int _k1, _l1;
 
 		private int k,l;
@@ -35,6 +36,8 @@ namespace ComputerGraphics
 		private Timer _timer = new Timer();
 
 		private int _size = 1;
+
+		private int f = 0;
 
 		private enum PenSettings
 		{
@@ -85,6 +88,8 @@ namespace ComputerGraphics
 			InitAxis();
 		}
 
+
+		#region HoldButtonsEvents
 
 		private void DownShiftButtonOnMouseUp(object? sender, MouseEventArgs e)
 		{
@@ -139,6 +144,8 @@ namespace ComputerGraphics
 			_timer.Start();
 		}
 
+		#endregion
+
 		private void clearButton_Click(object sender, EventArgs e)
 		{
 			Clear();
@@ -150,7 +157,9 @@ namespace ComputerGraphics
 			g.Clear(Color.White);
 			InitAxis();
 		}
-		
+
+		#region PenSettings
+
 		private void colorPickerButton_Click(object sender, EventArgs e)
 		{
 			ColorDialog colorDialog1 = new ColorDialog();
@@ -159,7 +168,7 @@ namespace ComputerGraphics
 				_pen.Color = colorDialog1.Color;
 				var color = colorDialog1.Color;
 
-				var colorInfo = new List<byte>() {color.R, color.G, color.B};
+				var colorInfo = new List<byte>() { color.R, color.G, color.B };
 				colorPickerButton.BackColor = _pen.Color;
 				foreach (var value in colorInfo)
 				{
@@ -174,10 +183,15 @@ namespace ComputerGraphics
 					}
 				}
 
-				
+
 			}
 		}
 
+		private void penSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			var selectedValue = (PenSettings)penSettingsComboBox.SelectedItem;
+			_pen.Width = (float)selectedValue;
+		}
 
 		private void fatPencheckBox_CheckedChanged(object sender, EventArgs e)
 		{
@@ -205,6 +219,9 @@ namespace ComputerGraphics
 			}
 		}
 
+		#endregion
+
+		#region ShiftButtons
 
 		private void templatesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -220,7 +237,7 @@ namespace ComputerGraphics
 			}
 		}
 
-		
+
 		private void leftShiftButton_Click(object sender, EventArgs e)
 		{
 			if (templatesComboBox.SelectedItem == "Прямоугольник")
@@ -245,7 +262,7 @@ namespace ComputerGraphics
 				Clear();
 				DrawSpecialFigure();
 			}
-			
+
 		}
 
 		private void upShiftButton_Click(object sender, EventArgs e)
@@ -272,7 +289,7 @@ namespace ComputerGraphics
 				Clear();
 				DrawSpecialFigure();
 			}
-			
+
 		}
 
 		private void downShiftButton_Click(object sender, EventArgs e)
@@ -327,20 +344,19 @@ namespace ComputerGraphics
 			}
 		}
 
-		private void penSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			var selectedValue = (PenSettings)penSettingsComboBox.SelectedItem;
-			_pen.Width = (float)selectedValue;
-		}
+		#endregion
 
-
-		
 		private void DrawSpecialFigure()
 		{
 			InitSpecialFigure();
-			InitShiftMatrix(k, l);
-			var rect = MultiplyMatrix(_square, _shiftMartix);
+			InitShiftMatr(k, l);
+			var rect = MultiplyMatrix(_square, ShiftMartix);
 			var g = Graphics.FromImage(bitmap);
+
+			var fPoint = new Point(rect[0, 0], rect[0, 1]);
+			var sPoint = new Point(rect[1, 0], rect[1, 1]);
+			var thPoint = new Point(rect[2, 0], rect[2, 1]);
+			var foPoint = new Point(rect[3, 0], rect[3, 1]);
 
 			g.DrawLine(_pen, rect[0, 0], rect[0, 1], rect[1, 0], rect[1, 1]);
 			g.DrawLine(_pen, rect[1, 0], rect[1, 1], rect[2, 0], rect[2, 1]);
@@ -368,6 +384,9 @@ namespace ComputerGraphics
 			pictureBox.BackgroundImage = bitmap;
 			pictureBox.Refresh();
 		}
+
+
+		#region Checkers
 
 		private bool CheckLocation(int x, int y)
 		{
@@ -421,6 +440,10 @@ namespace ComputerGraphics
 			return false;
 		}
 
+		#endregion
+
+		#region Fundamentals
+
 		private int[,] MultiplyMatrix(int[,] firstMatrix, int[,] secondMatrix)
 		{
 			// размерность первой матрицы
@@ -443,18 +466,34 @@ namespace ComputerGraphics
 			return result;
 		}
 
+
 		private void InitShiftMatrix(int k1, int l1)
 		{
 			_shiftMartix[0, 0] = _size;
-			_shiftMartix[1, 0] = 0;
+			_shiftMartix[1, 0] = 0; //
 			_shiftMartix[2, 0] = k1;
-			_shiftMartix[0, 1] = 0;
+			_shiftMartix[0, 1] = 0; //
 			_shiftMartix[1, 1] = _size;
 			_shiftMartix[2, 1] = l1;
-			_shiftMartix[0, 2] = 0;
-			_shiftMartix[1, 2] = 0;
+			_shiftMartix[0, 2] = 0; //
+			_shiftMartix[1, 2] = 0; // 
 			_shiftMartix[2, 2] = _size;
 		}
+
+
+		private void InitShiftMatr(int k1, int l1)
+		{
+			ShiftMartix[0, 0] = _size;
+			ShiftMartix[1, 0] = 0;
+			ShiftMartix[2, 0] = k1;
+			ShiftMartix[0, 1] = 0;
+			ShiftMartix[1, 1] = _size;
+			ShiftMartix[2, 1] = l1;
+			ShiftMartix[0, 2] = 0; //
+			ShiftMartix[1, 2] = 0; // 
+			ShiftMartix[2, 2] = _size;
+		}
+
 
 		private void InitSquare()
 		{
@@ -482,28 +521,11 @@ namespace ComputerGraphics
 			_square[0, 1] = 0;
 			_square[1, 1] = 50;
 			_square[2, 1] = 0;
-			_square[3, 1] = -85;
+			_square[3, 1] = -100;
 			_square[0, 2] = 1;
 			_square[1, 2] = 1;
 			_square[2, 2] = 1;
 			_square[3, 2] = 1;
-		}
-
-		private void sizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			_size = (int)sizeComboBox.SelectedItem;
-		}
-
-		private void mirrorCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (mirrorCheckBox.Checked)
-			{
-				_size *= -1;
-			}
-			else
-			{
-				Math.Abs(_size);
-			}
 		}
 
 		private void BuildAxis()
@@ -523,6 +545,7 @@ namespace ComputerGraphics
 
 		}
 
+
 		private void InitAxis()
 		{
 			BuildAxis();
@@ -540,6 +563,52 @@ namespace ComputerGraphics
 
 			pictureBox.BackgroundImage = bitmap;
 			pictureBox.Refresh();
+		}
+		#endregion
+
+		private void rotateButton_Click(object sender, EventArgs e)
+		{
+			if (f == 180) //-1
+			{
+				f = 0;
+				Clear();
+				DrawSpecialFigure();
+				return;
+			}
+
+			if (f == 0)
+			{
+				f = 90;//1
+				Clear();
+				DrawSpecialFigure();
+				return;
+			}
+
+			if (f == 90)//1
+			{
+				f = 180;//-1
+				Clear();
+				DrawSpecialFigure();
+				return;
+			}
+			
+		}
+
+		private void sizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			_size = (int)sizeComboBox.SelectedItem;
+		}
+
+		private void mirrorCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (mirrorCheckBox.Checked)
+			{
+				_size *= -1;
+			}
+			else
+			{
+				Math.Abs(_size);
+			}
 		}
 	}
 }

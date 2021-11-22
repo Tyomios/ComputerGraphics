@@ -63,9 +63,69 @@ namespace ComputerGraphics.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap outline_east_black_18dp {
+            get {
+                object obj = ResourceManager.GetObject("outline_east_black_18dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap outline_north_black_18dp {
+            get {
+                object obj = ResourceManager.GetObject("outline_north_black_18dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap outline_rotate_left_black_24dp {
+            get {
+                object obj = ResourceManager.GetObject("outline_rotate_left_black_24dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap outline_south_black_18dp {
+            get {
+                object obj = ResourceManager.GetObject("outline_south_black_18dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap outline_west_black_18dp {
+            get {
+                object obj = ResourceManager.GetObject("outline_west_black_18dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap panelBack {
             get {
                 object obj = ResourceManager.GetObject("panelBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tusur_55_1024 {
+            get {
+                object obj = ResourceManager.GetObject("tusur_55_1024", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

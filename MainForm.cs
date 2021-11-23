@@ -352,11 +352,20 @@ namespace ComputerGraphics
 			InitShiftMatr(k, l);
 			var rect = MultiplyMatrix(_square, ShiftMartix);
 			var g = Graphics.FromImage(bitmap);
+			var m = rect[2, 0];
+			var n = rect[2, 1];
+			var rotateMatrix = new int[3, 3];
+			rotateMatrix[0, 0] = (int)Math.Cos(f);
+			rotateMatrix[0, 1] = -(int)Math.Sin(f);
+			rotateMatrix[1, 0] = (int)Math.Sin(f);
+			rotateMatrix[1, 1] = (int)Math.Cos(f);
+			rotateMatrix[2, 0] = -m* (int)Math.Cos(f - 1) + n * (int)Math.Sin(f);
+			rotateMatrix[2, 1] = -m * (int)Math.Sin(f) - n * (int)Math.Cos(f - 1);
+			rotateMatrix[2, 2] = 1;
+			rotateMatrix[1, 2] = 0;
+			rotateMatrix[0, 2] = 0;
 
-			var fPoint = new Point(rect[0, 0], rect[0, 1]);
-			var sPoint = new Point(rect[1, 0], rect[1, 1]);
-			var thPoint = new Point(rect[2, 0], rect[2, 1]);
-			var foPoint = new Point(rect[3, 0], rect[3, 1]);
+			rect = MultiplyMatrix(rect, rotateMatrix);
 
 			g.DrawLine(_pen, rect[0, 0], rect[0, 1], rect[1, 0], rect[1, 1]);
 			g.DrawLine(_pen, rect[1, 0], rect[1, 1], rect[2, 0], rect[2, 1]);
@@ -536,8 +545,8 @@ namespace ComputerGraphics
 			_axis[3, 0] = 0;
 			_axis[0, 1] = 0;
 			_axis[1, 1] = 0;
-			_axis[2, 1] = 200;
-			_axis[3, 1] = -200;
+			_axis[2, 1] = 400;
+			_axis[3, 1] = -400;
 			_axis[0, 2] = 1;
 			_axis[1, 2] = 1;
 			_axis[2, 2] = 1;
@@ -568,30 +577,9 @@ namespace ComputerGraphics
 
 		private void rotateButton_Click(object sender, EventArgs e)
 		{
-			if (f == 180) //-1
-			{
-				f = 0;
-				Clear();
-				DrawSpecialFigure();
-				return;
-			}
-
-			if (f == 0)
-			{
-				f = 90;//1
-				Clear();
-				DrawSpecialFigure();
-				return;
-			}
-
-			if (f == 90)//1
-			{
-				f = 180;//-1
-				Clear();
-				DrawSpecialFigure();
-				return;
-			}
-			
+			f += 10;
+			Clear();
+			DrawSpecialFigure();
 		}
 
 		private void sizeComboBox_SelectedIndexChanged(object sender, EventArgs e)

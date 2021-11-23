@@ -578,16 +578,32 @@ namespace ComputerGraphics
 
 		private void rotateButton_Click(object sender, EventArgs e)
 		{
-			f += 45;
-			Clear();
-			DrawSpecialFigure();
+			if (templatesComboBox.SelectedItem == "Вариант 14")
+			{
+				f += 45;
+				Clear();
+				DrawSpecialFigure();
+			}
+			else
+			{
+				MessageBox.Show("Поворот доступен только специальной фигуре", "Внимание", MessageBoxButtons.OK,
+					MessageBoxIcon.Warning);
+			}
 		}
 
 		private void rotateRightButton_Click(object sender, EventArgs e)
 		{
-			f -= 45;
-			Clear();
-			DrawSpecialFigure();
+			if (templatesComboBox.SelectedItem == "Вариант 14")
+			{
+				f -= 45;
+				Clear();
+				DrawSpecialFigure();
+			}
+			else
+			{
+				MessageBox.Show("Поворот доступен только специальной фигуре", "Внимание", MessageBoxButtons.OK,
+					MessageBoxIcon.Warning);
+			}
 		}
 
 		private void sizeComboBox_SelectedIndexChanged(object sender, EventArgs e)

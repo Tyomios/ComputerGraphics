@@ -108,7 +108,7 @@ namespace ComputerGraphics
 			// 
 			this.rotateButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_rotate_left_black_24dp;
 			this.rotateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.rotateButton.Location = new System.Drawing.Point(19, 237);
+			this.rotateButton.Location = new System.Drawing.Point(19, 335);
 			this.rotateButton.Name = "rotateButton";
 			this.rotateButton.Size = new System.Drawing.Size(30, 30);
 			this.rotateButton.TabIndex = 24;
@@ -293,7 +293,7 @@ namespace ComputerGraphics
 			// 
 			// rotateRightButton
 			// 
-			this.rotateRightButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_rotate_left_black_24dp;
+			this.rotateRightButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.imgonline_com_ua_Mirror_n9WB5rtwGg21;
 			this.rotateRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 			this.rotateRightButton.Location = new System.Drawing.Point(134, 335);
 			this.rotateRightButton.Name = "rotateRightButton";

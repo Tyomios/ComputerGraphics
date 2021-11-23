@@ -14,20 +14,19 @@ using Timer = System.Windows.Forms.Timer;
 namespace ComputerGraphics
 {
 	//TODO: Поворот
-	//TODO: Дорисовать оси
 	public partial class MainForm : Form
 	{
 		private Pen _pen = new Pen(Color.Black, 1);
 
 		private Bitmap bitmap;
 
-		private int[,] _axis = new int[4, 3];
+		private double[,] _axis = new double[4, 3];
 
-		private int[,] _square = new int[4, 3];
+		private double[,] _square = new double[4, 3];
 
-		private int[,] _shiftMartix = new int[3, 3];
+		private double[,] _shiftMartix = new double[3, 3];
 
-		private int[,] ShiftMartix = new int[3, 3];
+		private double[,] ShiftMartix = new double[3, 3];
 
 		private int _k1, _l1;
 
@@ -350,27 +349,29 @@ namespace ComputerGraphics
 		{
 			InitSpecialFigure();
 			InitShiftMatr(k, l);
+			
+			
 			var rect = MultiplyMatrix(_square, ShiftMartix);
-			var g = Graphics.FromImage(bitmap);
-			var m = rect[2, 0];
-			var n = rect[2, 1];
-			var rotateMatrix = new int[3, 3];
-			rotateMatrix[0, 0] = (int)Math.Cos(f);
-			rotateMatrix[0, 1] = -(int)Math.Sin(f);
-			rotateMatrix[1, 0] = (int)Math.Sin(f);
-			rotateMatrix[1, 1] = (int)Math.Cos(f);
-			rotateMatrix[2, 0] = -m* (int)Math.Cos(f - 1) + n * (int)Math.Sin(f);
-			rotateMatrix[2, 1] = -m * (int)Math.Sin(f) - n * (int)Math.Cos(f - 1);
+			var m = rect[0, 2];
+			var n = rect[1, 2];
+			var rotateMatrix = new double[3, 3];
+			rotateMatrix[0, 0] = Math.Cos(f);
+			rotateMatrix[0, 1] = -Math.Sin(f);
+			rotateMatrix[1, 0] = Math.Sin(f);
+			rotateMatrix[1, 1] = Math.Cos(f);
+			rotateMatrix[2, 0] = k;
+			rotateMatrix[2, 1] = l;
 			rotateMatrix[2, 2] = 1;
-			rotateMatrix[1, 2] = 0;
-			rotateMatrix[0, 2] = 0;
+			rotateMatrix[1, 2] = -m * (Math.Cos(f) - 1) + n * Math.Sin(f);
+			rotateMatrix[0, 2] = -m * Math.Sin(f) - n * (Math.Cos(f) - 1); //
 
-			rect = MultiplyMatrix(rect, rotateMatrix);
+			rect = MultiplyMatrix(_square, rotateMatrix);
 
-			g.DrawLine(_pen, rect[0, 0], rect[0, 1], rect[1, 0], rect[1, 1]);
-			g.DrawLine(_pen, rect[1, 0], rect[1, 1], rect[2, 0], rect[2, 1]);
-			g.DrawLine(_pen, rect[2, 0], rect[2, 1], rect[3, 0], rect[3, 1]);
-			g.DrawLine(_pen, rect[3, 0], rect[3, 1], rect[0, 0], rect[0, 1]);
+			var g = Graphics.FromImage(bitmap);
+			g.DrawLine(_pen, (int)rect[0, 0], (int)rect[0, 1], (int)rect[1, 0], (int)rect[1, 1]);
+			g.DrawLine(_pen, (int)rect[1, 0], (int)rect[1, 1], (int)rect[2, 0], (int)rect[2, 1]);
+			g.DrawLine(_pen, (int)rect[2, 0], (int)rect[2, 1], (int)rect[3, 0], (int)rect[3, 1]);
+			g.DrawLine(_pen, (int)rect[3, 0], (int)rect[3, 1], (int)rect[0, 0], (int)rect[0, 1]);
 
 			pictureBox.BackgroundImage = bitmap;
 			pictureBox.Refresh();
@@ -385,10 +386,10 @@ namespace ComputerGraphics
 			var g = Graphics.FromImage(bitmap);
 
 
-			g.DrawLine(_pen, rect[0,0], rect[0, 1], rect[1, 0], rect[1, 1]);
-			g.DrawLine(_pen, rect[1,0], rect[1, 1], rect[2, 0], rect[2, 1]);
-			g.DrawLine(_pen, rect[2,0], rect[2, 1], rect[3, 0], rect[3, 1]);
-			g.DrawLine(_pen, rect[3,0], rect[3, 1], rect[0, 0], rect[0, 1]);
+			g.DrawLine(_pen, (float)rect[0,0], (float)rect[0, 1], (float)rect[1, 0], (float)rect[1, 1]);
+			g.DrawLine(_pen, (float)rect[1,0], (float)rect[1, 1], (float)rect[2, 0], (float)rect[2, 1]);
+			g.DrawLine(_pen, (float)rect[2,0], (float)rect[2, 1], (float)rect[3, 0], (float)rect[3, 1]);
+			g.DrawLine(_pen, (float)rect[3,0], (float)rect[3, 1], (float)rect[0, 0], (float)rect[0, 1]);
 
 			pictureBox.BackgroundImage = bitmap;
 			pictureBox.Refresh();
@@ -397,7 +398,7 @@ namespace ComputerGraphics
 
 		#region Checkers
 
-		private bool CheckLocation(int x, int y)
+		private bool CheckLocation(double x, double y)
 		{
 			if (x < 0 || y < 0) return true;
 
@@ -453,13 +454,13 @@ namespace ComputerGraphics
 
 		#region Fundamentals
 
-		private int[,] MultiplyMatrix(int[,] firstMatrix, int[,] secondMatrix)
+		private double[,] MultiplyMatrix(double[,] firstMatrix, double[,] secondMatrix)
 		{
 			// размерность первой матрицы
 			var n = firstMatrix.GetLength(0);
 			var m = firstMatrix.GetLength(1);
 
-			var result = new int[n, m];
+			var result = new double[n, m];
 			for (int i = 0; i < n; i++)
 			{
 				for (int j = 0; j < m; j++)
@@ -565,8 +566,8 @@ namespace ComputerGraphics
 			var pen = new Pen(Color.Black, 1);
 			var g = Graphics.FromImage(bitmap);
 
-			g.DrawLine(pen, axis[0, 0], axis[0, 1], axis[1, 0], axis[1, 1]);
-			g.DrawLine(pen, axis[2, 0], axis[2, 1], axis[3, 0], axis[3, 1]);
+			g.DrawLine(pen, (float)axis[0, 0], (float)axis[0, 1], (float)axis[1, 0], (float)axis[1, 1]);
+			g.DrawLine(pen, (float)axis[2, 0], (float)axis[2, 1], (float)axis[3, 0], (float)axis[3, 1]);
 
 			g.Dispose();
 
@@ -577,7 +578,14 @@ namespace ComputerGraphics
 
 		private void rotateButton_Click(object sender, EventArgs e)
 		{
-			f += 10;
+			f += 45;
+			Clear();
+			DrawSpecialFigure();
+		}
+
+		private void rotateRightButton_Click(object sender, EventArgs e)
+		{
+			f -= 45;
 			Clear();
 			DrawSpecialFigure();
 		}

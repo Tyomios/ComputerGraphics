@@ -49,6 +49,7 @@ namespace ComputerGraphics
 			this.fatPencheckBox = new System.Windows.Forms.CheckBox();
 			this.colorPickerButton = new System.Windows.Forms.Button();
 			this.TUSURpictureBox = new System.Windows.Forms.PictureBox();
+			this.rotateRightButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.panel.SuspendLayout();
 			this.penSettingsGroupBox.SuspendLayout();
@@ -84,6 +85,7 @@ namespace ComputerGraphics
 			this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel.Controls.Add(this.rotateRightButton);
 			this.panel.Controls.Add(this.rotateButton);
 			this.panel.Controls.Add(this.mirrorCheckBox);
 			this.panel.Controls.Add(this.sizeComboBox);
@@ -106,7 +108,7 @@ namespace ComputerGraphics
 			// 
 			this.rotateButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_rotate_left_black_24dp;
 			this.rotateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.rotateButton.Location = new System.Drawing.Point(144, 392);
+			this.rotateButton.Location = new System.Drawing.Point(19, 237);
 			this.rotateButton.Name = "rotateButton";
 			this.rotateButton.Size = new System.Drawing.Size(30, 30);
 			this.rotateButton.TabIndex = 24;
@@ -289,6 +291,17 @@ namespace ComputerGraphics
 			this.TUSURpictureBox.TabIndex = 6;
 			this.TUSURpictureBox.TabStop = false;
 			// 
+			// rotateRightButton
+			// 
+			this.rotateRightButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_rotate_left_black_24dp;
+			this.rotateRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.rotateRightButton.Location = new System.Drawing.Point(134, 335);
+			this.rotateRightButton.Name = "rotateRightButton";
+			this.rotateRightButton.Size = new System.Drawing.Size(30, 30);
+			this.rotateRightButton.TabIndex = 25;
+			this.rotateRightButton.UseVisualStyleBackColor = true;
+			this.rotateRightButton.Click += new System.EventHandler(this.rotateRightButton_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -331,6 +344,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.CheckBox mirrorCheckBox;
 		private System.Windows.Forms.Button rotateButton;
 		private System.Windows.Forms.PictureBox TUSURpictureBox;
+		private System.Windows.Forms.Button rotateRightButton;
 	}
 }
 

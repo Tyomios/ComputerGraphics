@@ -32,8 +32,8 @@ namespace ComputerGraphics
 			this.clearButton = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
+			this.rotateRightButton = new System.Windows.Forms.Button();
 			this.rotateButton = new System.Windows.Forms.Button();
-			this.mirrorCheckBox = new System.Windows.Forms.CheckBox();
 			this.sizeComboBox = new System.Windows.Forms.ComboBox();
 			this.SizeLabel = new System.Windows.Forms.Label();
 			this.leftShiftButton = new System.Windows.Forms.Button();
@@ -48,12 +48,9 @@ namespace ComputerGraphics
 			this.prevPenCheckBox = new System.Windows.Forms.CheckBox();
 			this.fatPencheckBox = new System.Windows.Forms.CheckBox();
 			this.colorPickerButton = new System.Windows.Forms.Button();
-			this.TUSURpictureBox = new System.Windows.Forms.PictureBox();
-			this.rotateRightButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.panel.SuspendLayout();
 			this.penSettingsGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TUSURpictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// clearButton
@@ -87,7 +84,6 @@ namespace ComputerGraphics
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panel.Controls.Add(this.rotateRightButton);
 			this.panel.Controls.Add(this.rotateButton);
-			this.panel.Controls.Add(this.mirrorCheckBox);
 			this.panel.Controls.Add(this.sizeComboBox);
 			this.panel.Controls.Add(this.SizeLabel);
 			this.panel.Controls.Add(this.leftShiftButton);
@@ -101,8 +97,19 @@ namespace ComputerGraphics
 			this.panel.Controls.Add(this.clearButton);
 			this.panel.Location = new System.Drawing.Point(395, 30);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(285, 465);
+			this.panel.Size = new System.Drawing.Size(285, 435);
 			this.panel.TabIndex = 5;
+			// 
+			// rotateRightButton
+			// 
+			this.rotateRightButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.imgonline_com_ua_Mirror_n9WB5rtwGg21;
+			this.rotateRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.rotateRightButton.Location = new System.Drawing.Point(134, 335);
+			this.rotateRightButton.Name = "rotateRightButton";
+			this.rotateRightButton.Size = new System.Drawing.Size(30, 30);
+			this.rotateRightButton.TabIndex = 25;
+			this.rotateRightButton.UseVisualStyleBackColor = true;
+			this.rotateRightButton.Click += new System.EventHandler(this.rotateRightButton_Click);
 			// 
 			// rotateButton
 			// 
@@ -114,17 +121,6 @@ namespace ComputerGraphics
 			this.rotateButton.TabIndex = 24;
 			this.rotateButton.UseVisualStyleBackColor = true;
 			this.rotateButton.Click += new System.EventHandler(this.rotateButton_Click);
-			// 
-			// mirrorCheckBox
-			// 
-			this.mirrorCheckBox.AutoSize = true;
-			this.mirrorCheckBox.Location = new System.Drawing.Point(14, 426);
-			this.mirrorCheckBox.Name = "mirrorCheckBox";
-			this.mirrorCheckBox.Size = new System.Drawing.Size(91, 19);
-			this.mirrorCheckBox.TabIndex = 23;
-			this.mirrorCheckBox.Text = "Отражение ";
-			this.mirrorCheckBox.UseVisualStyleBackColor = true;
-			this.mirrorCheckBox.CheckedChanged += new System.EventHandler(this.mirrorCheckBox_CheckedChanged);
 			// 
 			// sizeComboBox
 			// 
@@ -279,35 +275,11 @@ namespace ComputerGraphics
 			this.colorPickerButton.UseVisualStyleBackColor = false;
 			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
-			// TUSURpictureBox
-			// 
-			this.TUSURpictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.TUSURpictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.TUSURpictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.TUSURpictureBox.Image = global::ComputerGraphics.Properties.Resources.tusur_55_1024;
-			this.TUSURpictureBox.Location = new System.Drawing.Point(541, 515);
-			this.TUSURpictureBox.Name = "TUSURpictureBox";
-			this.TUSURpictureBox.Size = new System.Drawing.Size(139, 85);
-			this.TUSURpictureBox.TabIndex = 6;
-			this.TUSURpictureBox.TabStop = false;
-			// 
-			// rotateRightButton
-			// 
-			this.rotateRightButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.imgonline_com_ua_Mirror_n9WB5rtwGg21;
-			this.rotateRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.rotateRightButton.Location = new System.Drawing.Point(134, 335);
-			this.rotateRightButton.Name = "rotateRightButton";
-			this.rotateRightButton.Size = new System.Drawing.Size(30, 30);
-			this.rotateRightButton.TabIndex = 25;
-			this.rotateRightButton.UseVisualStyleBackColor = true;
-			this.rotateRightButton.Click += new System.EventHandler(this.rotateRightButton_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(684, 611);
-			this.Controls.Add(this.TUSURpictureBox);
 			this.Controls.Add(this.panel);
 			this.Controls.Add(this.pictureBox);
 			this.MinimumSize = new System.Drawing.Size(700, 650);
@@ -318,7 +290,6 @@ namespace ComputerGraphics
 			this.panel.PerformLayout();
 			this.penSettingsGroupBox.ResumeLayout(false);
 			this.penSettingsGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TUSURpictureBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -341,9 +312,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.Button upShiftButton;
 		private System.Windows.Forms.Label SizeLabel;
 		private System.Windows.Forms.ComboBox sizeComboBox;
-		private System.Windows.Forms.CheckBox mirrorCheckBox;
 		private System.Windows.Forms.Button rotateButton;
-		private System.Windows.Forms.PictureBox TUSURpictureBox;
 		private System.Windows.Forms.Button rotateRightButton;
 	}
 }

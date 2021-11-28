@@ -13,28 +13,31 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace ComputerGraphics
 {
-	//TODO: Поворот
+	//TODO: Поворот матрицы не нужно смешивать, фигуру умножить
+	//на матрицу сдвига на матрицу масштаба, на матрицу поворота
 	public partial class MainForm : Form
 	{
 		private Pen _pen = new Pen(Color.Black, 1);
 
 		private Bitmap bitmap;
 
-		private double[,] _axis = new double[4, 3];
+		private double[,] _axis = new double[4, 4]; 
 
-		private double[,] _square = new double[4, 3];
+		private double[,] _square = new double[6, 4];
 
-		private double[,] _shiftMartix = new double[3, 3];
+		private double[,] ShiftMartix = new double[4, 4];
 
-		private double[,] ShiftMartix = new double[3, 3];
+		private double[,] _rotateMatrix = new double[4, 4];
 
-		private int _k1, _l1;
+		private double[,] _sizeMatrix = new double[4, 4]; 
 
-		private int k,l;
+		private int _k1, _l1, _p1;
+
+		private int k,l, p;
 
 		private Timer _timer = new Timer();
 
-		private int _size = 1;
+		private double _size = 50;
 
 		private int f = 0;
 
@@ -50,9 +53,9 @@ namespace ComputerGraphics
 		{
 			InitializeComponent();
 			
-			templatesComboBox.Items.Add("Прямоугольник");
 			templatesComboBox.Items.Add("Вариант 14");
 
+			sizeComboBox.Items.Add(0.5);
 			sizeComboBox.Items.Add(1);
 			sizeComboBox.Items.Add(2);
 			sizeComboBox.Items.Add(3);
@@ -84,6 +87,7 @@ namespace ComputerGraphics
 			_l1 = pictureBox.Height / 2;
 			k = _k1;
 			l = _l1;
+			p = 1;
 			InitAxis();
 		}
 
@@ -224,11 +228,7 @@ namespace ComputerGraphics
 
 		private void templatesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Прямоугольник")
-			{
-				Clear();
-				DrawRectangle();
-			}
+			
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
 				Clear();
@@ -239,25 +239,11 @@ namespace ComputerGraphics
 
 		private void leftShiftButton_Click(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Прямоугольник")
-			{
-				k -= 5;
-				if (CheckRect())
-				{
-					k += 5;
-					return;
-				}
-				Clear();
-				DrawRectangle();
-			}
+			
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
 				k -= 5;
-				if (CheckSpecialFigure())
-				{
-					k += 5;
-					return;
-				}
+				
 				Clear();
 				DrawSpecialFigure();
 			}
@@ -266,25 +252,9 @@ namespace ComputerGraphics
 
 		private void upShiftButton_Click(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Прямоугольник")
-			{
-				l -= 5;
-				if (CheckRect())
-				{
-					l += 5;
-					return;
-				}
-				Clear();
-				DrawRectangle();
-			}
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
 				l -= 5;
-				if (CheckSpecialFigure())
-				{
-					l += 5;
-					return;
-				}
 				Clear();
 				DrawSpecialFigure();
 			}
@@ -293,25 +263,10 @@ namespace ComputerGraphics
 
 		private void downShiftButton_Click(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Прямоугольник")
-			{
-				l += 5;
-				if (CheckRect())
-				{
-					l -= 5;
-					return;
-				}
-				Clear();
-				DrawRectangle();
-			}
+			
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
 				l += 5;
-				if (CheckSpecialFigure())
-				{
-					l -= 5;
-					return;
-				}
 				Clear();
 				DrawSpecialFigure();
 			}
@@ -319,25 +274,10 @@ namespace ComputerGraphics
 
 		private void rightShiftButton_Click(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Прямоугольник")
-			{
-				k += 5;
-				if (CheckRect())
-				{
-					k -= 5;
-					return;
-				}
-				Clear();
-				DrawRectangle();
-			}
+			
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
 				k += 5;
-				if (CheckSpecialFigure())
-				{
-					k -= 5;
-					return;
-				}
 				Clear();
 				DrawSpecialFigure();
 			}
@@ -348,109 +288,43 @@ namespace ComputerGraphics
 		private void DrawSpecialFigure()
 		{
 			InitSpecialFigure();
-			InitShiftMatr(k, l);
-			
-			
-			var rect = MultiplyMatrix(_square, ShiftMartix);
-			var m = rect[0, 2];
-			var n = rect[1, 2];
-			var rotateMatrix = new double[3, 3];
-			rotateMatrix[0, 0] = Math.Cos(f);
-			rotateMatrix[0, 1] = -Math.Sin(f);
-			rotateMatrix[1, 0] = Math.Sin(f);
-			rotateMatrix[1, 1] = Math.Cos(f);
-			rotateMatrix[2, 0] = k;
-			rotateMatrix[2, 1] = l;
-			rotateMatrix[2, 2] = 1;
-			rotateMatrix[1, 2] = -m * (Math.Cos(f) - 1) + n * Math.Sin(f);
-			rotateMatrix[0, 2] = -m * Math.Sin(f) - n * (Math.Cos(f) - 1); //
+			InitShiftMatrix(_k1, _l1, p);
+			InitRotateMatrix();
+			InitSizeMatrix();
 
-			rect = MultiplyMatrix(_square, rotateMatrix);
+			var rect = MultiplyMatrix(_square, _sizeMatrix);
+			rect = MultiplyMatrix(rect, _rotateMatrix);
+			rect = MultiplyMatrix(rect, ShiftMartix);
 
 			var g = Graphics.FromImage(bitmap);
-			g.DrawLine(_pen, (int)rect[0, 0], (int)rect[0, 1], (int)rect[1, 0], (int)rect[1, 1]);
-			g.DrawLine(_pen, (int)rect[1, 0], (int)rect[1, 1], (int)rect[2, 0], (int)rect[2, 1]);
-			g.DrawLine(_pen, (int)rect[2, 0], (int)rect[2, 1], (int)rect[3, 0], (int)rect[3, 1]);
-			g.DrawLine(_pen, (int)rect[3, 0], (int)rect[3, 1], (int)rect[0, 0], (int)rect[0, 1]);
+
+			// соединение левой вершины 
+			
+			
+			
+
+			// соединение верхней вершины
+			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[3, 0], (float)rect[3, 1]); //дальняя
+			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближняя
+			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[4, 0], (float)rect[4, 1]); //правая
+			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[0, 0], (float)rect[0, 1]); //правая
+
+			// соединение нижней вершины
+			g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[3, 0], (float)rect[3, 1]); //дальняя
+			g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближняя
+			g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[4, 0], (float)rect[4, 1]); //правая
+			g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[0, 0], (float)rect[0, 1]); //правая
+
+			// соединение соседних 
+			g.DrawLine(_pen, (float)rect[0, 0], (float)rect[0, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближнаяя с левой
+			g.DrawLine(_pen, (float)rect[0, 0], (float)rect[0, 1], (float)rect[3, 0], (float)rect[3, 1]); // дальняя с левой
+			g.DrawLine(_pen, (float)rect[4, 0], (float)rect[4, 1], (float)rect[3, 0], (float)rect[3, 1]); // правая с дальней
+			g.DrawLine(_pen, (float)rect[4, 0], (float)rect[4, 1], (float)rect[2, 0], (float)rect[2, 1]); // правая с бижней
 
 			pictureBox.BackgroundImage = bitmap;
 			pictureBox.Refresh();
 		}
 
-		private void DrawRectangle()
-		{
-			InitSquare();
-			InitShiftMatrix(k, l);
-			var rect = MultiplyMatrix(_square, _shiftMartix);
-
-			var g = Graphics.FromImage(bitmap);
-
-
-			g.DrawLine(_pen, (float)rect[0,0], (float)rect[0, 1], (float)rect[1, 0], (float)rect[1, 1]);
-			g.DrawLine(_pen, (float)rect[1,0], (float)rect[1, 1], (float)rect[2, 0], (float)rect[2, 1]);
-			g.DrawLine(_pen, (float)rect[2,0], (float)rect[2, 1], (float)rect[3, 0], (float)rect[3, 1]);
-			g.DrawLine(_pen, (float)rect[3,0], (float)rect[3, 1], (float)rect[0, 0], (float)rect[0, 1]);
-
-			pictureBox.BackgroundImage = bitmap;
-			pictureBox.Refresh();
-		}
-
-
-		#region Checkers
-
-		private bool CheckLocation(double x, double y)
-		{
-			if (x < 0 || y < 0) return true;
-
-			if (x > pictureBox.Width) return true;
-
-			if (y > pictureBox.Height) return true;
-
-			return false;
-		}
-
-
-		private bool CheckRect()
-		{
-			InitSquare();
-			InitShiftMatrix(k, l);
-			var rect = MultiplyMatrix(_square, _shiftMartix);
-
-			if (CheckLocation(rect[0, 0], rect[0, 1]) || CheckLocation(rect[1, 0], rect[1, 1])
-			                                          || CheckLocation(rect[1, 0], rect[1, 1]) ||
-			                                          CheckLocation(rect[2, 0], rect[2, 1])
-			                                          || CheckLocation(rect[2, 0], rect[2, 1]) ||
-			                                          CheckLocation(rect[3, 0], rect[3, 1])
-			                                          || CheckLocation(rect[3, 0], rect[3, 1]) ||
-			                                          CheckLocation(rect[0, 0], rect[0, 1]))
-			{
-				return true;
-			}
-
-			return false;
-		}
-
-		private bool CheckSpecialFigure()
-		{
-			InitSpecialFigure();
-			InitShiftMatrix(k, l);
-			var rect = MultiplyMatrix(_square, _shiftMartix);
-
-			if (CheckLocation(rect[0, 0], rect[0, 1]) || CheckLocation(rect[1, 0], rect[1, 1])
-			                                          || CheckLocation(rect[1, 0], rect[1, 1]) ||
-			                                          CheckLocation(rect[2, 0], rect[2, 1])
-			                                          || CheckLocation(rect[2, 0], rect[2, 1]) ||
-			                                          CheckLocation(rect[3, 0], rect[3, 1])
-			                                          || CheckLocation(rect[3, 0], rect[3, 1]) ||
-			                                          CheckLocation(rect[0, 0], rect[0, 1]))
-			{
-				return true;
-			}
-
-			return false;
-		}
-
-		#endregion
 
 		#region Fundamentals
 
@@ -477,91 +351,145 @@ namespace ComputerGraphics
 		}
 
 
-		private void InitShiftMatrix(int k1, int l1)
+		private void InitSizeMatrix()
 		{
-			_shiftMartix[0, 0] = _size;
-			_shiftMartix[1, 0] = 0; //
-			_shiftMartix[2, 0] = k1;
-			_shiftMartix[0, 1] = 0; //
-			_shiftMartix[1, 1] = _size;
-			_shiftMartix[2, 1] = l1;
-			_shiftMartix[0, 2] = 0; //
-			_shiftMartix[1, 2] = 0; // 
-			_shiftMartix[2, 2] = _size;
+			_sizeMatrix[0, 0] = _size;
+			_sizeMatrix[1, 1] = _size;
+			_sizeMatrix[2, 2] = _size;
+			_sizeMatrix[3, 3] = 1;
+
+			_sizeMatrix[0, 1] = 0;
+			_sizeMatrix[0, 2] = 0;
+			_sizeMatrix[0, 3] = 0;
+			_sizeMatrix[1, 0] = 0;
+			_sizeMatrix[1, 2] = 0;
+			_sizeMatrix[1, 3] = 0;
+			_sizeMatrix[2, 0] = 0;
+			_sizeMatrix[2, 1] = 0;
+			_sizeMatrix[2, 3] = 0;
+			_sizeMatrix[3, 0] = 0;
+			_sizeMatrix[3, 1] = 0;
+			_sizeMatrix[3, 2] = 0;
+			
 		}
 
-
-		private void InitShiftMatr(int k1, int l1)
+		/// <summary>
+		/// Матрица вращения вокруг OY
+		/// </summary>
+		private void InitRotateMatrix()
 		{
-			ShiftMartix[0, 0] = _size;
-			ShiftMartix[1, 0] = 0;
-			ShiftMartix[2, 0] = k1;
+			var rad = Math.PI / 180 * f;
+			_rotateMatrix[0, 0] = Math.Cos(rad);
+			_rotateMatrix[0, 1] = 0;
+			_rotateMatrix[0, 2] = Math.Sin(rad);
+			_rotateMatrix[0, 3] = 0;
+			_rotateMatrix[1, 0] = 0;
+			_rotateMatrix[1, 1] = 1;
+			_rotateMatrix[1, 2] = 0;
+			_rotateMatrix[1, 3] = 0;
+			_rotateMatrix[2, 0] = -Math.Sin(rad);
+			_rotateMatrix[2, 1] = 0;
+			_rotateMatrix[2, 2] = Math.Cos(rad);
+			_rotateMatrix[2, 3] = 0;
+			_rotateMatrix[3, 0] = 0;
+			_rotateMatrix[3, 1] = 0;
+			_rotateMatrix[3, 2] = 0;
+			_rotateMatrix[3, 3] = 1;
+		}
+
+		private void InitShiftMatrix(int k1, int l1, int p)
+		{
+			ShiftMartix[0, 0] = 1;
 			ShiftMartix[0, 1] = 0;
-			ShiftMartix[1, 1] = _size;
-			ShiftMartix[2, 1] = l1;
-			ShiftMartix[0, 2] = 0; //
-			ShiftMartix[1, 2] = 0; // 
-			ShiftMartix[2, 2] = _size;
+			ShiftMartix[0, 2] = 0;
+			ShiftMartix[0, 3] = 0; //к1
+
+			ShiftMartix[1, 3] = 0; //л1
+			ShiftMartix[1, 0] = 0;
+			ShiftMartix[1, 1] = 1;
+			ShiftMartix[1, 2] = 0;
+			
+			ShiftMartix[2, 0] = 0;
+			ShiftMartix[2, 1] = 0;
+			ShiftMartix[2, 2] = 1;
+			ShiftMartix[2, 3] = 0; //р
+			
+			ShiftMartix[3, 0] = k1;
+			ShiftMartix[3, 1] = l1;
+			ShiftMartix[3, 2] = p;
+			ShiftMartix[3, 3] = 1;
 		}
-
-
-		private void InitSquare()
-		{
-			_square[0, 0] = -50; //x1
-			_square[1, 0] = 0; //x2
-			_square[2, 0] = 50; //x3
-			_square[3, 0] = 0; //x4
-			_square[0, 1] = 0;  //y1
-			_square[1, 1] = 50; //y2
-			_square[2, 1] = 0; //y3
-			_square[3, 1] = -50; //y4
-			_square[0, 2] = 1;
-			_square[1, 2] = 1;
-			_square[2, 2] = 1;
-			_square[3, 2] = 1;
-		}
-
 
 		private void InitSpecialFigure()
 		{
-			_square[0, 0] = -50;
-			_square[1, 0] = 0;
-			_square[2, 0] = 50;
-			_square[3, 0] = 50;
+			// левая вершина 
+			_square[0, 0] = -1;
 			_square[0, 1] = 0;
-			_square[1, 1] = 50;
+			_square[0, 2] = 0;
+			_square[0, 3] = 1;
+
+			// правая вершина
+			_square[4, 0] = 1;
+			_square[4, 1] = 0;
+			_square[4, 2] = 0;
+			_square[4, 3] = 1;
+
+			// верхняя вершина отразить по y для нижней.
+			_square[1, 0] = 0;
+			_square[1, 1] = -2;
+			_square[1, 2] = 0;
+			_square[1, 3] = 1;
+
+
+			// Нижнаяя вершина
+			_square[5, 0] = 0;
+			_square[5, 1] = 2;
+			_square[5, 2] = 0;
+			_square[5, 3] = 1;
+
+			// ближняя вершина.
+			_square[2, 0] = -1;
 			_square[2, 1] = 0;
-			_square[3, 1] = -100;
-			_square[0, 2] = 1;
-			_square[1, 2] = 1;
 			_square[2, 2] = 1;
+			_square[2, 3] = 1;
+
+			// дальняя вершина.
+			_square[3, 0] = -1;
+			_square[3, 1] = 0;
 			_square[3, 2] = 1;
+			_square[3, 3] = 1;
 		}
 
 		private void BuildAxis()
 		{
-			_axis[0, 0] = -200;
-			_axis[1, 0] = 200;
-			_axis[2, 0] = 0;
-			_axis[3, 0] = 0;
-			_axis[0, 1] = 0;
-			_axis[1, 1] = 0;
-			_axis[2, 1] = 400;
-			_axis[3, 1] = -400;
-			_axis[0, 2] = 1;
-			_axis[1, 2] = 1;
-			_axis[2, 2] = 1;
-			_axis[3, 2] = 1;
+			_axis[0, 0] = -200; //x1
+			_axis[1, 0] = 200; //x2
+			_axis[2, 0] = 0; //x3
+			_axis[3, 0] = 0; //x4
 
+			_axis[0, 1] = 0; //y1
+			_axis[1, 1] = 0; //y2
+			_axis[2, 1] = 400; //y3
+			_axis[3, 1] = -400; //y4
+
+			_axis[0, 2] = 0; //z1
+			_axis[1, 2] = 0; //z2
+			_axis[2, 2] = 0; //z3
+			_axis[3, 2] = 0; //z4
+
+			_axis[0, 3] = 1;
+			_axis[1, 3] = 1;
+			_axis[2, 3] = 1;
+			_axis[3, 3] = 1;
 		}
 
 
 		private void InitAxis()
 		{
 			BuildAxis();
-			InitShiftMatrix(_k1, _l1);
+			InitShiftMatrix(_k1, _l1, p);
 
-			var axis = MultiplyMatrix(_axis, _shiftMartix);
+			var axis = MultiplyMatrix(_axis, ShiftMartix);
 
 			var pen = new Pen(Color.Black, 1);
 			var g = Graphics.FromImage(bitmap);
@@ -580,7 +508,7 @@ namespace ComputerGraphics
 		{
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
-				f += 45;
+				f += 1;
 				Clear();
 				DrawSpecialFigure();
 			}
@@ -595,7 +523,7 @@ namespace ComputerGraphics
 		{
 			if (templatesComboBox.SelectedItem == "Вариант 14")
 			{
-				f -= 45;
+				f -= 1;
 				Clear();
 				DrawSpecialFigure();
 			}
@@ -609,18 +537,6 @@ namespace ComputerGraphics
 		private void sizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			_size = (int)sizeComboBox.SelectedItem;
-		}
-
-		private void mirrorCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (mirrorCheckBox.Checked)
-			{
-				_size *= -1;
-			}
-			else
-			{
-				Math.Abs(_size);
-			}
 		}
 	}
 }

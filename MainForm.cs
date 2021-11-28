@@ -33,7 +33,7 @@ namespace ComputerGraphics
 
 		private int _k1, _l1, _p1;
 
-		private int k,l, p;
+		private int k, l, p;
 
 		private Timer _timer = new Timer();
 
@@ -55,7 +55,7 @@ namespace ComputerGraphics
 		{
 			InitializeComponent();
 			
-			templatesComboBox.Items.Add("Вариант 14");
+			templatesComboBox.Items.Add("Фигура");
 
 			sizeComboBox.Items.Add("0.5");
 			sizeComboBox.Items.Add(1);
@@ -73,7 +73,7 @@ namespace ComputerGraphics
 			_timer.Interval = 50;
 			_timer.Enabled = false;
 
-			_rotateTimer.Interval = 50;
+			_rotateTimer.Interval = 20;
 			_rotateTimer.Enabled = false;
 
 			rotateRightButton.MouseDown += RotateRightButtonOnMouseDown;
@@ -186,6 +186,10 @@ namespace ComputerGraphics
 		private void clearButton_Click(object sender, EventArgs e)
 		{
 			Clear();
+			k = _k1;
+			l = _l1;
+			p = 1;
+			f = 0;
 		}
 
 		private void Clear()
@@ -263,7 +267,7 @@ namespace ComputerGraphics
 		private void templatesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			
-			if (templatesComboBox.SelectedItem == "Вариант 14")
+			if (templatesComboBox.SelectedItem == "Фигура")
 			{
 				Clear();
 				DrawSpecialFigure();
@@ -274,7 +278,7 @@ namespace ComputerGraphics
 		private void leftShiftButton_Click(object sender, EventArgs e)
 		{
 			
-			if (templatesComboBox.SelectedItem == "Вариант 14")
+			if (templatesComboBox.SelectedItem == "Фигура")
 			{
 				k -= 5;
 				
@@ -286,19 +290,18 @@ namespace ComputerGraphics
 
 		private void upShiftButton_Click(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Вариант 14")
+			if (templatesComboBox.SelectedItem == "Фигура")
 			{
 				l -= 5;
 				Clear();
 				DrawSpecialFigure();
 			}
-
 		}
 
 		private void downShiftButton_Click(object sender, EventArgs e)
 		{
 			
-			if (templatesComboBox.SelectedItem == "Вариант 14")
+			if (templatesComboBox.SelectedItem == "Фигура")
 			{
 				l += 5;
 				Clear();
@@ -309,7 +312,7 @@ namespace ComputerGraphics
 		private void rightShiftButton_Click(object sender, EventArgs e)
 		{
 			
-			if (templatesComboBox.SelectedItem == "Вариант 14")
+			if (templatesComboBox.SelectedItem == "Фигура")
 			{
 				k += 5;
 				Clear();
@@ -350,6 +353,14 @@ namespace ComputerGraphics
 			g.DrawLine(_pen, (float)rect[0, 0], (float)rect[0, 1], (float)rect[3, 0], (float)rect[3, 1]); // дальняя с левой
 			g.DrawLine(_pen, (float)rect[4, 0], (float)rect[4, 1], (float)rect[3, 0], (float)rect[3, 1]); // правая с дальней
 			g.DrawLine(_pen, (float)rect[4, 0], (float)rect[4, 1], (float)rect[2, 0], (float)rect[2, 1]); // правая с бижней
+
+			if (rotateAxisCheckBox.Checked)
+			{
+				var axisPen = new Pen(_pen.Color);
+				axisPen.DashStyle = DashStyle.Dash;
+				g.DrawLine(axisPen, (float)rect[1, 0], (float)rect[1, 1] - 15, (float)rect[5, 0], (float)rect[5, 1] + 15);
+			}
+			
 
 			pictureBox.BackgroundImage = bitmap;
 			pictureBox.Refresh();
@@ -556,7 +567,7 @@ namespace ComputerGraphics
 
 		private void rotateButton_Click(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Вариант 14")
+			if (templatesComboBox.SelectedItem == "Фигура")
 			{
 				f += 1;
 				Clear();
@@ -564,14 +575,14 @@ namespace ComputerGraphics
 			}
 			else
 			{
-				MessageBox.Show("Поворот доступен только специальной фигуре", "Внимание", MessageBoxButtons.OK,
+				MessageBox.Show("Создайте фигуру", "Внимание", MessageBoxButtons.OK,
 					MessageBoxIcon.Warning);
 			}
 		}
 
 		private void rotateRightButton_Click(object sender, EventArgs e)
 		{
-			if (templatesComboBox.SelectedItem == "Вариант 14")
+			if (templatesComboBox.SelectedItem == "Фигура")
 			{
 				f -= 1;
 				Clear();
@@ -579,7 +590,7 @@ namespace ComputerGraphics
 			}
 			else
 			{
-				MessageBox.Show("Поворот доступен только специальной фигуре", "Внимание", MessageBoxButtons.OK,
+				MessageBox.Show("Создайте фигуру", "Внимание", MessageBoxButtons.OK,
 					MessageBoxIcon.Warning);
 			}
 		}

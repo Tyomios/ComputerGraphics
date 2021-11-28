@@ -32,6 +32,7 @@ namespace ComputerGraphics
 			this.clearButton = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
+			this.rotateAxisCheckBox = new System.Windows.Forms.CheckBox();
 			this.rotateRightButton = new System.Windows.Forms.Button();
 			this.rotateButton = new System.Windows.Forms.Button();
 			this.sizeComboBox = new System.Windows.Forms.ComboBox();
@@ -55,9 +56,9 @@ namespace ComputerGraphics
 			// 
 			// clearButton
 			// 
-			this.clearButton.Location = new System.Drawing.Point(71, 199);
+			this.clearButton.Location = new System.Drawing.Point(153, 393);
 			this.clearButton.Name = "clearButton";
-			this.clearButton.Size = new System.Drawing.Size(136, 23);
+			this.clearButton.Size = new System.Drawing.Size(105, 23);
 			this.clearButton.TabIndex = 2;
 			this.clearButton.Text = "Очистить";
 			this.clearButton.UseVisualStyleBackColor = true;
@@ -71,9 +72,9 @@ namespace ComputerGraphics
 			this.pictureBox.BackColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.pictureBox.BackgroundImage = global::ComputerGraphics.Properties.Resources.panelBack;
 			this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pictureBox.Location = new System.Drawing.Point(10, 30);
+			this.pictureBox.Location = new System.Drawing.Point(10, 12);
 			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(375, 570);
+			this.pictureBox.Size = new System.Drawing.Size(375, 587);
 			this.pictureBox.TabIndex = 3;
 			this.pictureBox.TabStop = false;
 			// 
@@ -82,6 +83,7 @@ namespace ComputerGraphics
 			this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel.BackColor = System.Drawing.SystemColors.Control;
 			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel.Controls.Add(this.rotateAxisCheckBox);
 			this.panel.Controls.Add(this.rotateRightButton);
 			this.panel.Controls.Add(this.rotateButton);
 			this.panel.Controls.Add(this.sizeComboBox);
@@ -95,16 +97,26 @@ namespace ComputerGraphics
 			this.panel.Controls.Add(this.templatesComboBox);
 			this.panel.Controls.Add(this.penSettingsGroupBox);
 			this.panel.Controls.Add(this.clearButton);
-			this.panel.Location = new System.Drawing.Point(395, 30);
+			this.panel.Location = new System.Drawing.Point(395, 12);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(285, 435);
+			this.panel.Size = new System.Drawing.Size(285, 426);
 			this.panel.TabIndex = 5;
+			// 
+			// rotateAxisCheckBox
+			// 
+			this.rotateAxisCheckBox.AutoSize = true;
+			this.rotateAxisCheckBox.Location = new System.Drawing.Point(14, 354);
+			this.rotateAxisCheckBox.Name = "rotateAxisCheckBox";
+			this.rotateAxisCheckBox.Size = new System.Drawing.Size(157, 19);
+			this.rotateAxisCheckBox.TabIndex = 26;
+			this.rotateAxisCheckBox.Text = "Показать ось вращения";
+			this.rotateAxisCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// rotateRightButton
 			// 
 			this.rotateRightButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.imgonline_com_ua_Mirror_n9WB5rtwGg21;
 			this.rotateRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.rotateRightButton.Location = new System.Drawing.Point(134, 335);
+			this.rotateRightButton.Location = new System.Drawing.Point(228, 223);
 			this.rotateRightButton.Name = "rotateRightButton";
 			this.rotateRightButton.Size = new System.Drawing.Size(30, 30);
 			this.rotateRightButton.TabIndex = 25;
@@ -115,7 +127,7 @@ namespace ComputerGraphics
 			// 
 			this.rotateButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_rotate_left_black_24dp;
 			this.rotateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.rotateButton.Location = new System.Drawing.Point(19, 335);
+			this.rotateButton.Location = new System.Drawing.Point(25, 223);
 			this.rotateButton.Name = "rotateButton";
 			this.rotateButton.Size = new System.Drawing.Size(30, 30);
 			this.rotateButton.TabIndex = 24;
@@ -128,7 +140,7 @@ namespace ComputerGraphics
 			// 
 			this.sizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.sizeComboBox.FormattingEnabled = true;
-			this.sizeComboBox.Location = new System.Drawing.Point(81, 397);
+			this.sizeComboBox.Location = new System.Drawing.Point(81, 393);
 			this.sizeComboBox.Name = "sizeComboBox";
 			this.sizeComboBox.Size = new System.Drawing.Size(55, 23);
 			this.sizeComboBox.TabIndex = 22;
@@ -137,7 +149,7 @@ namespace ComputerGraphics
 			// SizeLabel
 			// 
 			this.SizeLabel.AutoSize = true;
-			this.SizeLabel.Location = new System.Drawing.Point(13, 400);
+			this.SizeLabel.Location = new System.Drawing.Point(14, 397);
 			this.SizeLabel.Name = "SizeLabel";
 			this.SizeLabel.Size = new System.Drawing.Size(62, 15);
 			this.SizeLabel.TabIndex = 21;
@@ -147,7 +159,7 @@ namespace ComputerGraphics
 			// 
 			this.leftShiftButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_west_black_18dp;
 			this.leftShiftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.leftShiftButton.Location = new System.Drawing.Point(19, 284);
+			this.leftShiftButton.Location = new System.Drawing.Point(68, 221);
 			this.leftShiftButton.Name = "leftShiftButton";
 			this.leftShiftButton.Size = new System.Drawing.Size(40, 35);
 			this.leftShiftButton.TabIndex = 20;
@@ -158,7 +170,7 @@ namespace ComputerGraphics
 			// 
 			this.downShiftButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_south_black_18dp;
 			this.downShiftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.downShiftButton.Location = new System.Drawing.Point(71, 325);
+			this.downShiftButton.Location = new System.Drawing.Point(121, 263);
 			this.downShiftButton.Name = "downShiftButton";
 			this.downShiftButton.Size = new System.Drawing.Size(35, 40);
 			this.downShiftButton.TabIndex = 19;
@@ -169,7 +181,7 @@ namespace ComputerGraphics
 			// 
 			this.rightShiftButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_east_black_18dp;
 			this.rightShiftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.rightShiftButton.Location = new System.Drawing.Point(124, 284);
+			this.rightShiftButton.Location = new System.Drawing.Point(173, 221);
 			this.rightShiftButton.Name = "rightShiftButton";
 			this.rightShiftButton.Size = new System.Drawing.Size(40, 35);
 			this.rightShiftButton.TabIndex = 18;
@@ -180,7 +192,7 @@ namespace ComputerGraphics
 			// 
 			this.upShiftButton.BackgroundImage = global::ComputerGraphics.Properties.Resources.outline_north_black_18dp;
 			this.upShiftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.upShiftButton.Location = new System.Drawing.Point(71, 237);
+			this.upShiftButton.Location = new System.Drawing.Point(121, 174);
 			this.upShiftButton.Name = "upShiftButton";
 			this.upShiftButton.Size = new System.Drawing.Size(35, 40);
 			this.upShiftButton.TabIndex = 17;
@@ -190,7 +202,7 @@ namespace ComputerGraphics
 			// shiftLabel
 			// 
 			this.shiftLabel.AutoSize = true;
-			this.shiftLabel.Location = new System.Drawing.Point(71, 294);
+			this.shiftLabel.Location = new System.Drawing.Point(121, 231);
 			this.shiftLabel.Name = "shiftLabel";
 			this.shiftLabel.Size = new System.Drawing.Size(42, 15);
 			this.shiftLabel.TabIndex = 16;
@@ -199,7 +211,7 @@ namespace ComputerGraphics
 			// templatesLabel
 			// 
 			this.templatesLabel.AutoSize = true;
-			this.templatesLabel.Location = new System.Drawing.Point(14, 19);
+			this.templatesLabel.Location = new System.Drawing.Point(14, 328);
 			this.templatesLabel.Name = "templatesLabel";
 			this.templatesLabel.Size = new System.Drawing.Size(61, 15);
 			this.templatesLabel.TabIndex = 15;
@@ -209,9 +221,9 @@ namespace ComputerGraphics
 			// 
 			this.templatesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.templatesComboBox.FormattingEnabled = true;
-			this.templatesComboBox.Location = new System.Drawing.Point(81, 16);
+			this.templatesComboBox.Location = new System.Drawing.Point(81, 325);
 			this.templatesComboBox.Name = "templatesComboBox";
-			this.templatesComboBox.Size = new System.Drawing.Size(135, 23);
+			this.templatesComboBox.Size = new System.Drawing.Size(126, 23);
 			this.templatesComboBox.TabIndex = 14;
 			this.templatesComboBox.SelectedIndexChanged += new System.EventHandler(this.templatesComboBox_SelectedIndexChanged);
 			// 
@@ -221,7 +233,7 @@ namespace ComputerGraphics
 			this.penSettingsGroupBox.Controls.Add(this.prevPenCheckBox);
 			this.penSettingsGroupBox.Controls.Add(this.fatPencheckBox);
 			this.penSettingsGroupBox.Controls.Add(this.colorPickerButton);
-			this.penSettingsGroupBox.Location = new System.Drawing.Point(14, 45);
+			this.penSettingsGroupBox.Location = new System.Drawing.Point(14, 3);
 			this.penSettingsGroupBox.Name = "penSettingsGroupBox";
 			this.penSettingsGroupBox.Size = new System.Drawing.Size(254, 148);
 			this.penSettingsGroupBox.TabIndex = 6;
@@ -286,7 +298,7 @@ namespace ComputerGraphics
 			this.Controls.Add(this.pictureBox);
 			this.MinimumSize = new System.Drawing.Size(700, 650);
 			this.Name = "MainForm";
-			this.Text = "Преобразования на плоскости";
+			this.Text = "Трехмерная фигура";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.panel.ResumeLayout(false);
 			this.panel.PerformLayout();
@@ -316,6 +328,7 @@ namespace ComputerGraphics
 		private System.Windows.Forms.ComboBox sizeComboBox;
 		private System.Windows.Forms.Button rotateButton;
 		private System.Windows.Forms.Button rotateRightButton;
+		private System.Windows.Forms.CheckBox rotateAxisCheckBox;
 	}
 }
 

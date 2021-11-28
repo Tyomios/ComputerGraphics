@@ -37,6 +37,8 @@ namespace ComputerGraphics
 
 		private Timer _timer = new Timer();
 
+		private Timer _rotateTimer = new Timer();
+
 		private double _size = 50;
 
 		private int f = 0;
@@ -71,6 +73,12 @@ namespace ComputerGraphics
 			_timer.Interval = 50;
 			_timer.Enabled = false;
 
+			_rotateTimer.Interval = 50;
+			_rotateTimer.Enabled = false;
+
+			rotateRightButton.MouseDown += RotateRightButtonOnMouseDown;
+			rotateRightButton.MouseUp += RotateRightButtonOnMouseUp;
+
 			rightShiftButton.MouseDown += RightShiftButtonOnMouseDown;
 			rightShiftButton.MouseUp += RightShiftButtonOnMouseUp;
 
@@ -93,6 +101,32 @@ namespace ComputerGraphics
 
 
 		#region HoldButtonsEvents
+
+		private void RotateRightButtonOnMouseUp(object? sender, MouseEventArgs e)
+		{
+			_rotateTimer.Stop();
+			_rotateTimer.Tick -= rotateRightButton_Click;
+		}
+
+		private void RotateRightButtonOnMouseDown(object? sender, MouseEventArgs e)
+		{
+			_rotateTimer.Enabled = true;
+			_rotateTimer.Tick += rotateRightButton_Click;
+			_rotateTimer.Start();
+		}
+
+		private void rotateButton_MouseDown(object sender, MouseEventArgs e)
+		{
+			_rotateTimer.Enabled = true;
+			_rotateTimer.Tick += rotateButton_Click;
+			_rotateTimer.Start();
+		}
+
+		private void rotateButton_MouseUp(object sender, MouseEventArgs e)
+		{
+			_rotateTimer.Stop();
+			_rotateTimer.Tick -= rotateButton_Click;
+		}
 
 		private void DownShiftButtonOnMouseUp(object? sender, MouseEventArgs e)
 		{
@@ -290,6 +324,7 @@ namespace ComputerGraphics
 			InitSpecialFigure();
 			InitShiftMatrix(k, l, p);
 			InitRotateMatrix();
+			//InitRotateX();
 			InitSizeMatrix();
 
 			var rect = MultiplyMatrix(_square, _sizeMatrix);
@@ -373,7 +408,7 @@ namespace ComputerGraphics
 		/// </summary>
 		private void InitRotateMatrix()
 		{
-			var rad = Math.PI / 180 * f;
+			var rad = Math.PI / 360 * f;
 			_rotateMatrix[0, 0] = Math.Cos(rad);
 			_rotateMatrix[0, 1] = 0;
 			_rotateMatrix[0, 2] = Math.Sin(rad);
@@ -384,6 +419,27 @@ namespace ComputerGraphics
 			_rotateMatrix[1, 3] = 0;
 			_rotateMatrix[2, 0] = -Math.Sin(rad);
 			_rotateMatrix[2, 1] = 0;
+			_rotateMatrix[2, 2] = Math.Cos(rad);
+			_rotateMatrix[2, 3] = 0;
+			_rotateMatrix[3, 0] = 0;
+			_rotateMatrix[3, 1] = 0;
+			_rotateMatrix[3, 2] = 0;
+			_rotateMatrix[3, 3] = 1;
+		}
+
+		private void InitRotateX()
+		{
+			var rad = Math.PI / 360 * f;
+			_rotateMatrix[0, 0] = 1;
+			_rotateMatrix[0, 1] = 0;
+			_rotateMatrix[0, 2] = 0;
+			_rotateMatrix[0, 3] = 0;
+			_rotateMatrix[1, 0] = 0;
+			_rotateMatrix[1, 1] = Math.Cos(rad);
+			_rotateMatrix[1, 2] = -Math.Sin(rad);
+			_rotateMatrix[1, 3] = 0;
+			_rotateMatrix[2, 0] = 0;
+			_rotateMatrix[2, 1] = Math.Sin(rad);
 			_rotateMatrix[2, 2] = Math.Cos(rad);
 			_rotateMatrix[2, 3] = 0;
 			_rotateMatrix[3, 0] = 0;
@@ -429,12 +485,11 @@ namespace ComputerGraphics
 			_square[4, 2] = 0;
 			_square[4, 3] = 1;
 
-			// верхняя вершина отразить по y для нижней.
+			// верхняя вершина 
 			_square[1, 0] = 0;
 			_square[1, 1] = -2;
 			_square[1, 2] = 0;
 			_square[1, 3] = 1;
-
 
 			// Нижнаяя вершина
 			_square[5, 0] = 0;
@@ -443,15 +498,15 @@ namespace ComputerGraphics
 			_square[5, 3] = 1;
 
 			// ближняя вершина.
-			_square[2, 0] = -1;
+			_square[2, 0] = 0;
 			_square[2, 1] = 0;
 			_square[2, 2] = 1;
 			_square[2, 3] = 1;
 
 			// дальняя вершина.
-			_square[3, 0] = -1;
+			_square[3, 0] = 0;
 			_square[3, 1] = 0;
-			_square[3, 2] = 1;
+			_square[3, 2] = -1;
 			_square[3, 3] = 1;
 		}
 

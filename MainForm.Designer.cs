@@ -121,6 +121,8 @@ namespace ComputerGraphics
 			this.rotateButton.TabIndex = 24;
 			this.rotateButton.UseVisualStyleBackColor = true;
 			this.rotateButton.Click += new System.EventHandler(this.rotateButton_Click);
+			this.rotateButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rotateButton_MouseDown);
+			this.rotateButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rotateButton_MouseUp);
 			// 
 			// sizeComboBox
 			// 

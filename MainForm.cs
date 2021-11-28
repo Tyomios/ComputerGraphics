@@ -55,7 +55,7 @@ namespace ComputerGraphics
 			
 			templatesComboBox.Items.Add("Вариант 14");
 
-			sizeComboBox.Items.Add(0.5);
+			sizeComboBox.Items.Add("0.5");
 			sizeComboBox.Items.Add(1);
 			sizeComboBox.Items.Add(2);
 			sizeComboBox.Items.Add(3);
@@ -288,7 +288,7 @@ namespace ComputerGraphics
 		private void DrawSpecialFigure()
 		{
 			InitSpecialFigure();
-			InitShiftMatrix(_k1, _l1, p);
+			InitShiftMatrix(k, l, p);
 			InitRotateMatrix();
 			InitSizeMatrix();
 
@@ -297,11 +297,6 @@ namespace ComputerGraphics
 			rect = MultiplyMatrix(rect, ShiftMartix);
 
 			var g = Graphics.FromImage(bitmap);
-
-			// соединение левой вершины 
-			
-			
-			
 
 			// соединение верхней вершины
 			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[3, 0], (float)rect[3, 1]); //дальняя
@@ -402,9 +397,9 @@ namespace ComputerGraphics
 			ShiftMartix[0, 0] = 1;
 			ShiftMartix[0, 1] = 0;
 			ShiftMartix[0, 2] = 0;
-			ShiftMartix[0, 3] = 0; //к1
+			ShiftMartix[0, 3] = 0;
 
-			ShiftMartix[1, 3] = 0; //л1
+			ShiftMartix[1, 3] = 0;
 			ShiftMartix[1, 0] = 0;
 			ShiftMartix[1, 1] = 1;
 			ShiftMartix[1, 2] = 0;
@@ -412,7 +407,7 @@ namespace ComputerGraphics
 			ShiftMartix[2, 0] = 0;
 			ShiftMartix[2, 1] = 0;
 			ShiftMartix[2, 2] = 1;
-			ShiftMartix[2, 3] = 0; //р
+			ShiftMartix[2, 3] = 0;
 			
 			ShiftMartix[3, 0] = k1;
 			ShiftMartix[3, 1] = l1;
@@ -536,7 +531,23 @@ namespace ComputerGraphics
 
 		private void sizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			_size = (int)sizeComboBox.SelectedItem;
+			if (sizeComboBox.SelectedItem == "0.5")
+			{
+				_size = 25;
+
+			}
+			else if ((int)sizeComboBox.SelectedItem == 1)
+			{
+				_size = 50;
+			}
+			else if ((int)sizeComboBox.SelectedItem == 2)
+			{
+				_size = 100;
+			}
+			else if ((int)sizeComboBox.SelectedItem == 3)
+			{
+				_size = 150;
+			}
 		}
 	}
 }

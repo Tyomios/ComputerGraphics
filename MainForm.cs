@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,27 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace ComputerGraphics
 {
+	/// <summary>
+	/// Вершина 
+	/// </summary>
+	public class Node
+	{
+		public double X { get; set; }
+		public double Y { get; set; }
+		public double Z { get; set; }
+
+		public Node(double x, double y, double z)
+		{
+			X = x;
+			Y = y;
+			Z = z;
+		}
+
+		public Node()
+		{
+
+		}
+	}
 	//TODO: Поворот матрицы не нужно смешивать, фигуру умножить
 	//на матрицу сдвига на матрицу масштаба, на матрицу поворота
 	public partial class MainForm : Form
@@ -336,23 +358,49 @@ namespace ComputerGraphics
 
 			var g = Graphics.FromImage(bitmap);
 
+			var edges = GetEdges(rect);
+
+			foreach (var edge in edges)
+			{
+				if (CheckEdge(edge[0], edge[1], edge[2], GetW(rect)))
+				{
+					g.DrawLine(_pen, (float)edge[0].X, (float)edge[0].Y, (float)edge[1].X, (float)edge[1].Y);
+					g.DrawLine(_pen, (float)edge[0].X, (float)edge[0].Y, (float)edge[2].X, (float)edge[2].Y);
+					g.DrawLine(_pen, (float)edge[2].X, (float)edge[2].Y, (float)edge[1].X, (float)edge[1].Y);
+				}
+			}
+
 			// соединение верхней вершины
-			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[3, 0], (float)rect[3, 1]); //дальняя
-			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближняя
-			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[4, 0], (float)rect[4, 1]); //правая
-			g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[0, 0], (float)rect[0, 1]); //правая
+			//g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[3, 0], (float)rect[3, 1]); //дальняя
+			//g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближняя
+			//g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[4, 0], (float)rect[4, 1]); //правая
+			//g.DrawLine(_pen, (float)rect[1, 0], (float)rect[1, 1], (float)rect[0, 0], (float)rect[0, 1]); //правая
 
-			// соединение нижней вершины
-			g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[3, 0], (float)rect[3, 1]); //дальняя
-			g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближняя
-			g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[4, 0], (float)rect[4, 1]); //правая
-			g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[0, 0], (float)rect[0, 1]); //правая
+			//// соединение нижней вершины
+			//g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[3, 0], (float)rect[3, 1]); //дальняя
+			//g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближняя
+			//g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[4, 0], (float)rect[4, 1]); //правая
+			//g.DrawLine(_pen, (float)rect[5, 0], (float)rect[5, 1], (float)rect[0, 0], (float)rect[0, 1]); //правая
 
-			// соединение соседних 
-			g.DrawLine(_pen, (float)rect[0, 0], (float)rect[0, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближнаяя с левой
-			g.DrawLine(_pen, (float)rect[0, 0], (float)rect[0, 1], (float)rect[3, 0], (float)rect[3, 1]); // дальняя с левой
-			g.DrawLine(_pen, (float)rect[4, 0], (float)rect[4, 1], (float)rect[3, 0], (float)rect[3, 1]); // правая с дальней
-			g.DrawLine(_pen, (float)rect[4, 0], (float)rect[4, 1], (float)rect[2, 0], (float)rect[2, 1]); // правая с бижней
+			//// соединение соседних 
+			//g.DrawLine(_pen, (float)rect[0, 0], (float)rect[0, 1], (float)rect[2, 0], (float)rect[2, 1]); // ближнаяя с левой
+			//g.DrawLine(_pen, (float)rect[0, 0], (float)rect[0, 1], (float)rect[3, 0], (float)rect[3, 1]); // дальняя с левой
+			//g.DrawLine(_pen, (float)rect[4, 0], (float)rect[4, 1], (float)rect[3, 0], (float)rect[3, 1]); // правая с дальней
+			//g.DrawLine(_pen, (float)rect[4, 0], (float)rect[4, 1], (float)rect[2, 0], (float)rect[2, 1]); // правая с бижней
+
+			//var leftNode = new Node(rect[0, 0], rect[0, 1], rect[0, 2]);
+			//var upNode = new Node(rect[1, 0], rect[1, 1], rect[1, 2]);
+			//var nearNode = new Node(rect[2, 0], rect[2, 1], rect[2, 2]);
+			//var farNode = new Node(rect[3, 0], rect[3, 1], rect[3, 2]);
+			//var rightNode = new Node(rect[4, 0], rect[4, 1], rect[4, 2]);
+			//var downNode = new Node(rect[5, 0], rect[5, 1], rect[5, 2]);
+
+			////g.DrawRectangle(new Pen(Color.Red), (float)leftNode.X, (float)leftNode.Y, 1, 1);
+			////g.DrawRectangle(new Pen(Color.Blue), (float)rightNode.X, (float)rightNode.Y, 2, 2);
+			//g.DrawRectangle(new Pen(Color.GreenYellow), (float)downNode.X, (float)downNode.Y, 2, 2);
+			//g.DrawRectangle(new Pen(Color.Orange), (float)upNode.X, (float)upNode.Y, 2, 2);
+			//g.DrawRectangle(new Pen(Color.Red), (float)nearNode.X, (float)nearNode.Y, 2, 2);
+			//g.DrawRectangle(new Pen(Color.Blue), (float)farNode.X, (float)farNode.Y, 2, 2);
 
 			if (rotateAxisCheckBox.Checked)
 			{
@@ -420,6 +468,7 @@ namespace ComputerGraphics
 		private void InitRotateMatrix()
 		{
 			var rad = Math.PI / 360 * f;
+
 			_rotateMatrix[0, 0] = Math.Cos(rad);
 			_rotateMatrix[0, 1] = 0;
 			_rotateMatrix[0, 2] = Math.Sin(rad);
@@ -480,6 +529,117 @@ namespace ComputerGraphics
 			ShiftMartix[3, 1] = l1;
 			ShiftMartix[3, 2] = p;
 			ShiftMartix[3, 3] = 1;
+		}
+
+		private Node GetW(double[,] rect)
+		{
+			var W = new Node();
+			for (int i = 0; i < 6; i++)
+			{
+				W.X += rect[i, 0];
+				W.Y += rect[i, 1];
+				W.Z += rect[i, 2];
+			}
+
+			W.X /= 6;
+			W.Y /= 6;
+			W.Z /= 6;
+			return W;
+		}
+
+
+		private bool CheckEdge(Node fPoint, Node sPoint, Node thPoint, Node W)
+		{
+			var vect1X = fPoint.X - sPoint.X;
+			var vect1Y = fPoint.Y - sPoint.Y;
+			var vect1Z = fPoint.Z - sPoint.Z;
+
+			var vect2X = thPoint.X - sPoint.X;
+			var vect2Y = thPoint.Y - sPoint.Y;
+			var vect2Z = thPoint.Z - sPoint.Z;
+
+			var A = vect1Y * vect2Z - vect1Y * vect1Z;
+			var B = vect1Z * vect2X - vect2Z * vect1X;
+			var C = vect1X * vect2Y - vect2X * vect1Y;
+
+			var D = -(A * fPoint.X + B * fPoint.Y + C * fPoint.Z);
+			var m = -Math.Sign(A * W.X + B * W.Y + C * W.Z + D);
+
+			A *= m;
+			B *= m;
+			C *= m;
+			D *= m;
+
+			var VisionPoint = new Node();
+			VisionPoint.X = 0;
+			VisionPoint.Y = 0;
+			VisionPoint.Z = 1000;
+
+			var statement = A * VisionPoint.X + B * VisionPoint.Y + C * VisionPoint.Z + D;
+
+			if (statement > 0)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+
+		private List<List<Node>> GetEdges(double[,] rect)
+		{
+			var leftNode = new Node(rect[0,0], rect[0, 1], rect[0, 2]);
+			var upNode = new Node(rect[1,0], rect[1, 1], rect[1, 2]);
+			var farNode = new Node(rect[2,0], rect[2, 1], rect[2, 2]);
+			var nearNode = new Node(rect[3,0], rect[3, 1], rect[3, 2]);
+			var rightNode = new Node(rect[4,0], rect[4, 1], rect[4, 2]);
+			var downNode = new Node(rect[5,0], rect[5, 1], rect[5, 2]);
+			
+
+			var result = new List<List<Node>>();
+
+			result.Add(new List<Node>() 
+			{
+				upNode, leftNode, nearNode
+			});
+
+			result.Add(new List<Node>()
+			{
+				upNode, leftNode, farNode
+			});
+
+			result.Add(new List<Node>()
+			{
+				upNode, rightNode, nearNode
+			});
+
+			result.Add(new List<Node>()
+			{
+				upNode, rightNode, farNode
+			});
+
+
+			result.Add(new List<Node>()
+			{
+				downNode, leftNode, nearNode
+			});
+
+			result.Add(new List<Node>()
+			{
+				downNode, leftNode, farNode
+			});
+
+			result.Add(new List<Node>()
+			{
+				downNode, rightNode, nearNode
+			});
+
+			result.Add(new List<Node>()
+			{
+				downNode, rightNode, farNode
+			});
+
+			return result;
 		}
 
 		private void InitSpecialFigure()
